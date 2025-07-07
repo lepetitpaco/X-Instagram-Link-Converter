@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "X & Instagram Link Converter",
+  "version": "1.0",
+  "description": "Convert and copy X.com or Instagram post links to vxtwitter, fixupx, or kkinstagram.",
+  "permissions": ["contextMenus", "activeTab", "clipboardWrite"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/icon128.png",
+    "default_title": "Share this X post",
+    "default_popup": "popup.html"
+  }
+}
