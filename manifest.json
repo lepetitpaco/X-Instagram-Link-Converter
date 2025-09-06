@@ -1,19 +1,34 @@
 {
   "manifest_version": 2,
   "name": "X & Instagram Link Converter",
-  "version": "1.0",
-  "description": "Convert and copy X.com or Instagram post links to vxtwitter, fixupx, or kkinstagram.",
-  "permissions": ["contextMenus", "activeTab", "clipboardWrite"],
+  "version": "1.0.2",
+  "description": "Automatically rewrites and copies X.com or Instagram post links to alternative frontends like fixvx, fixupx, or kkinstagram when sharing or copying.",
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
   "background": {
-    "scripts": ["background.js"],
-    "persistent": true
+    "scripts": ["background.js"]
   },
+  "content_scripts": [
+    {
+      "matches": ["*://x.com/*"],
+      "js": ["content-x.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://www.instagram.com/*"],
+      "js": ["content-instagram.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "icons": {
     "128": "icons/icon128.png"
   },
   "browser_action": {
     "default_icon": "icons/icon128.png",
-    "default_title": "Share this X post",
-    "default_popup": "popup.html"
+    "default_title": "Link Converter"
   }
 }

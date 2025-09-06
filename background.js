@@ -1,8 +1,8 @@
 chrome.runtime.onInstalled.addListener(() => {
-  // X.com options
+  // Crée les options de menu pour X
   chrome.contextMenus.create({
-    id: "copy-x-vxtwitter-page",
-    title: "📋 Copy vxtwitter link of this X page",
+    id: "copy-x-fixvx-page",
+    title: "📋 Copy fixvx link of this X page",
     contexts: ["page"],
     documentUrlPatterns: ["*://x.com/*"]
   });
@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(() => {
     documentUrlPatterns: ["*://x.com/*"]
   });
 
-  // Instagram option (any path)
+  // Crée l'option de menu pour Instagram
   chrome.contextMenus.create({
     id: "copy-kkinstagram-page",
     title: "📷 Copy kkinstagram link of this Instagram page",
@@ -24,35 +24,30 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
+  const rawUrl = tab.url.split("?")[0];
+  const url = new URL(rawUrl);
   let replacementDomain = null;
 
-  if (info.menuItemId.includes("vxtwitter")) {
-    replacementDomain = "vxtwitter.com";
-  } else if (info.menuItemId.includes("fixupx")) {
-    replacementDomain = "fixupx.com";
-  } else if (info.menuItemId.includes("kkinstagram")) {
-    replacementDomain = "kkinstagram.com";
+  switch (info.menuItemId) {
+    case "copy-x-fixvx-page":
+      replacementDomain = "fixvx.com";
+      break;
+    case "copy-x-fixupx-page":
+      replacementDomain = "fixupx.com";
+      break;
+    case "copy-kkinstagram-page":
+      replacementDomain = "kkinstagram.com";
+      break;
+    default:
+      chrome.tabs.executeScript(tab.id, {
+        code: `alert("❌ This page is not supported.")`
+      });
+      return;
   }
 
-  const rawUrl = tab.url;
-
-  // Check if it's an eligible base domain
-  const isX = rawUrl.includes("x.com");
-  const isIG = rawUrl.includes("instagram.com");
-
-  if (!isX && !isIG) {
-    chrome.tabs.executeScript(tab.id, {
-      code: `alert("❌ This page is not supported.")`
-    });
-    return;
-  }
-
-  // Clean query params
-  const cleanUrl = rawUrl.split("?")[0];
-  const finalUrl = new URL(cleanUrl);
-  finalUrl.hostname = replacementDomain;
+  url.hostname = replacementDomain;
 
   chrome.tabs.executeScript(tab.id, {
-    code: `navigator.clipboard.writeText(${JSON.stringify(finalUrl.toString())})`
+    code: `navigator.clipboard.writeText(${JSON.stringify(url.toString())});`
   });
 });
