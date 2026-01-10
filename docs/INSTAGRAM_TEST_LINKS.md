@@ -1,22 +1,8 @@
 # Guide de test des liens Instagram
 
-## 📍 Où apparaissent les boutons "kkinstagram" ?
+## 📍 Où apparaît le bouton "kkinstagram" ?
 
-### 1. **Boutons sous les posts** (Timeline uniquement)
-**Apparence**: Bouton avec icône caméra et texte "kkinstagram" sous chaque post
-
-**Où**:
-- ✅ Timeline principale (`instagram.com`)
-- ✅ Pages de profils utilisateurs
-- ✅ Pages de hashtags
-- ✅ Pages de recherche
-- ❌ Pages de reels individuelles (`/reels/ID` ou `/reel/ID`) - **DÉSACTIVÉ**
-
-**Style**: Dégradé Instagram (violet-rose-orange) avec animations hover
-
----
-
-### 2. **Bouton dans le menu de partage** (Partout)
+### **Bouton dans le menu de partage** (Partout)
 **Apparence**: Bouton "kkinstagram" dans le menu qui s'ouvre quand on clique sur "Share"
 
 **Où**:
@@ -27,9 +13,11 @@
 
 **Comment tester**: Cliquer sur le bouton "Share" d'un post → Le bouton "kkinstagram" apparaît dans le menu
 
+**Note**: Depuis la version 1.0.4, les boutons sous les posts ont été supprimés. Seul le menu de partage est disponible.
+
 ---
 
-### 3. **Bouton dans les commentaires** (Au survol)
+### **Bouton dans les commentaires** (Au survol)
 **Apparence**: Bouton "🔗 Convert" qui apparaît au survol des liens Instagram
 
 **Où**:
@@ -56,7 +44,6 @@ Basé sur le post de référence: `https://www.instagram.com/p/DTNnuzxjgIK/`
 ✅ https://instagram.com/p/DTNnuzxjgIK/
 ✅ https://www.instagram.com/p/DTNnuzxjgIK/?hl=en
 
-Pas de boutons kkinstagram visible ici KO
 Présent dans le menu share OK
 ```
 
@@ -74,7 +61,6 @@ Rien de spécial a tester, on ne va jamais dans ces liens
 ✅ https://www.instagram.com/the_frog_mage/p/DTNnuzxjgIK/
 ✅ https://www.instagram.com/the_frog_mage/p/DTNnuzxjgIK
 
-Pas de boutons kkinstagram visible ici KO
 Présent dans le menu share OK
 ```
 
@@ -130,9 +116,8 @@ Pas dans 3 petits point plus d'options OK
 **URL**: `https://www.instagram.com/`
 
 **À vérifier**:
-- [V] Boutons "kkinstagram" apparaissent sous chaque post
-- [V] Bouton dans le menu de partage fonctionne
-- [ ] Liens dans les commentaires sont convertibles au survol (j'ai pas trouvé de liens, je verrai quand je tomberai dessus)
+- [1] Bouton dans le menu de partage fonctionne
+- [2] Liens dans les commentaires sont convertibles au survol
 
 ---
 
@@ -140,14 +125,14 @@ Pas dans 3 petits point plus d'options OK
 **URL**: `https://www.instagram.com/p/DTNnuzxjgIK/`
 
 **À vérifier**:
-- [V] Bouton dans le menu de partage fonctionne
-- [V] L'URL convertie est correcte: `https://kkinstagram.com/p/DTNnuzxjgIK/`
-- [ ] Liens dans les commentaires sont convertibles
+- [3] Bouton dans le menu de partage fonctionne
+- [4] L'URL convertie est correcte: `https://kkinstagram.com/p/DTNnuzxjgIK/`
+- [5] Liens dans les commentaires sont convertibles
 
 **Variantes à tester**:
-- [V] `https://www.instagram.com/p/DTNnuzxjgIK` (sans slash final)
-- [V] `https://www.instagram.com/p/DTNnuzxjgIK/?utm_source=ig_web_copy_link` (avec query params)
-- [V] `https://www.instagram.com/p/DTNnuzxjgIK/liked_by/` (avec chemin supplémentaire)
+- [6] `https://www.instagram.com/p/DTNnuzxjgIK` (sans slash final)
+- [7] `https://www.instagram.com/p/DTNnuzxjgIK/?utm_source=ig_web_copy_link` (avec query params)
+- [8] `https://www.instagram.com/p/DTNnuzxjgIK/liked_by/` (avec chemin supplémentaire)
 
 ---
 
@@ -155,14 +140,13 @@ Pas dans 3 petits point plus d'options OK
 **URL**: `https://www.instagram.com/reel/DTTCxeXjHbj/`
 
 **À vérifier**:
-- [V] ❌ Aucun bouton sous le reel (désactivé)
-- [V] ✅ Bouton dans le menu de partage fonctionne
-- [V] L'URL convertie est correcte: `https://kkinstagram.com/reel/DTTCxeXjHbj/`
+- [9] Bouton dans le menu de partage fonctionne
+- [10] L'URL convertie est correcte: `https://kkinstagram.com/reel/DTTCxeXjHbj/`
 
 **Variantes à tester**:
-- [ ] `https://www.instagram.com/reels/DTTCxeXjHbj/` (avec 's')
-- [ ] `https://www.instagram.com/reel/DTTCxeXjHbj` (sans slash final)
-- [ ] `https://www.instagram.com/username/reel/DTTCxeXjHbj/` (avec username)
+- [11] `https://www.instagram.com/reels/DTTCxeXjHbj/` (avec 's')
+- [12] `https://www.instagram.com/reel/DTTCxeXjHbj` (sans slash final)
+- [13] `https://www.instagram.com/username/reel/DTTCxeXjHbj/` (avec username)
 
 ---
 
@@ -170,8 +154,8 @@ Pas dans 3 petits point plus d'options OK
 **URL**: `https://www.instagram.com/chasedelrosario/reel/DMss84surIn/`
 
 **À vérifier**:
-- [V] L'URL est correctement nettoyée: `https://www.instagram.com/reel/DMss84surIn/` 
-- [V] L'URL convertie est correcte: `https://kkinstagram.com/reel/DMss84surIn/`
+- [14] L'URL est correctement nettoyée: `https://www.instagram.com/reel/DMss84surIn/` 
+- [15] L'URL convertie est correcte: `https://kkinstagram.com/reel/DMss84surIn/`
 
 ---
 
@@ -179,8 +163,8 @@ Pas dans 3 petits point plus d'options OK
 **URL**: N'importe quelle page de reel
 
 **À vérifier**:
-- [V] ❌ Le bouton "kkinstagram" n'apparaît PAS dans le menu "More"
-- [V] ✅ Le bouton apparaît uniquement dans le menu "Share"
+- [ ] ❌ Le bouton "kkinstagram" n'apparaît PAS dans le menu "More"
+- [ ] ✅ Le bouton apparaît uniquement dans le menu "Share"
 
 ---
 
@@ -211,31 +195,29 @@ https://www.instagram.com/username/p/DTNnuzxjgIK/
 
 ### Test 8: Normalisation `/reels/` → `/reel/`
 **À vérifier**:
-- [V] `https://www.instagram.com/reels/DTTCxeXjHbj/` → Converti en `https://kkinstagram.com/reel/DTTCxeXjHbj/` -> https://kkinstagram.com/reel/DTTCxeXjHbj/
-- [V] Le 's' est bien supprimé pour kkinstagram
+- [ ] `https://www.instagram.com/reels/DTTCxeXjHbj/` → Converti en `https://kkinstagram.com/reel/DTTCxeXjHbj/`
+- [ ] Le 's' est bien supprimé pour kkinstagram
 
 ---
 
 ## 📋 Checklist de test rapide
 
 ### Sur la timeline (`instagram.com`)
-- [V] Boutons sous les posts visibles
-- [V] Boutons cliquables et fonctionnels
-- [V] Menu de partage contient "kkinstagram"
-- [je sais pas] Liens dans commentaires convertibles
+- [ ] Menu de partage contient "kkinstagram"
+- [ ] Bouton cliquable et fonctionnel
+- [ ] Liens dans commentaires convertibles
 
 ### Sur un post individuel (`/p/ID`)
-- [V] Menu de partage contient "kkinstagram"
-- [V] URL convertie correcte
-- [V] Liens dans commentaires convertibles
+- [ ] Menu de partage contient "kkinstagram"
+- [ ] URL convertie correcte
+- [ ] Liens dans commentaires convertibles
 
 ### Sur un reel individuel (`/reel/ID` ou `/reels/ID`)
-- [V] ❌ Pas de bouton sous le reel -> je veux un bouton pour `/reel/ID` mais pas pour `/reels/ID`
-- [V] ✅ Menu de partage contient "kkinstagram"
-- [V] URL convertie correcte (avec `/reel/` sans 's')
+- [ ] Menu de partage contient "kkinstagram"
+- [ ] URL convertie correcte (avec `/reel/` sans 's')
 
 ### Menu "More" (trois points)
-- [V] ❌ Pas de bouton "kkinstagram" dans ce menu
+- [ ] ❌ Pas de bouton "kkinstagram" dans ce menu
 
 ---
 
@@ -246,7 +228,7 @@ https://www.instagram.com/username/p/DTNnuzxjgIK/
 **URL convertie attendue**: `https://kkinstagram.com/p/DTNnuzxjgIK/`
 
 **Où tester**:
-1. **Timeline**: Si ce post apparaît dans votre feed → Bouton sous le post
+1. **Timeline**: Si ce post apparaît dans votre feed → Menu de partage
 2. **Page individuelle**: Ouvrir `https://www.instagram.com/p/DTNnuzxjgIK/` → Menu de partage
 3. **Commentaires**: Si ce lien apparaît dans un commentaire → Survoler le lien
 
@@ -254,10 +236,11 @@ https://www.instagram.com/username/p/DTNnuzxjgIK/
 
 ## 🔍 Détection des problèmes
 
-### Si les boutons n'apparaissent pas:
+### Si le bouton n'apparaît pas dans le menu de partage:
 1. Ouvrir la console (F12)
 2. Chercher les logs `[kkinstagram]`
 3. Vérifier les erreurs JavaScript
+4. Vérifier que le menu de partage est bien ouvert
 
 ### Si l'URL convertie est incorrecte:
 1. Vérifier que l'URL originale est valide
@@ -268,7 +251,7 @@ https://www.instagram.com/username/p/DTNnuzxjgIK/
 
 ## 📝 Notes importantes
 
-1. **Pages de reels individuelles**: Les boutons ne sont PAS ajoutés directement sur ces pages, seulement dans le menu de partage.
+1. **Boutons sous les posts**: Supprimés depuis la version 1.0.4. Seul le menu de partage est disponible.
 
 2. **Menu "More"**: Le bouton n'apparaît PAS dans ce menu, uniquement dans le menu "Share".
 

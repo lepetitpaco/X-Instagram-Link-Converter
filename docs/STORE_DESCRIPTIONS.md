@@ -27,14 +27,15 @@ Automatically convert links from X.com (formerly Twitter) and Instagram to priva
 ✨ Features:
 • Convert X/Twitter links to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram links to kkinstagram.com
-• Multiple ways to convert: in-page buttons, context menu, popup, or automatic interception
+• Multiple ways to convert: in-page buttons on X/Twitter, share menu on Instagram, or popup interface
 • Works on x.com, twitter.com, and instagram.com
 • No tracking, no data collection, just clean link conversion
 
 🎯 How it works:
 1. Browse X/Twitter or Instagram normally
-2. Click the conversion buttons that appear under each post
-3. Or use the context menu (right-click) or popup
+2. On X/Twitter: Click the conversion buttons that appear under each post
+3. On Instagram: Click "Share" → Click "kkinstagram" in the share menu
+4. Or use the popup interface (extension icon)
 4. The converted link is automatically copied to your clipboard
 5. Share privacy-friendly links without tracking
 
@@ -57,14 +58,12 @@ This extension automatically converts links from X.com (formerly Twitter) and In
 Features:
 • Convert X/Twitter posts to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram posts to kkinstagram.com
-• Multiple conversion methods: in-page buttons, context menu, popup interface
-• Automatic link interception on Instagram
+• Multiple conversion methods: in-page buttons on X/Twitter, share menu on Instagram, popup interface
 • Works seamlessly with x.com, twitter.com, and instagram.com
 
 How to use:
 - On X/Twitter: Click the conversion buttons that appear under each post
-- On Instagram: Buttons appear automatically under each post
-- Or use the context menu (right-click) for quick conversion
+- On Instagram: Click "Share" → Click "kkinstagram" in the share menu
 - Or click the extension icon for the popup interface
 
 Privacy-focused:
@@ -107,21 +106,18 @@ Perfect for sharing content without exposing your friends to tracking, ads, and 
    - Montrer un post X/Twitter avec les boutons "fixvx", "fixupx", "vxtwitter" visibles sous le post
    - Titre: "Convert X/Twitter links with one click"
 
-2. **Screenshot 2 - Instagram avec bouton:**
-   - Montrer un post Instagram avec le bouton "kkinstagram" visible
-   - Titre: "Convert Instagram links instantly"
+2. **Screenshot 2 - Instagram share menu:**
+   - Montrer le menu de partage Instagram avec le bouton "kkinstagram" visible
+   - Titre: "Convert Instagram links via share menu"
 
-3. **Screenshot 3 - Menu contextuel:**
-   - Montrer le menu contextuel (clic droit) avec les options de conversion
-   - Titre: "Right-click to convert"
-
-4. **Screenshot 4 - Popup:**
-   - Montrer l'interface popup avec tous les boutons
+3. **Screenshot 3 - Popup interface:**
+   - Montrer l'interface popup avec tous les boutons de conversion
    - Titre: "Easy popup interface"
 
-5. **Screenshot 5 - Toast notification:**
+4. **Screenshot 4 - Toast notification:**
    - Montrer la notification toast après copie
    - Titre: "Instant feedback"
+
 
 ## Catégories
 
@@ -193,14 +189,15 @@ Automatically convert links from X.com (formerly Twitter) and Instagram to priva
 ✨ Features:
 • Convert X/Twitter links to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram links to kkinstagram.com
-• Multiple ways to convert: in-page buttons, context menu, popup, or automatic interception
+• Multiple ways to convert: in-page buttons on X/Twitter, share menu on Instagram, or popup interface
 • Works on x.com, twitter.com, and instagram.com
 • No tracking, no data collection, just clean link conversion
 
 🎯 How it works:
 1. Browse X/Twitter or Instagram normally
-2. Click the conversion buttons that appear under each post
-3. Or use the context menu (right-click) or popup
+2. On X/Twitter: Click the conversion buttons that appear under each post
+3. On Instagram: Click "Share" → Click "kkinstagram" in the share menu
+4. Or use the popup interface (extension icon)
 4. The converted link is automatically copied to your clipboard
 5. Share privacy-friendly links without tracking
 
@@ -235,14 +232,12 @@ This extension automatically converts links from X.com (formerly Twitter) and In
 Features:
 • Convert X/Twitter posts to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram posts to kkinstagram.com
-• Multiple conversion methods: in-page buttons, context menu, popup interface
-• Automatic link interception on Instagram
+• Multiple conversion methods: in-page buttons on X/Twitter, share menu on Instagram, popup interface
 • Works seamlessly with x.com, twitter.com, and instagram.com
 
 How to use:
 - On X/Twitter: Click the conversion buttons that appear under each post
-- On Instagram: Buttons appear automatically under each post
-- Or use the context menu (right-click) for quick conversion
+- On Instagram: Click "Share" → Click "kkinstagram" in the share menu
 - Or click the extension icon for the popup interface
 
 Privacy-focused:

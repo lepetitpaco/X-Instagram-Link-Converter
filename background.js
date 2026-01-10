@@ -59,6 +59,3 @@ function isValidInstagramUrl(url) {
     return url.includes('instagram.com');
   }
 }
-
-
-});

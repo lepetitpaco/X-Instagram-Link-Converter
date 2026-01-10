@@ -4,37 +4,13 @@
 
 Ce document répertorie toutes les fonctionnalités et interactions implémentées pour Instagram dans le plugin X-Instagram-Link-Converter.
 
+**Note importante**: Depuis la version 1.0.4, les boutons sous les posts ont été supprimés. Seul le bouton dans le menu de partage est conservé.
+
 ---
 
 ## 🎯 Fonctionnalités principales
 
-### 1. **Boutons de conversion sous les posts** ✅
-**Fichier**: `content-instagram.js` - Fonction `addButtonsToPost()`
-
-**Description**: Ajoute des boutons "kkinstagram" directement sous chaque post dans le feed Instagram.
-
-**Où ça fonctionne**:
-- ✅ Timeline principale (`instagram.com`)
-- ✅ Pages de profils utilisateurs
-- ✅ Pages de hashtags
-- ✅ Pages de recherche
-- ❌ Pages de reels individuelles (`/reels/ID` ou `/reel/ID`) - **DÉSACTIVÉ**
-
-**Comportement**:
-- Bouton avec icône caméra SVG et texte "kkinstagram"
-- Style Instagram (dégradé violet-rose-orange)
-- Animations hover et click
-- Respect des paramètres utilisateur (domaines activés/désactivés)
-- Sauvegarde dans l'historique et statistiques
-
-**Détection**:
-- Utilise `MutationObserver` pour détecter les nouveaux posts chargés dynamiquement
-- Debounce de 300ms pour éviter trop d'exécutions
-- Vérifie que l'URL du post est valide avant d'ajouter le bouton
-
----
-
-### 2. **Bouton dans le menu de partage** ✅
+### 1. **Bouton dans le menu de partage** ✅
 **Fichier**: `content-instagram.js` - Fonction `addKkinstagramToShareMenu()`
 
 **Description**: Ajoute un bouton "kkinstagram" dans le menu de partage Instagram (quand on clique sur "Share").
@@ -65,7 +41,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ---
 
-### 3. **Conversion de liens dans les commentaires** ✅
+### 2. **Conversion de liens dans les commentaires** ✅
 **Fichier**: `content-instagram.js` - Fonction `convertLinkInText()`
 
 **Description**: Détecte les liens Instagram dans les commentaires et affiche un bouton "🔗 Convert" au survol.
@@ -83,7 +59,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ---
 
-### 4. **Nettoyage et normalisation des URLs** ✅
+### 3. **Nettoyage et normalisation des URLs** ✅
 **Fichier**: `content-instagram.js` - Fonction `cleanInstagramUrl()`
 
 **Description**: Nettoie et normalise les URLs Instagram pour extraire uniquement l'ID du post/reel.
@@ -103,7 +79,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ---
 
-### 5. **Extraction d'URL depuis le menu de partage** ✅
+### 4. **Extraction d'URL depuis le menu de partage** ✅
 **Fichier**: `content-instagram.js` - Fonction `extractPostUrlFromShareMenu()`
 
 **Description**: Extrait l'URL du post depuis le menu de partage de manière fiable.
@@ -125,21 +101,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ## 🔧 Interactions et observateurs
 
-### 1. **MutationObserver principal** ✅
-**Ligne**: 509-528
-
-**Rôle**: Détecte les nouveaux posts chargés dynamiquement dans le feed.
-
-**Comportement**:
-- Observe `document.body` avec `childList: true, subtree: true`
-- Debounce de 300ms
-- Appelle `addButtonsToAllPosts()` et `convertLinkInText()`
-
----
-
-### 2. **ShareMenuObserver** ✅
-**Ligne**: 1644-1714
-
+### 1. **ShareMenuObserver** ✅
 **Rôle**: Détecte l'ouverture du menu de partage.
 
 **Comportement**:
@@ -151,9 +113,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ---
 
-### 3. **Écouteur de clics sur boutons de partage** ✅
-**Ligne**: 1725-1743
-
+### 2. **Écouteur de clics sur boutons de partage** ✅
 **Rôle**: Détecte les clics sur les boutons de partage pour déclencher immédiatement la recherche.
 
 **Comportement**:
@@ -163,9 +123,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ---
 
-### 4. **Vérification périodique** ✅
-**Ligne**: 1755-1769
-
+### 3. **Vérification périodique** ✅
 **Rôle**: Vérifie périodiquement si le menu de partage est ouvert.
 
 **Comportement**:
@@ -177,20 +135,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ## 🚫 Exclusions et limitations
 
-### Pages de reels individuelles
-**Ligne**: 474-478
-
-**Comportement**: 
-- ❌ Aucun bouton sous les posts sur `/reels/ID` ou `/reel/ID`
-- ✅ Bouton dans le menu de partage fonctionne
-
-**Raison**: L'utilisateur a demandé de ne pas ajouter de boutons directement sur ces pages.
-
----
-
 ### Menu "More" (trois points)
-**Ligne**: 1010-1024, 1046-1058, 1150-1163
-
 **Comportement**:
 - ❌ Le bouton n'est pas ajouté dans le menu "More" des reels
 - Vérifie que le menu contient "Copy link" ou des boutons de partage avant d'ajouter
@@ -205,25 +150,15 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 ### Historique des conversions
 - Sauvegarde: `window.Storage.saveToHistory(originalUrl, convertedUrl, domain, platform)`
-- Utilisé dans: Boutons sous posts, menu de partage, liens dans commentaires
+- Utilisé dans: Menu de partage, liens dans commentaires
 
 ### Statistiques
 - Incrémentation: `window.Storage.incrementStats(platform, domain)`
 - Utilisé dans: Toutes les conversions
 
-### Paramètres utilisateur
-- Chargement: `window.Storage.getSettings()`
-- Utilisé dans: `createButtonsWithSettings()` pour afficher/masquer les domaines
-
 ---
 
 ## 🎨 Styles et UI
-
-### Boutons sous les posts
-- Dégradé Instagram: `linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%)`
-- Icône SVG caméra (3 paths)
-- Animations hover (scale 1.05) et click (scale 0.98)
-- Ombre portée avec couleur Instagram
 
 ### Bouton dans le menu de partage
 - Structure identique aux autres boutons Instagram
@@ -242,7 +177,7 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 ## 🔍 Points d'attention et améliorations possibles
 
 ### 1. Performance
-- ✅ Debounce sur les observers (300ms, 200ms)
+- ✅ Debounce sur les observers (200ms)
 - ✅ Flag de verrouillage pour éviter les exécutions multiples
 - ✅ Vérification de l'existence avant d'ajouter
 - ⚠️ `TreeWalker` peut être coûteux sur de grandes pages (utilisé seulement si nécessaire)
@@ -270,7 +205,6 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 
 | Fonctionnalité | Timeline | Post individuel | Reel individuel | Commentaires |
 |---------------|----------|-----------------|-----------------|--------------|
-| Boutons sous posts | ✅ | ✅ | ❌ | N/A |
 | Menu de partage | ✅ | ✅ | ✅ | N/A |
 | Liens dans commentaires | ✅ | ✅ | ✅ | ✅ |
 
@@ -307,17 +241,15 @@ Ce document répertorie toutes les fonctionnalités et interactions implémenté
 ## 🎯 État actuel
 
 ✅ **Tout fonctionne correctement**:
-- Boutons sous les posts (timeline uniquement)
 - Bouton dans le menu de partage (partout)
 - Conversion de liens dans les commentaires
 - Exclusion du menu "More"
-- Pas de boutons sur pages de reels individuelles
 
 ---
 
 ## 📌 Notes importantes
 
-1. **Pages de reels individuelles**: Les boutons ne sont PAS ajoutés directement sur ces pages, seulement dans le menu de partage.
+1. **Boutons sous les posts**: Supprimés depuis la version 1.0.4. Seul le menu de partage est conservé.
 
 2. **Menu "More"**: Exclu de manière robuste à plusieurs niveaux.
 
