@@ -1,53 +1,64 @@
-chrome.runtime.onInstalled.addListener(() => {
-  // Crée les options de menu pour X
-  chrome.contextMenus.create({
-    id: "copy-x-fixvx-page",
-    title: "📋 Copy fixvx link of this X page",
-    contexts: ["page"],
-    documentUrlPatterns: ["*://x.com/*"]
-  });
+// Background script pour Manifest V2
+// Gère les menus contextuels et les actions du popup
 
-  chrome.contextMenus.create({
-    id: "copy-x-fixupx-page",
-    title: "📋 Copy fixupx link of this X page",
-    contexts: ["page"],
-    documentUrlPatterns: ["*://x.com/*"]
-  });
+// Configuration inline (pour compatibilité)
+const CONFIG = {
+  X_ALTERNATIVES: {
+    fixvx: 'fixvx.com',
+    fixupx: 'fixupx.com',
+    vxtwitter: 'vxtwitter.com'
+  },
+  INSTAGRAM_ALTERNATIVES: {
+    kkinstagram: 'kkinstagram.com'
+  },
+  X_DOMAINS: ['x.com', 'twitter.com'],
+  INSTAGRAM_DOMAINS: ['www.instagram.com', 'instagram.com']
+};
 
-  // Crée l'option de menu pour Instagram
-  chrome.contextMenus.create({
-    id: "copy-kkinstagram-page",
-    title: "📷 Copy kkinstagram link of this Instagram page",
-    contexts: ["page"],
-    documentUrlPatterns: ["*://www.instagram.com/*"]
-  });
-});
-
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  const rawUrl = tab.url.split("?")[0];
-  const url = new URL(rawUrl);
-  let replacementDomain = null;
-
-  switch (info.menuItemId) {
-    case "copy-x-fixvx-page":
-      replacementDomain = "fixvx.com";
-      break;
-    case "copy-x-fixupx-page":
-      replacementDomain = "fixupx.com";
-      break;
-    case "copy-kkinstagram-page":
-      replacementDomain = "kkinstagram.com";
-      break;
-    default:
-      chrome.tabs.executeScript(tab.id, {
-        code: `alert("❌ This page is not supported.")`
-      });
-      return;
+/**
+ * Convertit une URL vers un domaine alternatif
+ */
+function convertUrl(url, newDomain) {
+  try {
+    const cleanUrl = url.split('?')[0];
+    const urlObj = new URL(cleanUrl);
+    urlObj.hostname = newDomain;
+    return urlObj.toString();
+  } catch (e) {
+    console.error('Error converting URL:', e);
+    return null;
   }
+}
 
-  url.hostname = replacementDomain;
+/**
+ * Vérifie si une URL est une URL X/Twitter valide
+ */
+function isValidXUrl(url) {
+  if (!url) return false;
+  try {
+    const urlObj = new URL(url);
+    return CONFIG.X_DOMAINS.some(domain => 
+      urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain)
+    );
+  } catch {
+    return url.includes('x.com') || url.includes('twitter.com');
+  }
+}
 
-  chrome.tabs.executeScript(tab.id, {
-    code: `navigator.clipboard.writeText(${JSON.stringify(url.toString())});`
-  });
+/**
+ * Vérifie si une URL est une URL Instagram valide
+ */
+function isValidInstagramUrl(url) {
+  if (!url) return false;
+  try {
+    const urlObj = new URL(url);
+    return CONFIG.INSTAGRAM_DOMAINS.some(domain => 
+      urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain)
+    );
+  } catch {
+    return url.includes('instagram.com');
+  }
+}
+
+
 });
