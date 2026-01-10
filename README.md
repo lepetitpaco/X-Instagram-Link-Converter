@@ -7,9 +7,9 @@ A lightweight browser extension to automatically convert links from **X.com** (f
 - **X/Twitter Support**: Convert links to `fixvx.com`, `fixupx.com`, or `vxtwitter.com`
 - **Instagram Support**: Convert links to `kkinstagram.com`
 - **Multiple Methods**: 
-  - In-page buttons on X/Twitter and Instagram posts
+  - In-page buttons on X/Twitter posts
+  - Share menu button on Instagram posts
   - Popup interface
-  - Automatic interception on Instagram copy button
 - **Dual Manifest Support**: Works with both Manifest V2 (Firefox) and Manifest V3 (Chrome)
 
 ## Supported Platforms
@@ -78,19 +78,20 @@ When viewing a post on X.com or Twitter.com, you'll see buttons below the post a
 - Click any button to copy the converted link to your clipboard
 - A toast notification will confirm the copy
 
-### Method 2: Popup Interface
+### Method 2: Share Menu Button (Instagram only)
+
+When viewing a post on Instagram:
+1. Click the "Share" button on any post
+2. The "kkinstagram" button appears in the share menu
+3. Click it to copy the converted link to your clipboard
+4. Works on timeline, individual posts, and reels
+
+### Method 3: Popup Interface
 
 1. Click the extension icon in your browser toolbar
 2. Select the desired conversion option
 3. The converted link is copied to your clipboard
 4. A status message confirms the action
-
-### Method 3: Automatic Interception (Instagram only)
-
-When you click the "Copy Link" button on Instagram:
-- The extension automatically intercepts the action
-- Converts the link to `kkinstagram.com`
-- Copies the converted link instead of the original
 
 ## File Structure
 
@@ -268,13 +269,18 @@ Each package includes:
 
 ## Changelog
 
+### Version 1.0.4
+- Simplified Instagram integration: removed in-page buttons, kept only share menu button
+- Improved share menu detection with multiple strategies
+- Better post URL extraction from share menu
+- Enhanced robustness and performance
+
 ### Version 1.0.3
-- Improved button visibility on all posts (X/Twitter and Instagram)
+- Improved button visibility on all posts (X/Twitter)
 - Buttons now appear on every post in the feed, not just the first one
-- Enhanced Instagram button design with gradient and animations
+- Enhanced X/Twitter button design
 - Better post URL extraction for accurate link conversion
 - Improved dynamic content detection for infinite scroll
-- Fixed button positioning and styling
 
 ### Version 1.0.2
 - Added Manifest V3 support
