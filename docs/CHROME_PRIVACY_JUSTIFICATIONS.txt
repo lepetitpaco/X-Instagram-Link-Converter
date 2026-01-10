@@ -1,0 +1,74 @@
+CHROME WEB STORE - JUSTIFICATIONS DES PERMISSIONS
+==================================================
+
+DESCRIPTION DE L'OBJECTIF UNIQUE
+--------------------------------
+Convert links from X.com, Twitter.com, and Instagram to privacy-friendly alternative frontends (fixvx.com, fixupx.com, vxtwitter.com, kkinstagram.com) when users share or copy posts.
+
+CODE DISTANT
+------------
+This extension does not use any remote code. All code is bundled in the extension package. No external scripts are loaded.
+
+AUTORISATION HOST_PERMISSIONS
+------------------------------
+Required to access and modify content on:
+- x.com
+- twitter.com
+- www.instagram.com
+- instagram.com
+
+Justification: The extension needs to inject conversion buttons and intercept link copying on these domains. Without host permissions, the content scripts cannot run on these sites to provide the link conversion functionality.
+
+AUTORISATION activeTab
+----------------------
+Required to access the current tab's URL and inject conversion buttons.
+
+Justification: The extension needs to read the current page URL to convert it, and inject UI elements (buttons) into the page. This permission allows the extension to work only on the active tab when the user interacts with it.
+
+AUTORISATION clipboardRead
+---------------------------
+Required for Instagram automatic link conversion feature.
+
+Justification: When users click "Copy Link" on Instagram, the extension intercepts this action by reading the clipboard content, converts the Instagram URL to kkinstagram.com, and writes the converted link back. This is the only way to automatically convert Instagram links without user interaction.
+
+AUTORISATION clipboardWrite
+----------------------------
+Required to copy converted links to the user's clipboard.
+
+Justification: After converting a link, the extension copies the converted URL to the clipboard so users can paste it directly. This is the core functionality - users click a button and the converted link is ready to paste.
+
+AUTORISATION scripting
+----------------------
+Required to inject conversion buttons into X/Twitter and Instagram pages (Manifest V3).
+
+Justification: The extension injects conversion buttons directly into the page content. This permission (Manifest V3 equivalent of executeScript) is necessary to add the UI elements that appear under each post. Without it, the in-page buttons cannot be displayed.
+
+PRATIQUES EN MATIÈRE DE CONFIDENTIALITÉ
+========================================
+
+COLLECTE DE DONNÉES
+-------------------
+This extension does NOT collect, store, or transmit any data.
+
+- No user data collection
+- No analytics or tracking
+- No external server communication
+- No personal information gathered
+- All processing happens locally in the browser
+
+The extension only processes URLs locally to convert them. No data leaves the user's browser.
+
+UTILISATION DES DONNÉES
+-----------------------
+No data is collected, therefore no data is used, stored, or shared.
+
+The extension:
+- Reads page URLs locally to convert them
+- Copies converted URLs to clipboard
+- Does not send any information to external servers
+- Does not store any information
+- Does not track user behavior
+
+TRANSMISSION DE DONNÉES
+-----------------------
+No data transmission occurs. The extension does not communicate with any external servers.

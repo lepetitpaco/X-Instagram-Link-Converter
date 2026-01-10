@@ -1,0 +1,46 @@
+X & Instagram Link Converter
+
+Converts links from X.com (formerly Twitter) and Instagram to privacy-friendly alternative frontends.
+
+WHAT IT DOES
+
+Converts links when you share or copy posts:
+- X/Twitter links → fixvx.com, fixupx.com, or vxtwitter.com
+- Instagram links → kkinstagram.com
+
+HOW IT WORKS
+
+Multiple ways to convert links:
+
+1. In-page buttons: Buttons appear under each post on X/Twitter and Instagram. Click to copy the converted link.
+
+2. Popup: Click the extension icon, select a conversion option.
+
+3. Automatic (Instagram): When you click "Copy Link" on Instagram, the extension automatically converts it to kkinstagram.com.
+
+SUPPORTED SITES
+
+- x.com
+- twitter.com
+- www.instagram.com
+- instagram.com
+
+DATA COLLECTION
+
+None. This extension does not collect, store, or transmit any data. All link conversion happens locally in your browser. No tracking, no analytics, no external requests.
+
+PERMISSIONS
+
+- activeTab: Access current tab to convert links
+- clipboardRead: Read clipboard (for Instagram automatic conversion)
+- clipboardWrite: Copy converted links
+- scripting: Inject conversion buttons (Manifest V3)
+
+All permissions are used solely for link conversion functionality.
+
+TECHNICAL
+
+- Manifest V3 compatible
+- Works with infinite scroll and dynamic content
+- Automatically detects new posts as you browse
+- Lightweight, no performance impact

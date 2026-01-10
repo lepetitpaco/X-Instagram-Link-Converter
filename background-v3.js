@@ -1,7 +1,7 @@
-// Background script pour Manifest V2
+// Background service worker pour Manifest V3
 // Gère les menus contextuels et les actions du popup
 
-// Configuration inline (pour compatibilité)
+// Configuration (doit être inline car les service workers ne peuvent pas importer)
 const CONFIG = {
   X_ALTERNATIVES: {
     fixvx: 'fixvx.com',
@@ -60,5 +60,3 @@ function isValidInstagramUrl(url) {
   }
 }
 
-
-});
