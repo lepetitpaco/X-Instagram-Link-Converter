@@ -315,6 +315,7 @@ if (typeof module !== 'undefined' && module.exports) {
   };
 } else {
   window.Storage = {
+    SETTINGS_KEY: STORAGE_KEYS.SETTINGS,
     saveToHistory,
     getHistory,
     incrementStats,

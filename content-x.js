@@ -1,396 +1,172 @@
 // Content script pour X.com et Twitter.com
-// Injecte des boutons pour copier les liens vers des domaines alternatifs sur chaque post
+// Ajoute dans la barre d'actions de chaque post une pastille par type de lien activé
+// (lien x.com d'origine ou domaines alternatifs) : un clic copie le lien
 
-// Charger les utilitaires (injectés via manifest)
-// Note: config.js et utils.js doivent être chargés avant ce script dans le manifest
+// Note: config.js, utils.js et storage.js doivent être chargés avant ce script dans le manifest
 
 /**
- * Extrait l'URL spécifique d'un post depuis son élément article
- * Nettoie l'URL pour ne garder que /status/[ID] sans chemins supplémentaires
+ * Extrait l'URL du post principal d'un article, en ignorant les posts cités
  */
 function getPostUrl(articleElement) {
-  // Méthode 1: Chercher un lien avec href contenant /status/
-  const statusLink = articleElement.querySelector('a[href*="/status/"]');
-  if (statusLink) {
-    const href = statusLink.getAttribute('href');
-    if (href) {
-      return cleanXUrl(href);
-    }
+  // Le lien de l'heure du post principal, hors citation (les citations sont dans un div[role="link"])
+  for (const time of articleElement.querySelectorAll('time')) {
+    if (time.closest('div[role="link"]')) continue;
+    const href = time.closest('a')?.getAttribute('href');
+    const url = cleanXUrl(href);
+    if (url) return url;
   }
 
-  // Méthode 2: Chercher dans les attributs data
-  const timeElement = articleElement.querySelector('time');
-  if (timeElement && timeElement.parentElement) {
-    const timeLink = timeElement.parentElement.closest('a');
-    if (timeLink) {
-      const href = timeLink.getAttribute('href');
-      if (href && href.includes('/status/')) {
-        return cleanXUrl(href);
-      }
-    }
-  }
-
-  // Méthode 3: Chercher dans tous les liens de l'article
-  const allLinks = articleElement.querySelectorAll('a[href*="/status/"]');
-  for (const link of allLinks) {
-    const href = link.getAttribute('href');
-    if (href && href.includes('/status/')) {
-      return cleanXUrl(href);
-    }
+  // Repli (posts sponsorisés sans heure) : premier lien /status/ hors citation
+  for (const link of articleElement.querySelectorAll('a[href*="/status/"]')) {
+    if (link.closest('div[role="link"]')) continue;
+    const url = cleanXUrl(link.getAttribute('href'));
+    if (url) return url;
   }
 
   return null;
 }
 
 /**
- * Nettoie une URL X/Twitter pour ne garder que /status/[ID]
- * Enlève les chemins supplémentaires comme /likes, /retweets, etc.
+ * Nettoie une URL X/Twitter pour ne garder que /<utilisateur>/status/<id>
+ * Enlève les chemins supplémentaires comme /photo/1, /analytics et les query params
  */
 function cleanXUrl(href) {
   if (!href) return null;
-  
+
   try {
-    // Enlever les query params
-    let cleanHref = href.split('?')[0];
-    
-    // Extraire seulement /status/[ID] en enlevant les chemins supplémentaires
-    const statusMatch = cleanHref.match(/\/(status)\/([^\/]+)/);
-    if (statusMatch) {
-      const statusType = statusMatch[1]; // 'status'
-      const statusId = statusMatch[2]; // ID du post
-      cleanHref = `/${statusType}/${statusId}`;
-    }
-    
-    // Si c'est un lien relatif, le convertir en absolu
-    if (cleanHref.startsWith('/')) {
-      return window.location.origin + cleanHref;
-    }
-    return cleanHref;
+    const url = new URL(href, window.location.origin);
+    // /<utilisateur>/status/<id>, ou /i/web/status/<id> sans nom d'utilisateur (gardé sous /i/status/<id>)
+    const match = url.pathname.match(/^\/(?:i\/web|([^/]+))\/status\/(\d+)/);
+    if (!match) return null;
+    return `${window.location.origin}/${match[1] || 'i'}/status/${match[2]}`;
   } catch (e) {
     console.error('Error cleaning X URL:', e);
     return null;
   }
 }
 
+// Pastilles affichées, dans l'ordre : lien x.com d'origine puis domaines alternatifs
+const QUICK_LINKS = [
+  { key: 'xcom', label: 'x', title: CONFIG.MESSAGES.COPY_ORIGINAL_X, domain: null },
+  { key: 'fixvx', label: 'vx', title: 'fixvx.com', domain: CONFIG.X_ALTERNATIVES.fixvx },
+  { key: 'fixupx', label: 'upx', title: 'fixupx.com', domain: CONFIG.X_ALTERNATIVES.fixupx },
+  { key: 'vxtwitter', label: 'vxt', title: 'vxtwitter.com', domain: CONFIG.X_ALTERNATIVES.vxtwitter }
+];
+
+// Types de liens activés dans le popup (mis à jour à chaud)
+let enabledDomains = {};
+
 /**
- * Ajoute les boutons de conversion à un post spécifique
+ * Copie le lien d'une pastille, enregistre l'historique et affiche la confirmation
  */
-function addButtonsToPost(articleElement) {
-  try {
-    // Créer un ID unique basé sur l'URL du post
-    const postUrl = getPostUrl(articleElement);
-    if (!postUrl) return; // Pas d'URL trouvée, on ne peut pas ajouter les boutons
+async function copyQuickLink(chip, articleElement, link) {
+  // L'URL est relue au clic : X recycle les éléments du fil
+  const postUrl = getPostUrl(articleElement);
+  const newUrl = postUrl && (link.domain ? convertUrl(postUrl, link.domain) : postUrl);
+  if (!newUrl) {
+    createToast(CONFIG.MESSAGES.INVALID_URL);
+    return;
+  }
 
-    // Valider l'URL avant de continuer
-    if (!postUrl.match(/\/status\/[^\/]+$/)) {
-      return; // URL invalide
-    }
+  const success = await copyToClipboard(newUrl);
+  if (!success) {
+    createToast(CONFIG.MESSAGES.CLIPBOARD_ERROR, 2000, newUrl);
+    return;
+  }
 
-    const uniqueId = 'custom-share-buttons-' + btoa(postUrl).replace(/[^a-zA-Z0-9]/g, '').substring(0, 16);
-    
-    // Vérifier si les boutons existent déjà
-    if (articleElement.querySelector(`#${uniqueId}`)) return;
+  chip.textContent = '✓';
+  chip.classList.add('xilc-copied');
+  setTimeout(() => {
+    chip.textContent = link.label;
+    chip.classList.remove('xilc-copied');
+  }, 1200);
+  createToast(CONFIG.MESSAGES.COPIED, 2500, newUrl);
 
-    // Trouver le conteneur d'actions du post
-    const actionGroup = articleElement.querySelector('div[role="group"][aria-label*="likes"]') ||
-                        articleElement.querySelector('div[role="group"]') ||
-                        articleElement.querySelector('[role="group"]');
+  if (window.Storage) {
+    const domainKey = link.domain ? link.key : 'x.com';
+    await window.Storage.saveToHistory(postUrl, newUrl, domainKey, 'x');
+    await window.Storage.incrementStats('x', domainKey);
+  }
+}
 
-    if (!actionGroup) return;
+/**
+ * Ajoute les pastilles de copie dans la barre d'actions d'un post
+ */
+function addButtonToPost(articleElement) {
+  // La barre d'actions du post principal (celle des citations n'existe pas)
+  const actionGroup = Array.from(articleElement.querySelectorAll('div[role="group"]'))
+    .find(group => !group.closest('div[role="link"]'));
+  // Présence vérifiée dans la barre elle-même : X recycle les articles et peut re-rendre la barre
+  if (!actionGroup || actionGroup.querySelector('.xilc-chips') || !getPostUrl(articleElement)) return;
+
+  const links = QUICK_LINKS.filter(link => enabledDomains[link.key] !== false);
+  if (links.length === 0) return;
 
   const wrapper = document.createElement('div');
-  wrapper.id = uniqueId;
-  Object.assign(wrapper.style, {
-    marginTop: '10px',
-    display: 'flex',
-    gap: '8px',
-    flexWrap: 'wrap'
-  });
+  wrapper.className = 'xilc-chips';
 
-  const createButton = (label, domain) => {
-    const btn = document.createElement('button');
-    btn.textContent = label;
-
-    // Style Twitter Blue
-    Object.assign(btn.style, {
-      padding: '8px 12px',
-      borderRadius: '9999px',
-      border: 'none',
-      backgroundColor: '#1d9bf0',
-      color: '#ffffff',
-      fontSize: '14px',
-      fontWeight: '600',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-      cursor: 'pointer',
-      transition: 'background-color 0.2s ease-in-out'
-    });
-
-    btn.onmouseover = () => btn.style.backgroundColor = '#1a8cd8';
-    btn.onmouseout = () => btn.style.backgroundColor = '#1d9bf0';
-
-    btn.onclick = async () => {
-      try {
-        // Utiliser l'URL spécifique du post
-        const postUrl = getPostUrl(articleElement);
-        
-        if (!postUrl) {
-          createToast(CONFIG.MESSAGES.INVALID_URL + ' (Post URL not found)');
-          return;
-        }
-
-        // Vérifier que c'est une URL X/Twitter valide
-        if (!isValidXUrl(postUrl)) {
-          createToast(CONFIG.MESSAGES.INVALID_URL + ' (X.com/Twitter)', 2000, postUrl);
-          return;
-        }
-
-        // Valider que l'URL contient bien un ID de post
-        if (!postUrl.match(/\/status\/[^\/]+$/)) {
-          createToast(CONFIG.MESSAGES.INVALID_URL + ' (Invalid post ID)', 2000, postUrl);
-          return;
-        }
-
-        const newUrl = convertUrl(postUrl, domain);
-        if (!newUrl) {
-          createToast(CONFIG.MESSAGES.ERROR + ': Invalid URL conversion', 2000, postUrl);
-          return;
-        }
-
-        const success = await copyToClipboard(newUrl);
-        if (success) {
-          // Sauvegarder dans l'historique et les stats
-          if (window.Storage) {
-            const domainKey = Object.keys(CONFIG.X_ALTERNATIVES).find(key => CONFIG.X_ALTERNATIVES[key] === domain);
-            await window.Storage.saveToHistory(postUrl, newUrl, domainKey || domain, 'x');
-            await window.Storage.incrementStats('x', domainKey || domain);
-          }
-          createToast(`${CONFIG.MESSAGES.COPIED}: ${domain}`, 3000, newUrl);
-        } else {
-          createToast(CONFIG.MESSAGES.CLIPBOARD_ERROR, 2000, newUrl);
-        }
-      } catch (error) {
-        console.error('Error in button click handler:', error);
-        createToast(CONFIG.MESSAGES.ERROR + ': ' + error.message);
-      }
-    };
-
-    return btn;
-  };
-
-  // Créer les boutons pour chaque alternative X (selon les paramètres)
-  // Note: createButtonsWithSettings est async, on l'appelle mais on insère le wrapper quand même
-  createButtonsWithSettings(wrapper, createButton).catch(err => {
-    console.error('Error creating buttons with settings:', err);
-    // Fallback : créer tous les boutons en cas d'erreur
-    Object.entries(CONFIG.X_ALTERNATIVES).forEach(([key, domain]) => {
-      wrapper.appendChild(createButton(`📋 ${key}`, domain));
-    });
-  });
-
-  // Insérer les boutons après le groupe d'actions
-  if (actionGroup.parentNode) {
-    actionGroup.parentNode.insertBefore(wrapper, actionGroup.nextSibling);
-  }
-  } catch (error) {
-    console.error('Error in addButtonsToPost:', error);
-  }
-}
-
-/**
- * Crée les boutons selon les paramètres utilisateur
- */
-async function createButtonsWithSettings(wrapper, createButtonFn) {
-  try {
-    if (!window.Storage) {
-      // Fallback : créer tous les boutons si Storage n'est pas disponible
-      Object.entries(CONFIG.X_ALTERNATIVES).forEach(([key, domain]) => {
-        wrapper.appendChild(createButtonFn(`📋 ${key}`, domain));
-      });
-      return;
-    }
-    
-    const settings = await window.Storage.getSettings();
-    const enabledDomains = settings.enabledDomains || {
-      fixvx: true,
-      fixupx: true,
-      vxtwitter: true
-    };
-    
-    Object.entries(CONFIG.X_ALTERNATIVES).forEach(([key, domain]) => {
-      if (enabledDomains[key] !== false) {
-        wrapper.appendChild(createButtonFn(`📋 ${key}`, domain));
-      }
-    });
-  } catch (error) {
-    console.error('Error loading settings for buttons:', error);
-    // Fallback : créer tous les boutons en cas d'erreur
-    Object.entries(CONFIG.X_ALTERNATIVES).forEach(([key, domain]) => {
-      wrapper.appendChild(createButtonFn(`📋 ${key}`, domain));
-    });
-  }
-}
-
-/**
- * Convertit un lien X/Twitter dans les commentaires
- */
-function convertLinkInText(element) {
-  // Chercher tous les liens dans l'élément
-  const links = element.querySelectorAll('a[href*="/status/"]');
-  
   links.forEach(link => {
-    // Vérifier si le lien n'a pas déjà été converti
-    if (link.hasAttribute('data-converted')) return;
-    
-    const href = link.getAttribute('href');
-    if (!href || !href.includes('/status/')) return;
-    
-    // Créer un bouton de conversion au survol
-    let convertButton = null;
-    
-    link.addEventListener('mouseenter', () => {
-      if (convertButton) return;
-      
-      convertButton = document.createElement('button');
-      convertButton.textContent = '🔗 Convert';
-      convertButton.style.cssText = `
-        position: absolute;
-        margin-left: 8px;
-        padding: 4px 8px;
-        border: none;
-        border-radius: 4px;
-        background-color: #1d9bf0;
-        color: #fff;
-        font-size: 11px;
-        cursor: pointer;
-        z-index: 1000;
-      `;
-      
-      convertButton.onclick = async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        try {
-          const cleanHref = cleanXUrl(href);
-          if (!cleanHref) return;
-          
-          const fullUrl = cleanHref.startsWith('/') 
-            ? window.location.origin + cleanHref 
-            : cleanHref;
-          
-          // Convertir vers fixvx par défaut
-          const newUrl = convertUrl(fullUrl, CONFIG.X_ALTERNATIVES.fixvx);
-          if (newUrl) {
-            const success = await copyToClipboard(newUrl);
-            if (success) {
-              if (window.Storage) {
-                await window.Storage.saveToHistory(fullUrl, newUrl, 'fixvx', 'x');
-                await window.Storage.incrementStats('x', 'fixvx');
-              }
-              createToast(`${CONFIG.MESSAGES.COPIED}: fixvx`, 3000, newUrl);
-            }
-          }
-        } catch (error) {
-          console.error('Error converting link:', error);
-        }
-        
-        if (convertButton) {
-          convertButton.remove();
-          convertButton = null;
-        }
-      };
-      
-      // Positionner le bouton à côté du lien
-      const rect = link.getBoundingClientRect();
-      convertButton.style.position = 'fixed';
-      convertButton.style.left = (rect.right + 8) + 'px';
-      convertButton.style.top = rect.top + 'px';
-      
-      document.body.appendChild(convertButton);
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'xilc-chip';
+    chip.textContent = link.label;
+    chip.title = link.title;
+    chip.setAttribute('aria-label', link.title);
+    chip.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      copyQuickLink(chip, articleElement, link);
     });
-    
-    link.addEventListener('mouseleave', () => {
-      setTimeout(() => {
-        if (convertButton && !convertButton.matches(':hover')) {
-          convertButton.remove();
-          convertButton = null;
-        }
-      }, 200);
-    });
-    
-    link.setAttribute('data-converted', 'true');
+    wrapper.appendChild(chip);
   });
+
+  actionGroup.appendChild(wrapper);
 }
 
 /**
- * Parcourt tous les posts du feed et ajoute les boutons
+ * Parcourt les posts affichés et ajoute les pastilles à ceux qui ne les ont pas
  */
-function addXButtonsToAllPosts() {
-  try {
-    // Trouver tous les articles/posts dans le feed
-    // X utilise <article> pour les posts
-    const articles = document.querySelectorAll('article[data-testid="tweet"]');
-    
-    // Fallback si le sélecteur ne fonctionne pas
-    const articlesFallback = articles.length === 0 
-      ? document.querySelectorAll('article')
-      : articles;
-
-    articlesFallback.forEach((article) => {
-      try {
-        // Vérifier que c'est bien un post (contient des éléments de post)
-        const hasPostContent = article.querySelector('div[role="group"]') || 
-                              article.querySelector('[data-testid="tweet"]') ||
-                              article.querySelector('a[href*="/status/"]');
-        
-        // Vérifier aussi qu'on a bien une URL de post valide
-        const postUrl = getPostUrl(article);
-        const hasValidPostUrl = postUrl && postUrl.match(/\/status\/[^\/]+$/);
-        
-        if (hasPostContent && hasValidPostUrl) {
-          addButtonsToPost(article);
-        }
-      } catch (error) {
-        console.error('Error processing article:', error);
-      }
-    });
-  } catch (error) {
-    console.error('Error in addXButtonsToAllPosts:', error);
-  }
-}
-
-// Observer pour détecter les nouveaux posts chargés dynamiquement
-const observer = new MutationObserver((mutations) => {
-  // Délai pour éviter trop d'exécutions
-  clearTimeout(window.addXButtonsTimeout);
-  window.addXButtonsTimeout = setTimeout(() => {
-    addXButtonsToAllPosts();
-    
-    // Détecter et convertir les liens dans les commentaires
+function addButtonsToAllPosts() {
+  document.querySelectorAll('article[data-testid="tweet"]').forEach(article => {
     try {
-      const commentSections = document.querySelectorAll('[data-testid="tweetText"], [role="article"]');
-      commentSections.forEach(section => {
-        convertLinkInText(section);
-      });
+      addButtonToPost(article);
     } catch (error) {
-      console.error('Error converting links in comments:', error);
+      console.error('Error processing article:', error);
     }
-  }, 300);
-});
-
-observer.observe(document.body, { 
-  childList: true, 
-  subtree: true 
-});
-
-// Exécuter immédiatement au chargement
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(addXButtonsToAllPosts, 500);
   });
-} else {
-  setTimeout(addXButtonsToAllPosts, 500);
 }
 
-// Réexécuter après un délai pour les chargements tardifs
-setTimeout(addXButtonsToAllPosts, 1000);
-setTimeout(addXButtonsToAllPosts, 2000);
+injectStyles();
+
+// Observer les posts chargés dynamiquement, une vérification par frame au plus
+let xCheckScheduled = false;
+const observer = new MutationObserver(() => {
+  if (xCheckScheduled) return;
+  xCheckScheduled = true;
+  requestAnimationFrame(() => {
+    xCheckScheduled = false;
+    addButtonsToAllPosts();
+  });
+});
+
+(async () => {
+  try {
+    if (window.Storage) {
+      enabledDomains = (await window.Storage.getSettings()).enabledDomains || {};
+    }
+  } catch (error) {
+    console.error('Error loading settings:', error);
+  }
+
+  observer.observe(document.body, { childList: true, subtree: true });
+  addButtonsToAllPosts();
+})();
+
+// Appliquer les réglages du popup sans recharger la page : les pastilles sont reconstruites
+const storageApi = typeof chrome !== 'undefined' && chrome.storage ? chrome.storage : browser.storage;
+storageApi.onChanged.addListener((changes, area) => {
+  if (area !== 'local' || !changes[window.Storage.SETTINGS_KEY]) return;
+  enabledDomains = changes[window.Storage.SETTINGS_KEY].newValue?.enabledDomains || {};
+  document.querySelectorAll('.xilc-chips').forEach(el => el.remove());
+  addButtonsToAllPosts();
+});

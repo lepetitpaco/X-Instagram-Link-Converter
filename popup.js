@@ -261,6 +261,7 @@ async function loadSettings() {
     };
     
     // Mettre à jour les checkboxes
+    document.getElementById('setting-xcom').checked = enabledDomains.xcom !== false;
     document.getElementById('setting-fixvx').checked = enabledDomains.fixvx !== false;
     document.getElementById('setting-fixupx').checked = enabledDomains.fixupx !== false;
     document.getElementById('setting-vxtwitter').checked = enabledDomains.vxtwitter !== false;
@@ -290,6 +291,7 @@ async function saveSettings() {
   if (!window.Storage) return;
   
   const enabledDomains = {
+    xcom: document.getElementById('setting-xcom').checked,
     fixvx: document.getElementById('setting-fixvx').checked,
     fixupx: document.getElementById('setting-fixupx').checked,
     vxtwitter: document.getElementById('setting-vxtwitter').checked,
@@ -299,16 +301,7 @@ async function saveSettings() {
   await window.Storage.saveSettings({ enabledDomains });
   updateButtonVisibility(enabledDomains);
   
-  // Notifier les content scripts du changement
-  if (browserAPI && browserAPI.tabs) {
-    browserAPI.tabs.query({}, (tabs) => {
-      tabs.forEach(tab => {
-        if (tab.url && (tab.url.includes('x.com') || tab.url.includes('twitter.com') || tab.url.includes('instagram.com'))) {
-          browserAPI.tabs.reload(tab.id);
-        }
-      });
-    });
-  }
+  // Les content scripts lisent les réglages au clic (X) ou écoutent storage.onChanged (Instagram) : pas de rechargement des onglets
 }
 
 // Event listeners pour les boutons X/Twitter
@@ -330,6 +323,7 @@ document.getElementById('copy-kkinstagram').addEventListener('click', () => {
 });
 
 // Event listeners pour les paramètres
+document.getElementById('setting-xcom').addEventListener('change', saveSettings);
 document.getElementById('setting-fixvx').addEventListener('change', saveSettings);
 document.getElementById('setting-fixupx').addEventListener('change', saveSettings);
 document.getElementById('setting-vxtwitter').addEventListener('change', saveSettings);

@@ -17,13 +17,18 @@ const CONFIG = {
   X_DOMAINS: ['x.com', 'twitter.com'],
   INSTAGRAM_DOMAINS: ['www.instagram.com', 'instagram.com'],
 
+  // Libellés du bouton Partager d'Instagram selon la langue de l'interface
+  INSTAGRAM_SHARE_LABELS: ['Share', 'Partager', 'Compartir', 'Compartilhar', 'Teilen', 'Condividi', 'Delen', 'Udostępnij', 'Paylaş', 'Поделиться', 'Bagikan'],
+
   // Messages
   MESSAGES: {
     COPIED: '✅ Copied',
     ERROR: '❌ Error',
     INVALID_URL: '❌ Invalid URL',
     NOT_SUPPORTED: '❌ This page is not supported.',
-    CLIPBOARD_ERROR: '❌ Clipboard error'
+    CLIPBOARD_ERROR: '❌ Clipboard error',
+    COPY_ORIGINAL_X: 'Copy x.com link',
+    COPY_KKINSTAGRAM: 'Copy kkinstagram link'
   }
 };
 
