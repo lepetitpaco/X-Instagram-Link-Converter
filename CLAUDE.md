@@ -10,9 +10,11 @@ Extension navigateur qui convertit les liens X/Twitter et Instagram vers des fro
 | Instagram | `instagram.com` | `kkinstagram.com` |
 
 **Méthodes de conversion :**
-1. Boutons injectés directement sur les posts X/Twitter (`content-x.js`)
-2. Bouton dans le menu de partage Instagram (`content-instagram.js`)
-3. Interface popup de l'extension (`popup.html` / `popup.js`)
+1. X/Twitter (`content-x.js`) : une pastille par type de lien activé dans la barre d'actions de chaque post (`x` = lien x.com d'origine, `vx` = fixvx, `upx` = fixupx, `vxt` = vxtwitter) ; un clic copie le lien
+2. Instagram (`content-instagram.js`) : bouton rapide après Partager dans les barres d'actions (fil, page d'un post, reels) qui copie le lien kkinstagram, et bouton kkinstagram juste après « Copier le lien » dans le menu Partager
+3. Interface popup de l'extension (`popup.html` / `popup.js`) : les réglages s'appliquent sans recharger les onglets
+
+**Repérage du DOM** (X et Instagram changent souvent leur HTML) : ne jamais dépendre des classes CSS générées ni de textes en anglais. Instagram : menu Partager repéré par ses liens `wa.me`/Threads/Facebook, bouton Partager par `CONFIG.INSTAGRAM_SHARE_LABELS`. Styles injectés une fois (`injectStyles`, classes `xilc-*`) ; un seul `MutationObserver` débouncé par frame, pas de `setInterval`.
 
 ## Manifests
 
@@ -52,7 +54,7 @@ X-Instagram-Link-Converter/
 ├── popup.html             # UI de l'extension
 ├── popup.js               # Logique popup
 ├── config.js              # Config centralisée : domaines, frontends alternatifs
-├── utils.js               # Utilitaires partagés
+├── utils.js               # Utilitaires partagés : styles, toast, icônes
 ├── storage.js             # Helpers localStorage
 ├── icons/
 │   └── icon128.png
