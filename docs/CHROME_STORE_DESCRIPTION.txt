@@ -12,7 +12,7 @@ HOW IT WORKS
 
 Multiple ways to convert links:
 
-1. In-page buttons: Buttons appear under each post on X/Twitter and Instagram. Click to copy the converted link.
+1. In-page buttons: compact one-click chips sit in the action bar of every X/Twitter post (x = original x.com link, vx = fixvx, upx = fixupx, vxt = vxtwitter), and a quick kkinstagram button sits next to Share on every Instagram post and reel.
 
 2. Popup: Click the extension icon, select a conversion option.
 

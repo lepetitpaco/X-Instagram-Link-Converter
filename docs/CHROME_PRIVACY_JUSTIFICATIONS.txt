@@ -43,6 +43,12 @@ Required to inject conversion buttons into X/Twitter and Instagram pages (Manife
 
 Justification: The extension injects conversion buttons directly into the page content. This permission (Manifest V3 equivalent of executeScript) is necessary to add the UI elements that appear under each post. Without it, the in-page buttons cannot be displayed.
 
+AUTORISATION storage
+--------------------
+Required to save settings and a local history of converted links.
+
+Justification: Used to save the user's settings locally (which link types to show: x.com, fixvx, fixupx, vxtwitter, kkinstagram) and a local history of recently converted links shown in the popup. All data stays in the browser's local extension storage; nothing is sent to any server.
+
 PRATIQUES EN MATIÈRE DE CONFIDENTIALITÉ
 ========================================
 
@@ -66,7 +72,7 @@ The extension:
 - Reads page URLs locally to convert them
 - Copies converted URLs to clipboard
 - Does not send any information to external servers
-- Does not store any information
+- Only stores settings and a history of converted links locally in the browser (never sent anywhere)
 - Does not track user behavior
 
 TRANSMISSION DE DONNÉES

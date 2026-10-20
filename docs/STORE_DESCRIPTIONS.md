@@ -27,13 +27,13 @@ Automatically convert links from X.com (formerly Twitter) and Instagram to priva
 ✨ Features:
 • Convert X/Twitter links to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram links to kkinstagram.com
-• Multiple ways to convert: in-page buttons on X/Twitter, share menu on Instagram, or popup interface
+• Multiple ways to convert: one-click chips on X/Twitter, quick button and share menu on Instagram, or popup interface
 • Works on x.com, twitter.com, and instagram.com
 • No tracking, no data collection, just clean link conversion
 
 🎯 How it works:
 1. Browse X/Twitter or Instagram normally
-2. On X/Twitter: Click the conversion buttons that appear under each post
+2. On X/Twitter: Click a chip in the post's action bar: x (original x.com link), vx (fixvx), upx (fixupx), vxt (vxtwitter)
 3. On Instagram: Click "Share" → Click "kkinstagram" in the share menu
 4. Or use the popup interface (extension icon)
 4. The converted link is automatically copied to your clipboard
@@ -58,11 +58,11 @@ This extension automatically converts links from X.com (formerly Twitter) and In
 Features:
 • Convert X/Twitter posts to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram posts to kkinstagram.com
-• Multiple conversion methods: in-page buttons on X/Twitter, share menu on Instagram, popup interface
+• Multiple conversion methods: one-click chips on X/Twitter, quick button and share menu on Instagram, popup interface
 • Works seamlessly with x.com, twitter.com, and instagram.com
 
 How to use:
-- On X/Twitter: Click the conversion buttons that appear under each post
+- On X/Twitter: Click a chip in the post's action bar: x (original x.com link), vx (fixvx), upx (fixupx), vxt (vxtwitter)
 - On Instagram: Click "Share" → Click "kkinstagram" in the share menu
 - Or click the extension icon for the popup interface
 
@@ -189,13 +189,13 @@ Automatically convert links from X.com (formerly Twitter) and Instagram to priva
 ✨ Features:
 • Convert X/Twitter links to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram links to kkinstagram.com
-• Multiple ways to convert: in-page buttons on X/Twitter, share menu on Instagram, or popup interface
+• Multiple ways to convert: one-click chips on X/Twitter, quick button and share menu on Instagram, or popup interface
 • Works on x.com, twitter.com, and instagram.com
 • No tracking, no data collection, just clean link conversion
 
 🎯 How it works:
 1. Browse X/Twitter or Instagram normally
-2. On X/Twitter: Click the conversion buttons that appear under each post
+2. On X/Twitter: Click a chip in the post's action bar: x (original x.com link), vx (fixvx), upx (fixupx), vxt (vxtwitter)
 3. On Instagram: Click "Share" → Click "kkinstagram" in the share menu
 4. Or use the popup interface (extension icon)
 4. The converted link is automatically copied to your clipboard
@@ -232,11 +232,11 @@ This extension automatically converts links from X.com (formerly Twitter) and In
 Features:
 • Convert X/Twitter posts to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram posts to kkinstagram.com
-• Multiple conversion methods: in-page buttons on X/Twitter, share menu on Instagram, popup interface
+• Multiple conversion methods: one-click chips on X/Twitter, quick button and share menu on Instagram, popup interface
 • Works seamlessly with x.com, twitter.com, and instagram.com
 
 How to use:
-- On X/Twitter: Click the conversion buttons that appear under each post
+- On X/Twitter: Click a chip in the post's action bar: x (original x.com link), vx (fixvx), upx (fixupx), vxt (vxtwitter)
 - On Instagram: Click "Share" → Click "kkinstagram" in the share menu
 - Or click the extension icon for the popup interface
 
@@ -254,6 +254,25 @@ Perfect for sharing content without exposing your friends to tracking, ads, and 
 **Tags:** twitter, x.com, instagram, privacy, link converter, alternative frontend, social media
 
 ## Notes de version (pour les mises à jour futures)
+
+```
+Version 1.1.0
+
+✨ New Features:
+- X/Twitter: copy the original x.com link, not only fixvx/fixupx/vxtwitter
+- X/Twitter: one-click chips for every link type, choose which ones to show in the popup
+- Instagram: quick kkinstagram button next to Share on every post, post page and reel
+- Settings apply instantly, without reloading your X/Instagram tabs
+
+🐛 Bug Fixes:
+- No more layout shifts: the X buttons are now compact chips inside the action bar instead of an extra row
+- Instagram share menu: the kkinstagram button stays on the same line and no longer flickers
+- Instagram: works whatever the interface language (French, Spanish, German...)
+- Copied link always points to the main post, not to a quoted post
+
+🔧 Improvements:
+- Lighter page monitoring (no more polling), cleaner toast at the bottom of the screen
+```
 
 ```
 Version 1.0.3
