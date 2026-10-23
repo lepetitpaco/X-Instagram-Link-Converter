@@ -27,6 +27,8 @@ Automatically convert links from X.com (formerly Twitter) and Instagram to priva
 ✨ Features:
 • Convert X/Twitter links to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram links to kkinstagram.com
+• Convert TikTok links to tnktok.com, tiktxk.com or kktiktok.com
+• Configure your own link services per site from the popup
 • Multiple ways to convert: one-click chips on X/Twitter, quick button and share menu on Instagram, or popup interface
 • Works on x.com, twitter.com, and instagram.com
 • No tracking, no data collection, just clean link conversion
@@ -58,6 +60,8 @@ This extension automatically converts links from X.com (formerly Twitter) and In
 Features:
 • Convert X/Twitter posts to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram posts to kkinstagram.com
+• Convert TikTok videos to tnktok.com, tiktxk.com or kktiktok.com
+• Configure your own link services per site from the popup
 • Multiple conversion methods: one-click chips on X/Twitter, quick button and share menu on Instagram, popup interface
 • Works seamlessly with x.com, twitter.com, and instagram.com
 
@@ -189,6 +193,8 @@ Automatically convert links from X.com (formerly Twitter) and Instagram to priva
 ✨ Features:
 • Convert X/Twitter links to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram links to kkinstagram.com
+• Convert TikTok links to tnktok.com, tiktxk.com or kktiktok.com
+• Configure your own link services per site from the popup
 • Multiple ways to convert: one-click chips on X/Twitter, quick button and share menu on Instagram, or popup interface
 • Works on x.com, twitter.com, and instagram.com
 • No tracking, no data collection, just clean link conversion
@@ -232,6 +238,8 @@ This extension automatically converts links from X.com (formerly Twitter) and In
 Features:
 • Convert X/Twitter posts to fixvx.com, fixupx.com, or vxtwitter.com
 • Convert Instagram posts to kkinstagram.com
+• Convert TikTok videos to tnktok.com, tiktxk.com or kktiktok.com
+• Configure your own link services per site from the popup
 • Multiple conversion methods: one-click chips on X/Twitter, quick button and share menu on Instagram, popup interface
 • Works seamlessly with x.com, twitter.com, and instagram.com
 

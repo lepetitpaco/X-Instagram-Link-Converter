@@ -1,20 +1,22 @@
 X & Instagram Link Converter
 
-Converts links from X.com (formerly Twitter) and Instagram to privacy-friendly alternative frontends.
+Converts links from X.com (formerly Twitter), Instagram and TikTok to privacy-friendly alternative frontends and embed services.
 
 WHAT IT DOES
 
 Converts links when you share or copy posts:
 - X/Twitter links → fixvx.com, fixupx.com, or vxtwitter.com
 - Instagram links → kkinstagram.com
+- TikTok links → tnktok.com, tiktxk.com or kktiktok.com
+- Your own services: add, remove or reorder link services per site from the popup, no update needed
 
 HOW IT WORKS
 
 Multiple ways to convert links:
 
-1. In-page buttons: compact one-click chips sit in the action bar of every X/Twitter post (x = original x.com link, vx = fixvx, upx = fixupx, vxt = vxtwitter), and a quick kkinstagram button sits next to Share on every Instagram post and reel.
+1. In-page buttons: compact one-click chips sit in the action bar of every X/Twitter post (x = original x.com link, vx = fixvx, upx = fixupx, vxt = vxtwitter), a quick button sits next to Share on every Instagram post and reel, and chips sit under Share on every TikTok video. Extra services go in a compact ⋯ menu.
 
-2. Popup: Click the extension icon, select a conversion option.
+2. Popup: Click the extension icon, select a conversion option (on the TikTok feed, it uses the video on screen).
 
 3. Automatic (Instagram): When you click "Copy Link" on Instagram, the extension automatically converts it to kkinstagram.com.
 
@@ -24,6 +26,8 @@ SUPPORTED SITES
 - twitter.com
 - www.instagram.com
 - instagram.com
+- www.tiktok.com
+- tiktok.com
 
 DATA COLLECTION
 

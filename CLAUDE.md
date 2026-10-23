@@ -1,6 +1,6 @@
 # CLAUDE.md — X-Instagram-Link-Converter
 
-Extension navigateur qui convertit les liens X/Twitter et Instagram vers des frontends alternatifs.
+Extension navigateur qui convertit les liens X/Twitter, Instagram et TikTok vers des frontends alternatifs.
 
 ## Fonctionnalités
 
@@ -8,13 +8,19 @@ Extension navigateur qui convertit les liens X/Twitter et Instagram vers des fro
 |---|---|---|
 | X / Twitter | `x.com`, `twitter.com` | `fixvx.com`, `fixupx.com`, `vxtwitter.com` |
 | Instagram | `instagram.com` | `kkinstagram.com` |
+| TikTok | `tiktok.com` | `tnktok.com`, `tiktxk.com`, `kktiktok.com` |
+
+Ces destinations sont les **services par défaut** (`CONFIG.DEFAULT_SERVICES`) : l'utilisateur les modifie dans le popup.
 
 **Méthodes de conversion :**
 1. X/Twitter (`content-x.js`) : une pastille par type de lien activé dans la barre d'actions de chaque post (`x` = lien x.com d'origine, `vx` = fixvx, `upx` = fixupx, `vxt` = vxtwitter) ; un clic copie le lien
 2. Instagram (`content-instagram.js`) : bouton rapide après Partager dans les barres d'actions (fil, page d'un post, reels) qui copie le lien kkinstagram, et bouton kkinstagram juste après « Copier le lien » dans le menu Partager
-3. Interface popup de l'extension (`popup.html` / `popup.js`) : les réglages s'appliquent sans recharger les onglets
+3. TikTok (`content-tiktok.js`) : une pastille par service activé sous Partager (`[data-e2e="share-icon"]`) dans la barre d'actions de chaque vidéo (`tnk`, `txk`, `kk`) ; l'URL est reconstruite depuis l'id du lecteur (`xgwrapper-<n>-<id>`) et le lien `/@auteur` de l'article
+4. Interface popup de l'extension (`popup.html` / `popup.js`) : boutons de copie et éditeur des services ; sur le fil TikTok, le popup demande au content script la vidéo affichée (message `xilc-current-url`)
 
-**Repérage du DOM** (X et Instagram changent souvent leur HTML) : ne jamais dépendre des classes CSS générées ni de textes en anglais. Instagram : menu Partager repéré par ses liens `wa.me`/Threads/Facebook, bouton Partager par `CONFIG.INSTAGRAM_SHARE_LABELS`. Styles injectés une fois (`injectStyles`, classes `xilc-*`) ; un seul `MutationObserver` débouncé par frame, pas de `setInterval`.
+**Services** : un service = `{ label, domain, enabled }`, l'ordre de la liste fait foi, la conversion remplace seulement le domaine. Liste dans `storage.sync` (clé `services`, API `Storage.getServices`/`saveServices`/`resetServices`/`onServicesChanged`), migrée au premier lancement depuis l'ancien `enabledDomains` (local). Historique et stats restent en local. Les content scripts rendent les boutons via `renderServiceButtons` (utils.js) : `CONFIG.MAX_VISIBLE` pastilles par plateforme, le reste dans un menu `⋯` en `position: fixed` sur `document.body`.
+
+**Repérage du DOM** (X, Instagram et TikTok changent souvent leur HTML) : ne jamais dépendre des classes CSS générées ni de textes en anglais. Instagram : menu Partager repéré par ses liens `wa.me`/Threads/Facebook, bouton Partager par `CONFIG.INSTAGRAM_SHARE_LABELS`. Styles injectés une fois (`injectStyles`, classes `xilc-*`) ; un seul `MutationObserver` débouncé par frame, pas de `setInterval`.
 
 ## Manifests
 
@@ -51,6 +57,7 @@ X-Instagram-Link-Converter/
 ├── background-v3.js       # V3 service worker
 ├── content-x.js           # Injection sur X/Twitter
 ├── content-instagram.js   # Injection sur Instagram
+├── content-tiktok.js      # Injection sur TikTok
 ├── popup.html             # UI de l'extension
 ├── popup.js               # Logique popup
 ├── config.js              # Config centralisée : domaines, frontends alternatifs
@@ -71,11 +78,11 @@ Pas de build step — c'est du JavaScript vanilla.
 - Firefox : `about:debugging` → "Load Temporary Add-on" → sélectionner `manifest.json`
 - Chrome : `chrome://extensions` → "Load unpacked" → après `prepare-chrome.sh`
 
-**Modifier la config** (domaines, URLs alternatives) : éditer `config.js` uniquement — `content-x.js` et `content-instagram.js` l'importent.
+**Modifier la config** (services par défaut, limites) : éditer `config.js` uniquement — les content scripts et le popup le chargent.
 
 ## Règles
 
-- Toujours modifier `config.js` pour les URLs/domaines, pas les content scripts directement
+- Toujours modifier `config.js` pour les services par défaut, pas les content scripts directement
 - Toujours tester les deux manifests avant une publication
 - Le dossier `packages/` est généré — ne pas le commiter
 - Ne pas mélanger les APIs V2/V3 dans le même fichier background (deux fichiers séparés)

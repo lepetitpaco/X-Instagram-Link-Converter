@@ -3,7 +3,7 @@ CHROME WEB STORE - JUSTIFICATIONS DES PERMISSIONS
 
 DESCRIPTION DE L'OBJECTIF UNIQUE
 --------------------------------
-Convert links from X.com, Twitter.com, and Instagram to privacy-friendly alternative frontends (fixvx.com, fixupx.com, vxtwitter.com, kkinstagram.com) when users share or copy posts.
+Convert links from X.com, Twitter.com, Instagram and TikTok to alternative frontends and embed services (by default fixvx.com, fixupx.com, vxtwitter.com, kkinstagram.com, tnktok.com, tiktxk.com, kktiktok.com; the list is editable by the user) when users share or copy posts.
 
 CODE DISTANT
 ------------
@@ -16,6 +16,8 @@ Required to access and modify content on:
 - twitter.com
 - www.instagram.com
 - instagram.com
+- www.tiktok.com
+- tiktok.com
 
 Justification: The extension needs to inject conversion buttons and intercept link copying on these domains. Without host permissions, the content scripts cannot run on these sites to provide the link conversion functionality.
 
@@ -39,15 +41,15 @@ Justification: After converting a link, the extension copies the converted URL t
 
 AUTORISATION scripting
 ----------------------
-Required to inject conversion buttons into X/Twitter and Instagram pages (Manifest V3).
+Required to inject conversion buttons into X/Twitter, Instagram and TikTok pages (Manifest V3).
 
 Justification: The extension injects conversion buttons directly into the page content. This permission (Manifest V3 equivalent of executeScript) is necessary to add the UI elements that appear under each post. Without it, the in-page buttons cannot be displayed.
 
 AUTORISATION storage
 --------------------
-Required to save settings and a local history of converted links.
+Required to save the user's list of link services and a local history of converted links.
 
-Justification: Used to save the user's settings locally (which link types to show: x.com, fixvx, fixupx, vxtwitter, kkinstagram) and a local history of recently converted links shown in the popup. All data stays in the browser's local extension storage; nothing is sent to any server.
+Justification: The list of link services (short label, domain, shown or hidden, order) is saved with storage.sync, so the browser's own sync can share it across the user's devices; it contains no personal data. The history of recently converted links shown in the popup stays in the browser's local extension storage. The extension itself sends nothing to any server.
 
 PRATIQUES EN MATIÈRE DE CONFIDENTIALITÉ
 ========================================
@@ -72,7 +74,7 @@ The extension:
 - Reads page URLs locally to convert them
 - Copies converted URLs to clipboard
 - Does not send any information to external servers
-- Only stores settings and a history of converted links locally in the browser (never sent anywhere)
+- Stores the list of link services in the browser's extension storage (shared across the user's devices only by the browser's own sync) and a history of converted links locally (never sent anywhere)
 - Does not track user behavior
 
 TRANSMISSION DE DONNÉES
