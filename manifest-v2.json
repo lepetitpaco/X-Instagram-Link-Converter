@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "X & Instagram Link Converter",
-  "version": "1.1.0",
-  "description": "Convert X/Twitter and Instagram links to privacy-friendly alternatives (fixvx, fixupx, vxtwitter, kkinstagram) with one click.",
+  "version": "1.2.0",
+  "description": "Convert X/Twitter, Instagram and TikTok links to privacy-friendly alternatives (fixvx, fixupx, vxtwitter, kkinstagram, tnktok, tiktxk, kktiktok) with one click.",
   "permissions": [
     "activeTab",
     "clipboardRead",
@@ -21,6 +21,11 @@
     {
       "matches": ["*://www.instagram.com/*", "*://instagram.com/*"],
       "js": ["config.js", "utils.js", "storage.js", "content-instagram.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://www.tiktok.com/*", "*://tiktok.com/*"],
+      "js": ["config.js", "utils.js", "storage.js", "content-tiktok.js"],
       "run_at": "document_idle"
     }
   ],

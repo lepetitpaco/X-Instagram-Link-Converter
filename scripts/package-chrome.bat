@@ -27,6 +27,7 @@ copy utils.js "%TEMP_DIR%\" >nul
 copy storage.js "%TEMP_DIR%\" >nul
 copy content-x.js "%TEMP_DIR%\" >nul
 copy content-instagram.js "%TEMP_DIR%\" >nul
+copy content-tiktok.js "%TEMP_DIR%\" >nul
 copy popup.html "%TEMP_DIR%\" >nul
 copy popup.js "%TEMP_DIR%\" >nul
 
