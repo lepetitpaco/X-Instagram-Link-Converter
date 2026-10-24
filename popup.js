@@ -175,7 +175,7 @@ async function loadHistory() {
     const container = document.getElementById('history-container');
 
     if (history.length === 0) {
-      container.innerHTML = '<div class="history-empty">Aucune conversion récente</div>';
+      container.innerHTML = '<div class="history-empty">No recent conversions</div>';
       return;
     }
 
@@ -290,7 +290,7 @@ function createServiceRow(platform, index, service, errorBox) {
   const enabled = document.createElement('input');
   enabled.type = 'checkbox';
   enabled.checked = service.enabled;
-  enabled.title = 'Afficher';
+  enabled.title = 'Show';
 
   const label = document.createElement('input');
   label.type = 'text';
@@ -298,14 +298,14 @@ function createServiceRow(platform, index, service, errorBox) {
   label.value = service.label;
   label.maxLength = CONFIG.LABEL_MAX;
   label.placeholder = 'vx';
-  label.setAttribute('aria-label', 'Libellé');
+  label.setAttribute('aria-label', 'Label');
 
   const domain = document.createElement('input');
   domain.type = 'text';
   domain.className = 'service-domain';
   domain.value = service.domain;
   domain.placeholder = 'fixvx.com';
-  domain.setAttribute('aria-label', 'Domaine');
+  domain.setAttribute('aria-label', 'Domain');
 
   // Sauvegarde dès que la ligne est valide ; sinon l'erreur reste affichée et rien n'est écrit
   const commit = async () => {
@@ -340,9 +340,9 @@ function createServiceRow(platform, index, service, errorBox) {
     await persistServices();
     renderServicesEditor();
   };
-  const up = createEditorButton('↑', 'Monter', move(-1));
-  const down = createEditorButton('↓', 'Descendre', move(1));
-  const remove = createEditorButton('✕', 'Supprimer', async () => {
+  const up = createEditorButton('↑', 'Move up', move(-1));
+  const down = createEditorButton('↓', 'Move down', move(1));
+  const remove = createEditorButton('✕', 'Remove', async () => {
     if (!isNew) {
       list.splice(index, 1);
       await persistServices();
@@ -398,14 +398,14 @@ function renderServicesEditor() {
     list.forEach((service, index) => rows.appendChild(createServiceRow(platform, index, service, errorBox)));
 
     const actions = createElement('div', 'services-actions');
-    const add = createEditorButton('+ Ajouter', 'Ajouter un service', () => {
+    const add = createEditorButton('+ Add', 'Add a service', () => {
       const row = createServiceRow(platform, -1, { label: '', domain: '', enabled: true }, errorBox);
       rows.appendChild(row);
       row.querySelector('.service-label').focus();
       add.disabled = true;
     });
     add.disabled = list.length >= CONFIG.MAX_SERVICES;
-    const reset = createEditorButton('Valeurs par défaut', 'Remettre les services par défaut', async () => {
+    const reset = createEditorButton('Reset', 'Restore the default services', async () => {
       services = await window.Storage.resetServices(platform);
       renderCopyButtons();
       renderServicesEditor();
@@ -427,11 +427,11 @@ document.getElementById('clear-history').addEventListener('click', async () => {
           storage.set({ conversionHistory: [] }, resolve);
         });
         await loadHistory();
-        showStatus('Historique effacé', 'success');
+        showStatus('History cleared', 'success');
       }
     } catch (error) {
       console.error('Error clearing history:', error);
-      showStatus('Erreur lors de l\'effacement', 'error');
+      showStatus('Could not clear history', 'error');
     }
   }
 });

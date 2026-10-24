@@ -107,7 +107,7 @@ On TikTok (feed and video pages), one button per enabled service appears right b
 
 Open the popup → **Services**, then expand a site:
 - Each line is a service: shown or hidden, short label (4 characters max, used on the in-page chip), domain (e.g. `fixvx.com`)
-- Use ↑ ↓ to reorder (the first ones are shown as chips), ✕ to remove, **+ Ajouter** to add one, **Valeurs par défaut** to restore the defaults
+- Use ↑ ↓ to reorder (the first ones are shown as chips), ✕ to remove, **+ Add** to add one, **Reset** to restore the defaults
 - Beyond 3 services on X, 2 on TikTok and 1 on Instagram, the others go in a **⋯** menu next to the chips
 - The list is saved with the browser sync storage and applied to open tabs immediately
 

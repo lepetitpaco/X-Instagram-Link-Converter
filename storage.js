@@ -285,11 +285,11 @@ function normalizeService(service) {
  * @returns {string|null} Message d'erreur, ou null si le service est valide
  */
 function validateService(service, others = []) {
-  if (!service.label) return 'Libellé requis';
-  if (service.label.length > CONFIG.LABEL_MAX) return `Libellé : ${CONFIG.LABEL_MAX} caractères au plus`;
-  if (/\s/.test(service.label)) return 'Libellé : pas d\'espace';
-  if (others.some(other => other.label === service.label)) return 'Libellé déjà utilisé';
-  if (!DOMAIN_PATTERN.test(service.domain)) return 'Domaine invalide (ex. fixvx.com)';
+  if (!service.label) return 'Label required';
+  if (service.label.length > CONFIG.LABEL_MAX) return `Label: ${CONFIG.LABEL_MAX} characters max`;
+  if (/\s/.test(service.label)) return 'Label: no spaces';
+  if (others.some(other => other.label === service.label)) return 'Label already used';
+  if (!DOMAIN_PATTERN.test(service.domain)) return 'Invalid domain (e.g. fixvx.com)';
   return null;
 }
 

@@ -22,6 +22,8 @@ Ces destinations sont les **services par défaut** (`CONFIG.DEFAULT_SERVICES`) :
 
 **Repérage du DOM** (X, Instagram et TikTok changent souvent leur HTML) : ne jamais dépendre des classes CSS générées ni de textes en anglais. Instagram : menu Partager repéré par ses liens `wa.me`/Threads/Facebook, bouton Partager par `CONFIG.INSTAGRAM_SHARE_LABELS`. Styles injectés une fois (`injectStyles`, classes `xilc-*`) ; un seul `MutationObserver` débouncé par frame, pas de `setInterval`.
 
+**Langue** : tout texte visible par l'utilisateur (popup, boutons, infobulles, messages, erreurs) est en anglais ; les commentaires du code restent en français.
+
 ## Manifests
 
 L'extension supporte deux versions de manifest selon le navigateur :
