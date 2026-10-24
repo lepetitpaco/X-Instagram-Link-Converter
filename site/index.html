@@ -65,6 +65,14 @@
     .tile h3 { margin: 0 0 6px; font-size: 17px; }
     .tile p { margin: 0; color: var(--muted); font-size: 15px; }
 
+    section.credits { padding: 0 0 80px; }
+    section.credits h2 { font-size: 32px; letter-spacing: -.02em; margin: 8px 0 10px; }
+    section.credits .intro { color: var(--muted); font-size: 17px; max-width: 720px; margin: 0 0 24px; }
+    .credit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .credit-grid .tile { text-decoration: none; }
+    .credit-grid .tile:hover { border-color: #9b4dff; }
+    @media (max-width: 820px) { .credit-grid { grid-template-columns: 1fr; } }
+
     footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
     footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
@@ -91,7 +99,7 @@
       <div class="wrap">
         <img class="logo" src="icon.svg" alt="X, Instagram &amp; TikTok Link Converter icon">
         <h1>Share links that <span>embed</span>.</h1>
-        <p>One click copies an X, Instagram or TikTok post as a link that shows the real video or picture in Discord, Telegram, WhatsApp &amp; co.</p>
+        <p>One click copies an X, Instagram or TikTok post as a link to an existing embed service (vxTwitter, FxEmbed, fxTikTok…), so Discord, Telegram, WhatsApp &amp; co show the real video or picture. <a href="#credits">The embeds are theirs.</a></p>
         <div class="ctas">
           <a class="btn primary" href="https://chromewebstore.google.com/detail/ohmjcjchdjkedcmpnefjgffkdolelbih">Add to Chrome</a>
           <a class="btn secondary" href="https://addons.mozilla.org/firefox/addon/x-instagram-link-converter/">Add to Firefox</a>
@@ -145,11 +153,27 @@
         <div class="tile"><h3>Open source</h3><p>Ideas or a broken embed service? <a href="https://github.com/lepetitpaco/X-Instagram-Link-Converter/issues">Open an issue</a>.</p></div>
       </div>
     </section>
+
+    <section class="credits" id="credits">
+      <div class="wrap">
+        <div class="kicker">Credits</div>
+        <h2>The embeds are made by these projects</h2>
+        <p class="intro">This extension does not generate any preview. It only rewrites the link you copy so it points to free embed services built and hosted by others. If you use them a lot, star or sponsor them.</p>
+        <div class="credit-grid">
+          <a class="tile" href="https://github.com/dylanpdx/BetterTwitFix"><h3>vxTwitter</h3><p>fixvx.com, vxtwitter.com · by dylanpdx</p></a>
+          <a class="tile" href="https://github.com/FxEmbed/FxEmbed"><h3>FxEmbed</h3><p>fixupx.com · FxTwitter / FixupX</p></a>
+          <a class="tile" href="https://github.com/okdargy/fxTikTok"><h3>fxTikTok</h3><p>tnktok.com · by okdargy</p></a>
+          <a class="tile" href="https://github.com/Britmoji/tiktxk"><h3>tiktxk</h3><p>tiktxk.com · by Britmoji</p></a>
+          <a class="tile" href="https://kkinstagram.com"><h3>kkinstagram</h3><p>kkinstagram.com · independent service</p></a>
+          <a class="tile" href="https://kktiktok.com"><h3>kktiktok</h3><p>kktiktok.com · independent service</p></a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
     <div class="wrap">
-      <span>Not affiliated with X Corp., Meta or TikTok. Embed services are run by third parties.</span>
+      <span>Not affiliated with X Corp., Meta, TikTok or the embed services above.</span>
       <a href="https://github.com/lepetitpaco/X-Instagram-Link-Converter">github.com/lepetitpaco/X-Instagram-Link-Converter</a>
     </div>
   </footer>

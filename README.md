@@ -2,7 +2,7 @@
 
 <h1 align="center">X, Instagram &amp; TikTok Link Converter</h1>
 
-<p align="center"><b>Share links that embed.</b> One click copies an X, Instagram or TikTok post as a link that shows the real video or picture in Discord, Telegram, WhatsApp &amp; co.</p>
+<p align="center"><b>Share links that embed.</b> One click copies an X, Instagram or TikTok post as a link to an existing embed service (vxTwitter, FxEmbed, fxTikTok…), so Discord, Telegram, WhatsApp &amp; co show the real video or picture. The embeds are made by those services, <a href="#credits-who-makes-the-embeds">credited below</a>.</p>
 
 <p align="center">
   <a href="https://chromewebstore.google.com/detail/ohmjcjchdjkedcmpnefjgffkdolelbih"><b>Add to Chrome</b></a> ·
@@ -39,20 +39,20 @@
 - `www.tiktok.com`
 - `tiktok.com`
 
-## Alternative Frontends
+## Credits: who makes the embeds
 
-### X / Twitter Alternatives
-- **fixvx.com** - Privacy-focused X frontend
-- **fixupx.com** - Alternative X frontend
-- **vxtwitter.com** - Enhanced X experience
+**This extension does not generate any embed or preview.** It only rewrites the domain of the link you copy (`x.com/…` → `fixvx.com/…`) so that it points to an existing embed service. All the work of fetching the post and building the preview is done by these projects, run by their own authors:
 
-### Instagram Alternatives
-- **kkinstagram.com** - Privacy-focused Instagram frontend
+| Service | Project | Maintainers |
+|---|---|---|
+| `fixvx.com`, `vxtwitter.com` | [vxTwitter (BetterTwitFix)](https://github.com/dylanpdx/BetterTwitFix) | dylanpdx and contributors |
+| `fixupx.com` | [FxEmbed (FxTwitter / FixupX)](https://github.com/FxEmbed/FxEmbed) | FxEmbed contributors |
+| `tnktok.com` | [fxTikTok](https://github.com/okdargy/fxTikTok) | okdargy and contributors |
+| `tiktxk.com` | [tiktxk](https://github.com/Britmoji/tiktxk) | Britmoji |
+| `kkinstagram.com` | [kkinstagram.com](https://kkinstagram.com) | independent service, maintainer not published |
+| `kktiktok.com` | [kktiktok.com](https://kktiktok.com) | independent service, maintainer not published |
 
-### TikTok Alternatives
-- **tnktok.com** - fxTikTok, video embeds for Discord, Telegram...
-- **tiktxk.com** - Alternative TikTok embed fixer
-- **kktiktok.com** - Alternative TikTok embed fixer
+These services are free and cost their maintainers hosting money. If you use them a lot, consider starring or sponsoring their projects. This extension is not affiliated with any of them, nor with X Corp., Meta or TikTok.
 
 ## Installation
 

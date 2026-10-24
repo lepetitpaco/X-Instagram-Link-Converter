@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "X, Instagram & TikTok Link Converter",
   "version": "1.2.1",
-  "description": "Convert X/Twitter, Instagram and TikTok links to privacy-friendly alternatives (fixvx, fixupx, vxtwitter, kkinstagram, tnktok, tiktxk, kktiktok) with one click.",
+  "description": "Copy X, Instagram and TikTok links that embed well in Discord and chats (fixvx, vxtwitter, kkinstagram, tnktok…) in one click.",
   "permissions": [
     "activeTab",
     "clipboardWrite",

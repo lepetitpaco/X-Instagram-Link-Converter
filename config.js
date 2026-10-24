@@ -44,7 +44,8 @@ const CONFIG = {
       changes: [
         'New icon',
         'Fewer permissions: the extension no longer asks to read your clipboard',
-        'Popup texts in English, and this What\'s new section'
+        'Popup texts in English, and this What\'s new section',
+        'Credits to the embed services that make the previews (vxTwitter, FxEmbed, fxTikTok, tiktxk…)'
       ]
     },
     {

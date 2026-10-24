@@ -26,9 +26,9 @@ Chrome (126 caractères, déjà dans le manifest) :
 Copy X, Instagram and TikTok links that embed well in Discord and chats (fixvx, vxtwitter, kkinstagram, tnktok…) in one click.
 ```
 
-Firefox (229 caractères) :
+Firefox (200 caractères) :
 ```
-Copy X/Twitter, Instagram and TikTok posts as links that show a real video preview in Discord, Telegram or WhatsApp: fixvx, vxtwitter, kkinstagram, tnktok and more, in one click. Add your own services, no tracking.
+One click copies X, Instagram and TikTok posts as links to embed services (vxTwitter, FxEmbed, fxTikTok…) that show a real preview in Discord, Telegram or WhatsApp. Add your own services, no tracking.
 ```
 
 ## Description (Chrome, champ « Description »)
@@ -36,7 +36,7 @@ Copy X/Twitter, Instagram and TikTok posts as links that show a real video previ
 ```
 Share links that actually embed.
 
-Paste an x.com, instagram.com or tiktok.com link in Discord, Telegram or WhatsApp and your friends often get… a bare link. This extension copies the same post as a link from an embed service (fixvx, vxtwitter, kkinstagram, tnktok…), so the chat shows the video or picture right away.
+Paste an x.com, instagram.com or tiktok.com link in Discord, Telegram or WhatsApp and your friends often get… a bare link. This extension copies the same post as a link to an existing embed service (vxTwitter, FxEmbed, fxTikTok…), and that service makes the chat show the video or picture.
 
 ★ ONE CLICK, RIGHT ON THE POST
 • X / Twitter: chips in the action bar of every post: vx (fixvx), upx (fixupx), vxt (vxtwitter), x (clean original link)
@@ -54,7 +54,16 @@ An embed site goes down, a new one appears? Add it yourself in the popup: a shor
 
 Works on x.com, twitter.com, instagram.com and tiktok.com.
 
-This extension is not affiliated with X Corp., Meta or TikTok. fixvx, vxtwitter, kkinstagram, tnktok and the other services are run by third parties.
+★ CREDITS: WHO MAKES THE EMBEDS
+This extension does not generate any preview. It only rewrites the link to point to free embed services built and hosted by others:
+• fixvx.com, vxtwitter.com: vxTwitter (github.com/dylanpdx/BetterTwitFix)
+• fixupx.com: FxEmbed (github.com/FxEmbed/FxEmbed)
+• tnktok.com: fxTikTok (github.com/okdargy/fxTikTok)
+• tiktxk.com: tiktxk (github.com/Britmoji/tiktxk)
+• kkinstagram.com, kktiktok.com: independent services
+If you use them a lot, consider supporting their maintainers.
+
+This extension is not affiliated with these services, nor with X Corp., Meta or TikTok.
 ```
 
 ## Description (Firefox, champ « Description », Markdown limité)
@@ -62,7 +71,7 @@ This extension is not affiliated with X Corp., Meta or TikTok. fixvx, vxtwitter,
 ```
 **Share links that actually embed.**
 
-Paste an x.com, instagram.com or tiktok.com link in Discord, Telegram or WhatsApp and your friends often get… a bare link. This add-on copies the same post as a link from an embed service (fixvx, vxtwitter, kkinstagram, tnktok…), so the chat shows the video or picture right away.
+Paste an x.com, instagram.com or tiktok.com link in Discord, Telegram or WhatsApp and your friends often get… a bare link. This add-on copies the same post as a link to an existing embed service (vxTwitter, FxEmbed, fxTikTok…), and that service makes the chat show the video or picture.
 
 **One click, right on the post**
 
@@ -81,7 +90,17 @@ An embed site goes down, a new one appears? Add it yourself in the popup: a shor
 - Links are converted locally, nothing is sent anywhere
 - Open source: https://github.com/lepetitpaco/X-Instagram-Link-Converter
 
-Not affiliated with X Corp., Meta or TikTok. fixvx, vxtwitter, kkinstagram, tnktok and the other services are run by third parties.
+**Credits: who makes the embeds**
+
+This add-on does not generate any preview. It only rewrites the link to point to free embed services built and hosted by others:
+
+- fixvx.com, vxtwitter.com: [vxTwitter](https://github.com/dylanpdx/BetterTwitFix)
+- fixupx.com: [FxEmbed](https://github.com/FxEmbed/FxEmbed)
+- tnktok.com: [fxTikTok](https://github.com/okdargy/fxTikTok)
+- tiktxk.com: [tiktxk](https://github.com/Britmoji/tiktxk)
+- kkinstagram.com, kktiktok.com: independent services
+
+If you use them a lot, consider supporting their maintainers. This add-on is not affiliated with these services, nor with X Corp., Meta or TikTok.
 ```
 
 ## Notes de version 1.2.1
