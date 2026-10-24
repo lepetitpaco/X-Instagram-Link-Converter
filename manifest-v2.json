@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "X, Instagram & TikTok Link Converter",
+  "name": "Embed Link Copier: X, Instagram, TikTok",
   "version": "1.2.1",
   "description": "Copy X, Instagram and TikTok links that embed well in Discord and chats (fixvx, vxtwitter, kkinstagram, tnktok…) in one click.",
   "permissions": [
@@ -41,7 +41,7 @@
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     },
-    "default_title": "Link Converter",
+    "default_title": "Embed Link Copier",
     "default_popup": "popup.html"
   },
   "browser_specific_settings": {

@@ -14,7 +14,7 @@ Textes prêts à coller, en anglais. Visuels dans `store/` (régénérés par `s
 ## Nom (les deux stores)
 
 ```
-X, Instagram & TikTok Link Converter
+Embed Link Copier: X, Instagram, TikTok
 ```
 
 ## Résumé

@@ -1,6 +1,8 @@
 <p align="center"><img src="store/icon.svg" width="96" alt=""></p>
 
-<h1 align="center">X, Instagram &amp; TikTok Link Converter</h1>
+<h1 align="center">Embed Link Copier</h1>
+
+<p align="center">for X, Instagram and TikTok</p>
 
 <p align="center"><b>Share links that embed.</b> One click copies an X, Instagram or TikTok post as a link to an embed service (vxTwitter, FxEmbed, fxTikTok…), so Discord, Telegram &amp; co show the video.</p>
 
