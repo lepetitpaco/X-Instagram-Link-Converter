@@ -97,21 +97,84 @@
       margin-top: 12px;
     }
 
-    .setting-item {
-      display: flex;
-      align-items: center;
+    .services-platform {
       margin: 6px 0;
       font-size: 12px;
     }
 
-    .setting-item input[type="checkbox"] {
-      margin-right: 8px;
+    .services-platform summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+      padding: 4px 0;
+    }
+
+    .service-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 4px 0;
+    }
+
+    .service-row input[type="checkbox"] {
+      margin: 0 2px 0 0;
       cursor: pointer;
     }
 
-    .setting-item label {
-      cursor: pointer;
+    .service-row input[type="text"] {
+      min-width: 0;
+      padding: 4px 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .service-row .service-label {
+      width: 36px;
+      flex: 0 0 auto;
+    }
+
+    .service-row .service-domain {
       flex: 1;
+    }
+
+    .service-row.invalid input[type="text"] {
+      border-color: #d93025;
+    }
+
+    .services-error {
+      color: #d93025;
+      font-size: 11px;
+      min-height: 0;
+    }
+
+    .services-error:empty {
+      display: none;
+    }
+
+    .services-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    button.editor-btn {
+      width: auto;
+      margin: 0;
+      padding: 4px 8px;
+      background-color: #f0f0f0;
+      color: #333;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    button.editor-btn:hover {
+      background-color: #e0e0e0;
+    }
+
+    button.editor-btn:disabled {
+      background-color: #f7f7f7;
+      color: #bbb;
     }
 
     .history-section {
@@ -144,6 +207,38 @@
       font-size: 10px;
     }
 
+    .changelog {
+      font-size: 12px;
+    }
+
+    .changelog summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #333;
+      padding: 4px 0;
+    }
+
+    .changelog-badge {
+      margin-left: 6px;
+      padding: 1px 5px;
+      border-radius: 8px;
+      background: #1d9bf0;
+      color: #fff;
+      font-size: 10px;
+    }
+
+    .changelog-version {
+      margin-top: 6px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .changelog ul {
+      margin: 2px 0 0;
+      padding-left: 16px;
+      color: #555;
+    }
+
     .history-empty {
       text-align: center;
       color: #999;
@@ -167,62 +262,34 @@
 <body>
   <div class="stats" id="stats">
     <div class="stats-item"><strong>Total:</strong> <span id="stats-total">0</span></div>
-    <div class="stats-item"><strong>Aujourd'hui:</strong> <span id="stats-today">0</span></div>
-    <div class="stats-item"><strong>X:</strong> <span id="stats-x">0</span> | <strong>Instagram:</strong> <span id="stats-instagram">0</span></div>
+    <div class="stats-item"><strong>Today:</strong> <span id="stats-today">0</span></div>
+    <div class="stats-item"><strong>X:</strong> <span id="stats-x">0</span> | <strong>Instagram:</strong> <span id="stats-instagram">0</span> | <strong>TikTok:</strong> <span id="stats-tiktok">0</span></div>
   </div>
 
-  <div class="section">
-    <h3>X / Twitter</h3>
-    <button id="copy-fixvx" data-domain="fixvx">📋 Copy fixvx link</button>
-    <button id="copy-fixupx" data-domain="fixupx">📋 Copy fixupx link</button>
-    <button id="copy-vxtwitter" data-domain="vxtwitter">📋 Copy vxtwitter link</button>
-  </div>
-
-  <div class="divider"></div>
-
-  <div class="section">
-    <h3>Instagram</h3>
-    <button id="copy-kkinstagram" data-domain="kkinstagram">📷 Copy kkinstagram link</button>
-  </div>
-
-  <div class="divider"></div>
+  <div id="copy-sections"></div>
 
   <div class="settings-section">
-    <h3>Options</h3>
-    <div class="setting-item">
-      <input type="checkbox" id="setting-xcom" checked>
-      <label for="setting-xcom">Afficher x.com (lien d'origine)</label>
-    </div>
-    <div class="setting-item">
-      <input type="checkbox" id="setting-fixvx" checked>
-      <label for="setting-fixvx">Afficher fixvx</label>
-    </div>
-    <div class="setting-item">
-      <input type="checkbox" id="setting-fixupx" checked>
-      <label for="setting-fixupx">Afficher fixupx</label>
-    </div>
-    <div class="setting-item">
-      <input type="checkbox" id="setting-vxtwitter" checked>
-      <label for="setting-vxtwitter">Afficher vxtwitter</label>
-    </div>
-    <div class="setting-item">
-      <input type="checkbox" id="setting-kkinstagram" checked>
-      <label for="setting-kkinstagram">Afficher kkinstagram</label>
-    </div>
+    <h3>Services</h3>
+    <div id="services-editor"></div>
   </div>
 
   <div class="divider"></div>
 
   <div class="history-section">
-    <h3>Historique</h3>
+    <h3>History</h3>
     <div id="history-container">
-      <div class="history-empty">Aucune conversion récente</div>
+      <div class="history-empty">No recent conversions</div>
     </div>
-    <button class="clear-history" id="clear-history">Effacer l'historique</button>
+    <button class="clear-history" id="clear-history">Clear history</button>
   </div>
+
+  <div class="divider"></div>
+
+  <div id="changelog"></div>
 
   <div id="status"></div>
 
+  <script src="config.js"></script>
   <script src="storage.js"></script>
   <script src="popup.js"></script>
 </body>

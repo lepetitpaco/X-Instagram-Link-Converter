@@ -1,14 +1,27 @@
-# 🔗 X & Instagram Link Converter
+<p align="center"><img src="store/icon.svg" width="96" alt=""></p>
 
-A lightweight browser extension to automatically convert links from **X.com** (formerly Twitter) or **Instagram** to alternative frontends when sharing or copying.
+<h1 align="center">X, Instagram &amp; TikTok Link Converter</h1>
+
+<p align="center"><b>Share links that embed.</b> One click copies an X, Instagram or TikTok post as a link that shows the real video or picture in Discord, Telegram, WhatsApp &amp; co.</p>
+
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/ohmjcjchdjkedcmpnefjgffkdolelbih"><b>Add to Chrome</b></a> ·
+  <a href="https://addons.mozilla.org/firefox/addon/x-instagram-link-converter/"><b>Add to Firefox</b></a> ·
+  <a href="https://lepetitpaco.github.io/X-Instagram-Link-Converter/">Website</a>
+</p>
+
+<p align="center"><img src="store/screenshots/1-share-links-that-embed.png" width="760" alt="A Discord chat: the x.com link has no preview, the fixvx.com link shows the video"></p>
 
 ## Features
 
 - **X/Twitter Support**: Convert links to `fixvx.com`, `fixupx.com`, or `vxtwitter.com`
 - **Instagram Support**: Convert links to `kkinstagram.com`
+- **TikTok Support**: Convert links to `tnktok.com`, `tiktxk.com` or `kktiktok.com`
+- **Configurable Services**: Add, remove, reorder or hide link services per site from the popup, no extension update needed
 - **Multiple Methods**: 
   - In-page buttons on X/Twitter posts
   - Share menu button on Instagram posts
+  - In-page buttons on TikTok videos
   - Popup interface
 - **Dual Manifest Support**: Works with both Manifest V2 (Firefox) and Manifest V3 (Chrome)
 
@@ -22,6 +35,10 @@ A lightweight browser extension to automatically convert links from **X.com** (f
 - `www.instagram.com`
 - `instagram.com`
 
+### TikTok
+- `www.tiktok.com`
+- `tiktok.com`
+
 ## Alternative Frontends
 
 ### X / Twitter Alternatives
@@ -31,6 +48,11 @@ A lightweight browser extension to automatically convert links from **X.com** (f
 
 ### Instagram Alternatives
 - **kkinstagram.com** - Privacy-focused Instagram frontend
+
+### TikTok Alternatives
+- **tnktok.com** - fxTikTok, video embeds for Discord, Telegram...
+- **tiktxk.com** - Alternative TikTok embed fixer
+- **kktiktok.com** - Alternative TikTok embed fixer
 
 ## Installation
 
@@ -86,10 +108,25 @@ When viewing a post on Instagram:
 3. Click it to copy the converted link to your clipboard
 4. Works on timeline, individual posts, and reels
 
-### Method 3: Popup Interface
+### Method 3: In-Page Buttons (TikTok)
+
+On TikTok (feed and video pages), one button per enabled service appears right below the Share button of each video (`tnk` = tnktok, `txk` = tiktxk, `kk` = kktiktok):
+- Click a button to copy the converted link of the video
+
+### Configuring Services
+
+Open the popup → **Services**, then expand a site:
+- Each line is a service: shown or hidden, short label (4 characters max, used on the in-page chip), domain (e.g. `fixvx.com`)
+- Use ↑ ↓ to reorder (the first ones are shown as chips), ✕ to remove, **+ Add** to add one, **Reset** to restore the defaults
+- Beyond 3 services on X, 2 on TikTok and 1 on Instagram, the others go in a **⋯** menu next to the chips
+- The list is saved with the browser sync storage and applied to open tabs immediately
+
+A service only swaps the domain of the link (`https://x.com/a/status/1` → `https://fixvx.com/a/status/1`).
+
+### Method 4: Popup Interface
 
 1. Click the extension icon in your browser toolbar
-2. Select the desired conversion option
+2. Select the desired conversion option (on the TikTok feed, the video currently on screen is used)
 3. The converted link is copied to your clipboard
 4. A status message confirms the action
 
@@ -104,13 +141,13 @@ X-Instagram-Link-Converter/
 ├── background-v3.js         # Background service worker for V3
 ├── content-x.js            # Content script for X/Twitter
 ├── content-instagram.js    # Content script for Instagram
+├── content-tiktok.js       # Content script for TikTok
 ├── popup.html              # Popup interface
 ├── popup.js                # Popup script
 ├── config.js               # Centralized configuration
 ├── utils.js                # Shared utility functions
 ├── storage.js              # Storage utilities
-├── icons/
-│   └── icon128.png
+├── icons/                  # icon16/32/48/128.png, rendered from store/icon.svg
 ├── scripts/                # Build and preparation scripts
 │   ├── prepare-chrome.sh/.bat
 │   ├── prepare-firefox.sh/.bat
@@ -119,9 +156,9 @@ X-Instagram-Link-Converter/
 ├── docs/                   # Documentation files
 │   ├── INSTAGRAM_FEATURES_REVIEW.md
 │   ├── INSTAGRAM_TEST_LINKS.md
-│   ├── STORE_DESCRIPTIONS.md
-│   ├── CHROME_PRIVACY_JUSTIFICATIONS.txt
-│   └── CHROME_STORE_DESCRIPTION.txt
+│   └── CHROME_PRIVACY_JUSTIFICATIONS.txt
+├── store/                  # Store listing texts (LISTING.md), icon source, screenshots, render.sh
+├── site/                   # GitHub Pages landing page
 ├── packages/               # Generated packages
 │   ├── x-instagram-link-converter-chrome.zip
 │   └── x-instagram-link-converter-firefox.zip
@@ -151,7 +188,7 @@ All configuration is centralized in `config.js`. You can modify:
 
 ### Popup doesn't work
 
-- Make sure you're on a supported page (X/Twitter or Instagram)
+- Make sure you're on a supported page (X/Twitter, Instagram or a TikTok video)
 - Check browser console for errors
 - Verify the extension has clipboard permissions
 
@@ -268,6 +305,21 @@ Each package includes:
 - Development files
 
 ## Changelog
+
+### Version 1.2.1
+- New icon (16 to 128 px) and store visuals
+- Removed the unused `clipboardRead` and `scripting` permissions
+- Popup texts in English, What's new section in the popup
+
+### Version 1.2.0
+- Added TikTok support: chips below Share copy a `tnktok.com`, `tiktxk.com` or `kktiktok.com` link; the popup copies the video on screen, even on the feed
+- Link services are now configurable per site from the popup (label, domain, order, shown or hidden), synced with the browser account
+- Extra services are grouped in a ⋯ menu so the action bars stay compact
+
+### Version 1.1.0
+- One-click chips in the X action bar (x.com, fixvx, fixupx, vxtwitter), no extra row under posts
+- Quick link button next to Share on Instagram (feed, posts, reels), in any interface language
+- Settings apply to open tabs without reloading
 
 ### Version 1.0.4
 - Simplified Instagram integration: removed in-page buttons, kept only share menu button

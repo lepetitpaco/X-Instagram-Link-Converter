@@ -1,5 +1,6 @@
 // Content script pour Instagram.com
-// Ajoute des boutons visibles sous chaque post pour convertir les liens vers kkinstagram.com
+// Ajoute après Partager un bouton qui copie le lien du premier service activé (les autres dans un menu « ⋯ »),
+// et ce même service dans le menu Partager
 
 // Charger les utilitaires (injectés via manifest)
 // Note: config.js et utils.js doivent être chargés avant ce script dans le manifest
@@ -115,16 +116,18 @@ function findShareRow(dialog) {
 }
 
 /**
- * Construit le bouton kkinstagram en clonant "Copier le lien" pour reprendre son style exact
+ * Construit le bouton du premier service en clonant "Copier le lien" pour reprendre son style exact
  */
-function buildKkinstagramButton(template, shareDialog) {
+function buildKkinstagramButton(template, shareDialog, service) {
+  // Nom affiché : le domaine sans son extension (kkinstagram.com -> kkinstagram)
+  const name = service.domain.replace(/\.[^.]+$/, '');
   const buttonDiv = template.cloneNode(true);
   buttonDiv.setAttribute('data-kkinstagram-button', 'true');
 
   // Remplacer l'icône
   const svg = buttonDiv.querySelector('svg');
   if (svg) {
-    svg.setAttribute('aria-label', 'kkinstagram');
+    svg.setAttribute('aria-label', name);
     svg.setAttribute('viewBox', '0 0 24 24');
     svg.replaceChildren();
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -133,7 +136,7 @@ function buildKkinstagramButton(template, shareDialog) {
     svg.appendChild(path);
   }
 
-  // Remplacer le libellé : le premier nœud texte reçoit "kkinstagram", les autres sont vidés
+  // Remplacer le libellé : le premier nœud texte reçoit le nom du service, les autres sont vidés
   const walker = document.createTreeWalker(buttonDiv, NodeFilter.SHOW_TEXT);
   let labelSet = false;
   let node;
@@ -144,7 +147,7 @@ function buildKkinstagramButton(template, shareDialog) {
       node.parentElement.style.whiteSpace = 'nowrap';
       node.parentElement.style.letterSpacing = '-0.2px';
     }
-    node.textContent = labelSet ? '' : 'kkinstagram';
+    node.textContent = labelSet ? '' : name;
     labelSet = true;
   }
 
@@ -155,25 +158,25 @@ function buildKkinstagramButton(template, shareDialog) {
     try {
       // L'URL est lue au moment du clic, depuis les liens du menu affiché
       const cleanUrl = extractPostUrlFromShareMenu(shareDialog);
-      const kkinstagramUrl = cleanUrl && convertUrl(cleanUrl, CONFIG.INSTAGRAM_ALTERNATIVES.kkinstagram);
-      if (!kkinstagramUrl) {
+      const newUrl = cleanUrl && convertUrl(cleanUrl, service.domain);
+      if (!newUrl) {
         createToast(CONFIG.MESSAGES.INVALID_URL, 2000);
         return;
       }
 
-      const success = await copyToClipboard(kkinstagramUrl);
+      const success = await copyToClipboard(newUrl);
       if (!success) {
         createToast(CONFIG.MESSAGES.CLIPBOARD_ERROR, 2000);
         return;
       }
-      createToast(CONFIG.MESSAGES.COPIED, 2500, kkinstagramUrl);
+      createToast(CONFIG.MESSAGES.COPIED, 2500, newUrl);
 
       if (window.Storage) {
-        await window.Storage.saveToHistory(cleanUrl, kkinstagramUrl, 'kkinstagram', 'instagram');
-        await window.Storage.incrementStats('instagram', 'kkinstagram');
+        await window.Storage.saveToHistory(cleanUrl, newUrl, service.domain, 'instagram');
+        await window.Storage.incrementStats('instagram', service.domain);
       }
     } catch (error) {
-      console.error('[kkinstagram] Error copying kkinstagram link:', error);
+      console.error('[kkinstagram] Error copying share menu link:', error);
       createToast(CONFIG.MESSAGES.ERROR, 2000);
     }
   }, true);
@@ -182,9 +185,12 @@ function buildKkinstagramButton(template, shareDialog) {
 }
 
 /**
- * Ajoute le bouton kkinstagram dans chaque menu de partage ouvert qui ne l'a pas encore
+ * Ajoute le bouton du premier service actif dans chaque menu de partage ouvert qui ne l'a pas encore
  */
 function addKkinstagramToShareMenu() {
+  const service = instagramServices.find(s => s.enabled);
+  if (!service) return;
+
   for (const dialog of document.querySelectorAll('div[role="dialog"]')) {
     if (dialog.querySelector('[data-kkinstagram-button]')) continue;
 
@@ -196,7 +202,7 @@ function addKkinstagramToShareMenu() {
     const template = copyLinkItem || row.firstElementChild;
     if (!template) continue;
 
-    template.insertAdjacentElement('afterend', buildKkinstagramButton(template, dialog));
+    template.insertAdjacentElement('afterend', buildKkinstagramButton(template, dialog, service));
   }
 }
 
@@ -291,8 +297,8 @@ function extractPostUrlFromShareMenu(shareDialog) {
   }
 }
 
-// Bouton kkinstagram activé dans les réglages du popup (mis à jour à chaud)
-let kkinstagramEnabled = true;
+// Services de la plateforme instagram, modifiables dans le popup (mis à jour à chaud)
+let instagramServices = CONFIG.DEFAULT_SERVICES.instagram;
 
 /**
  * Retourne l'URL Instagram (/p/<id>/ ou /reel/<id>/) du post qui contient l'élément
@@ -303,45 +309,6 @@ function getPostUrlFor(element) {
   if (articleUrl) return articleUrl;
   // Page d'un post, fenêtre d'un post ou fil des reels : l'URL de la page désigne le post affiché
   return cleanInstagramUrl(window.location.pathname);
-}
-
-/**
- * Crée le bouton rapide : un clic copie directement le lien kkinstagram du post
- */
-function createQuickButton() {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'xilc-quick-btn xilc-ig';
-  button.title = CONFIG.MESSAGES.COPY_KKINSTAGRAM;
-  button.setAttribute('aria-label', CONFIG.MESSAGES.COPY_KKINSTAGRAM);
-  button.appendChild(createIcon('link'));
-
-  button.addEventListener('click', async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const cleanUrl = getPostUrlFor(button);
-    const kkinstagramUrl = cleanUrl && convertUrl(cleanUrl, CONFIG.INSTAGRAM_ALTERNATIVES.kkinstagram);
-    if (!kkinstagramUrl) {
-      createToast(CONFIG.MESSAGES.INVALID_URL, 2000);
-      return;
-    }
-
-    const success = await copyToClipboard(kkinstagramUrl);
-    if (!success) {
-      createToast(CONFIG.MESSAGES.CLIPBOARD_ERROR, 2000);
-      return;
-    }
-    flashCopied(button);
-    createToast(CONFIG.MESSAGES.COPIED, 2500, kkinstagramUrl);
-
-    if (window.Storage) {
-      await window.Storage.saveToHistory(cleanUrl, kkinstagramUrl, 'kkinstagram', 'instagram');
-      await window.Storage.incrementStats('instagram', 'kkinstagram');
-    }
-  });
-
-  return button;
 }
 
 /**
@@ -366,24 +333,31 @@ function addQuickButtons() {
     if (!slot.parentElement || slot.parentElement.children.length < 3) continue;
     if (slot.nextElementSibling?.classList.contains('xilc-ig-action')) continue;
 
+    const buttons = renderServiceButtons(instagramServices, {
+      platform: 'instagram',
+      getUrl: getPostUrlFor,
+      chipClass: 'xilc-quick-btn xilc-ig',
+      iconClass: 'xilc-quick-btn xilc-ig'
+    });
+    if (!buttons) return;
+
     const slotStyle = getComputedStyle(slot);
     const wrapper = document.createElement('div');
     wrapper.className = 'xilc-ig-action';
     wrapper.style.cssText = `display:flex;align-items:center;justify-content:center;flex:0 0 auto;margin:${slotStyle.marginTop} ${slotStyle.marginRight} ${slotStyle.marginBottom} ${slotStyle.marginLeft};`;
-    wrapper.appendChild(createQuickButton());
+    wrapper.appendChild(buttons);
     slot.insertAdjacentElement('afterend', wrapper);
   }
 }
 
 /**
- * Retire tous les boutons injectés (bouton désactivé dans les réglages)
+ * Retire tous les boutons injectés (services modifiés dans le popup)
  */
 function removeInjectedButtons() {
   document.querySelectorAll('.xilc-ig-action, [data-kkinstagram-button]').forEach(el => el.remove());
 }
 
 function refresh() {
-  if (!kkinstagramEnabled) return;
   addQuickButtons();
   addKkinstagramToShareMenu();
 }
@@ -404,25 +378,20 @@ injectStyles();
 (async () => {
   try {
     if (window.Storage) {
-      const settings = await window.Storage.getSettings();
-      kkinstagramEnabled = settings.enabledDomains?.kkinstagram !== false;
+      instagramServices = (await window.Storage.getServices()).instagram;
     }
   } catch (error) {
-    console.error('[kkinstagram] Error loading settings:', error);
+    console.error('[kkinstagram] Error loading services:', error);
   }
 
   pageObserver.observe(document.body, { childList: true, subtree: true });
   refresh();
 })();
 
-// Appliquer les réglages du popup sans recharger la page
-const storageApi = typeof chrome !== 'undefined' && chrome.storage ? chrome.storage : browser.storage;
-storageApi.onChanged.addListener((changes, area) => {
-  if (area !== 'local' || !changes[window.Storage.SETTINGS_KEY]) return;
-  kkinstagramEnabled = changes[window.Storage.SETTINGS_KEY].newValue?.enabledDomains?.kkinstagram !== false;
-  if (kkinstagramEnabled) {
-    refresh();
-  } else {
-    removeInjectedButtons();
-  }
+// Appliquer les services modifiés dans le popup sans recharger la page : les boutons sont reconstruits
+window.Storage.onServicesChanged('instagram', (services) => {
+  instagramServices = services;
+  closeServiceMenu();
+  removeInjectedButtons();
+  refresh();
 });

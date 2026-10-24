@@ -29,6 +29,7 @@ cp utils.js "$TEMP_DIR/"
 cp storage.js "$TEMP_DIR/"
 cp content-x.js "$TEMP_DIR/"
 cp content-instagram.js "$TEMP_DIR/"
+cp content-tiktok.js "$TEMP_DIR/"
 cp popup.html "$TEMP_DIR/"
 cp popup.js "$TEMP_DIR/"
 
