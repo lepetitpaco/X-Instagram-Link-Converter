@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<!--
+  Visuels des fiches Chrome Web Store et Firefox Add-ons, rendus par store/render.mjs.
+  Une scène par ancre (#hero, #x, #tiktok, #instagram, #popup, #promo, #marquee).
+  Les publications sont fictives ; les boutons et le menu viennent du vrai utils.js de l'extension.
+-->
+<head>
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #12121a;
+      --muted: #5b5d6b;
+      --accent: #7b5cff;
+      --grad: linear-gradient(135deg, #4f6bff 0%, #9b4dff 55%, #ff4f8b 100%);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      width: 1280px; height: 800px; overflow: hidden;
+      font-family: Inter, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink);
+      background: #f6f5fb;
+    }
+    .scene { display: none; position: relative; width: 100%; height: 100%; }
+    .scene.on { display: flex; }
+    .bg-soft { background: radial-gradient(1200px 600px at 100% 0%, #ece6ff 0%, transparent 60%), radial-gradient(900px 500px at 0% 100%, #ffe3ef 0%, transparent 60%), #f7f6fc; }
+
+    /* Colonne de texte des captures */
+    .copy { width: 470px; padding: 0 40px 0 72px; display: flex; flex-direction: column; justify-content: center; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; margin-bottom: 36px; }
+    .brand img { width: 40px; height: 40px; }
+    .kicker { font-weight: 700; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; background: var(--grad); -webkit-background-clip: text; color: transparent; margin-bottom: 14px; }
+    h1 { font-size: 46px; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; font-weight: 800; }
+    .lead { font-size: 19px; line-height: 1.5; color: var(--muted); margin: 0; }
+    .points { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; font-size: 16px; color: var(--ink); }
+    .points li { display: flex; gap: 10px; align-items: baseline; }
+    .points li::before { content: ""; flex: 0 0 8px; height: 8px; border-radius: 50%; background: var(--grad); transform: translateY(-2px); }
+    .stage { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+
+    code, .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+
+    /* Discord-like chat (hero) */
+    .chat { width: 640px; background: #313338; color: #dbdee1; border-radius: 18px; padding: 26px 28px; box-shadow: 0 30px 80px rgba(40, 20, 90, .25); }
+    .msg { display: flex; gap: 14px; }
+    .msg + .msg { margin-top: 22px; }
+    .avatar { flex: 0 0 42px; height: 42px; border-radius: 50%; }
+    .who { font-weight: 600; color: #f2f3f5; font-size: 15px; }
+    .who time { font-weight: 400; color: #949ba4; font-size: 12px; margin-left: 6px; }
+    .msg-body { flex: 1; min-width: 0; }
+    .msg-text { font-size: 15px; margin-top: 3px; }
+    .msg-text a { color: #00a8fc; text-decoration: none; }
+    .embed { margin-top: 8px; max-width: 470px; background: #2b2d31; border-left: 4px solid #1d9bf0; border-radius: 4px; padding: 12px 16px 16px; }
+    .embed-author { font-size: 13px; font-weight: 600; color: #f2f3f5; }
+    .embed-desc { font-size: 14px; margin: 6px 0 10px; color: #dbdee1; }
+    .media { position: relative; height: 230px; border-radius: 8px; overflow: hidden; background: linear-gradient(135deg, #ff9a62, #ff4f8b 45%, #7b5cff); }
+    .media::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 30% 70%, rgba(255,255,255,.35), transparent 40%), radial-gradient(circle at 75% 25%, rgba(255,255,255,.25), transparent 35%); }
+    .play { position: absolute; z-index: 1; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: rgba(0,0,0,.55); }
+    .play::after { content: ""; position: absolute; left: 26px; top: 20px; border-left: 20px solid #fff; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px; border-radius: 6px; margin-left: 8px; vertical-align: 2px; }
+    .tag.before { background: #4e5058; color: #c4c9ce; }
+    .tag.after { background: #23a55a; color: #fff; }
+    .nopreview { margin-top: 6px; font-size: 13px; color: #949ba4; font-style: italic; }
+
+    /* Fausse publication X (thème sombre) */
+    .x-post { width: 600px; background: #000; color: #e7e9ea; border-radius: 20px; padding: 18px 20px 10px; box-shadow: 0 30px 80px rgba(20, 10, 60, .35); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .x-head { display: flex; gap: 12px; }
+    .x-name { font-weight: 700; font-size: 15px; }
+    .x-name span { font-weight: 400; color: #71767b; margin-left: 4px; }
+    .x-text { font-size: 15px; line-height: 20px; margin: 4px 0 12px; }
+    .x-media { height: 300px; border-radius: 16px; border: 1px solid #2f3336; background: linear-gradient(160deg, #1b2a4a, #3b2a6a 50%, #a03a7a); position: relative; overflow: hidden; }
+    .x-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; color: #71767b; font-size: 13px; }
+    .x-act { display: flex; align-items: center; gap: 6px; height: 34px; }
+    .x-act svg { width: 19px; height: 19px; fill: currentColor; }
+    .x-actions .xilc-services { color: #71767b; }
+
+    /* Fausse vidéo TikTok */
+    .tt { display: flex; align-items: flex-end; gap: 18px; }
+    .tt-video { width: 340px; height: 604px; border-radius: 18px; position: relative; overflow: hidden; background: linear-gradient(170deg, #0f2027, #203a43 45%, #2c5364); box-shadow: 0 30px 80px rgba(20, 10, 60, .35); }
+    .tt-video::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, rgba(255,180,120,.55), transparent 45%); }
+    .tt-caption { position: absolute; left: 16px; right: 16px; bottom: 18px; color: #fff; font-size: 14px; line-height: 1.4; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .tt-caption b { display: block; font-size: 15px; margin-bottom: 4px; }
+    .tt-col { display: flex; flex-direction: column; align-items: center; gap: 14px; color: #161823; font: 600 12px/1 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding-bottom: 6px; }
+    .tt-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .tt-circle { width: 48px; height: 48px; border-radius: 50%; background: #ebebec; display: flex; align-items: center; justify-content: center; }
+    .tt-circle svg { width: 24px; height: 24px; fill: #161823; }
+    .tt-col .xilc-tt-action { margin: 0; }
+
+    /* Fausse publication Instagram */
+    .ig { width: 470px; background: #fff; border-radius: 14px; box-shadow: 0 30px 80px rgba(40, 20, 90, .2); overflow: hidden; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #000; }
+    .ig-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; font-weight: 600; font-size: 14px; }
+    .ig-ring { width: 34px; height: 34px; border-radius: 50%; padding: 2px; background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5); }
+    .ig-ring i { display: block; width: 100%; height: 100%; border-radius: 50%; border: 2px solid #fff; background: #c9b8ff; }
+    .ig-media { height: 400px; background: linear-gradient(200deg, #ffd3a5, #fd6585 55%, #7b5cff); }
+    .ig-actions { display: flex; align-items: center; padding: 4px 6px; }
+    .ig-ico { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+    .ig-ico svg { width: 24px; height: 24px; }
+    .ig-likes { padding: 0 14px 14px; font-size: 14px; font-weight: 600; }
+    .ig .xilc-services { color: #000; }
+    .ig-sheet { position: absolute; right: 40px; bottom: 120px; width: 330px; background: #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.25); padding: 18px 16px; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .ig-sheet h4 { margin: 0 0 14px; text-align: center; font-size: 16px; }
+    .ig-share-row { display: flex; justify-content: space-between; }
+    .ig-share { width: 70px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; color: #000; text-align: center; }
+    .ig-share i { width: 52px; height: 52px; border-radius: 50%; background: #efefef; display: flex; align-items: center; justify-content: center; }
+    .ig-share i svg { width: 24px; height: 24px; }
+    .ig-share.kk i { background: var(--grad); color: #fff; box-shadow: 0 0 0 3px #fff, 0 0 0 5px #9b4dff; }
+    .ig-share.kk span { font-weight: 700; }
+
+    /* Popup */
+    .popup-shot { width: 380px; border-radius: 14px; box-shadow: 0 30px 80px rgba(40, 20, 90, .25); background: #fff; display: block; }
+    .float-note { position: absolute; background: #fff; border-radius: 12px; padding: 12px 16px; box-shadow: 0 10px 30px rgba(40, 20, 90, .15); font-size: 14px; line-height: 1.4; max-width: 230px; }
+    .float-note b { display: block; margin-bottom: 2px; }
+
+    /* Tuiles promo */
+    .promo { width: 100%; height: 100%; background: var(--grad); color: #fff; display: flex; align-items: center; }
+    .promo img { filter: drop-shadow(0 10px 30px rgba(0,0,0,.25)); border-radius: 24%; }
+  </style>
+</head>
+
+<body>
+  <!-- 1. Promesse : le lien qui s'affiche dans le chat -->
+  <section class="scene bg-soft" id="hero">
+    <div class="copy">
+      <div class="brand"><img src="icon.svg" alt="">X, Instagram &amp; TikTok Link Converter</div>
+      <div class="kicker">Share links that embed</div>
+      <h1>Your friends see the video, not a bare link.</h1>
+      <p class="lead">One click copies an X, Instagram or TikTok post as a link that shows a real preview in Discord, Telegram, WhatsApp&nbsp;&amp;&nbsp;co.</p>
+    </div>
+    <div class="stage">
+      <div class="chat">
+        <div class="msg">
+          <div class="avatar" style="background:#5865f2"></div>
+          <div class="msg-body">
+            <div class="who">sam<time>Today at 21:04</time><span class="tag before">BEFORE</span></div>
+            <div class="msg-text"><a>https://x.com/alexr/status/1849204417726103</a></div>
+            <div class="nopreview">No preview, nobody clicks.</div>
+          </div>
+        </div>
+        <div class="msg">
+          <div class="avatar" style="background:#eb459e"></div>
+          <div class="msg-body">
+            <div class="who">you<time>Today at 21:05</time><span class="tag after">AFTER</span></div>
+            <div class="msg-text"><a>https://fixvx.com/alexr/status/1849204417726103</a></div>
+            <div class="embed">
+              <div class="embed-author">Alex Rivera (@alexr)</div>
+              <div class="embed-desc">my cat just discovered the robot vacuum 😭</div>
+              <div class="media"><div class="play"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. X : pastilles dans la barre d'actions + menu ⋯ -->
+  <section class="scene bg-soft" id="x">
+    <div class="copy">
+      <div class="kicker">X / Twitter</div>
+      <h1>One click on the post. Done.</h1>
+      <p class="lead">Chips sit right in the action bar of every post. Pick the format, the link is in your clipboard.</p>
+      <ul class="points">
+        <li><span><b>vx</b>, <b>upx</b>, <b>vxt</b>: fixvx, fixupx, vxtwitter</span></li>
+        <li><span><b>x</b>: the clean original link</span></li>
+        <li><span>More services wait in the <b>⋯</b> menu</span></li>
+      </ul>
+    </div>
+    <div class="stage">
+      <div class="x-post">
+        <div class="x-head">
+          <div class="avatar" style="background:linear-gradient(135deg,#7b5cff,#ff4f8b)"></div>
+          <div style="flex:1">
+            <div class="x-name">Alex Rivera<span>@alexr · 2h</span></div>
+            <div class="x-text">my cat just discovered the robot vacuum 😭 sound on</div>
+            <div class="x-media"><div class="play"></div></div>
+            <div class="x-actions" id="x-actions">
+              <div class="x-act"><svg viewBox="0 0 24 24"><path d="M1.75 10c0-4.42 3.58-8 8-8h4.37c4.42 0 8.13 3.54 8.13 7.95 0 2.79-1.49 5.37-3.9 6.79L10 21.6v-3.6H9.75c-4.42 0-8-3.58-8-8zm8-6c-3.32 0-6 2.69-6 6s2.68 6 6 6H12v2.06l5.35-3.03c1.81-1.06 2.9-2.99 2.9-5.08C20.25 6.69 17.48 4 14.12 4H9.75z"/></svg>128</div>
+              <div class="x-act"><svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.43 4.14-1.36 1.46L5.5 7.55V16c0 1.1.9 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.43 9.48.07 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.07-1.93 1.36 1.46-4.43 4.14-4.43-4.14 1.36-1.46 2.07 1.93V8c0-1.1-.9-2-2-2z"/></svg>2.4K</div>
+              <div class="x-act"><svg viewBox="0 0 24 24"><path d="M16.7 5.5c-1.11-.03-2.4.52-3.9 2.16l-.78.86-.79-.86C9.73 6.02 8.44 5.47 7.32 5.5 6.2 5.53 5.2 6.07 4.6 6.97c-1.18 1.75-.69 4.8 3.66 8.86 1.4 1.3 2.62 2.24 3.76 2.95 1.12-.7 2.35-1.65 3.75-2.95 4.35-4.06 4.84-7.11 3.66-8.86-.6-.9-1.6-1.44-2.73-1.47z"/></svg>31K</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TikTok -->
+  <section class="scene bg-soft" id="tiktok">
+    <div class="copy">
+      <div class="kicker">TikTok</div>
+      <h1>TikToks that play right in the chat.</h1>
+      <p class="lead">Chips under Share copy a <b>tnktok</b>, <b>tiktxk</b> or <b>kktiktok</b> link. On the For You feed, the popup grabs the video on screen.</p>
+    </div>
+    <div class="stage">
+      <div class="tt">
+        <div class="tt-video">
+          <div class="play" style="opacity:.0"></div>
+          <div class="tt-caption"><b>@dance.lab</b>trying the new trend in one take 🔥 #fyp</div>
+        </div>
+        <div class="tt-col" id="tt-col">
+          <div class="avatar" style="width:48px;height:48px;background:linear-gradient(135deg,#25f4ee,#fe2c55)"></div>
+          <div class="tt-btn"><div class="tt-circle"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.3 3 4.5 6.9 4.5c2.1 0 3.6 1.2 5.1 3 1.5-1.8 3-3 5.1-3 3.9 0 6 3.8 4.5 7.3C19.5 16.4 12 21 12 21z"/></svg></div>482K</div>
+          <div class="tt-btn"><div class="tt-circle"><svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.9 2 11.6c0 2.6 1.4 4.9 3.6 6.5L5 21.5l4-2c.9.2 1.9.3 3 .3 5.5 0 10-3.9 10-8.6S17.5 3 12 3z"/></svg></div>3,104</div>
+          <div class="tt-btn"><div class="tt-circle"><svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z"/></svg></div>21K</div>
+          <div class="tt-btn" id="tt-share"><div class="tt-circle"><svg viewBox="0 0 24 24"><path d="M13 4.5V9C6 9.5 3 13.5 2.5 20c2-3.8 5.2-5.5 10.5-5.5V19l8.5-7.2L13 4.5z"/></svg></div>Share</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Instagram -->
+  <section class="scene bg-soft" id="instagram">
+    <div class="copy">
+      <div class="kicker">Instagram</div>
+      <h1>Reels and posts, ready to share.</h1>
+      <p class="lead">A link button sits next to Share on every post and reel, and <b>kkinstagram</b> joins the Share menu. Works in any interface language.</p>
+    </div>
+    <div class="stage">
+      <div class="ig">
+        <div class="ig-head"><div class="ig-ring"><i></i></div>sunset.club</div>
+        <div class="ig-media"></div>
+        <div class="ig-actions" id="ig-actions">
+          <div class="ig-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M16.8 3.5c-2 0-3.6 1.1-4.8 2.8-1.2-1.7-2.8-2.8-4.8-2.8C4.3 3.5 2 6 2 9.1c0 5.6 8.6 11.1 10 11.4 1.4-.3 10-5.8 10-11.4 0-3.1-2.3-5.6-5.2-5.6z"/></svg></div>
+          <div class="ig-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round"><path d="M20.7 16.5A10 10 0 1 0 17.5 20l3.5 1z"/></svg></div>
+          <div class="ig-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linejoin="round"><path d="M22 3 9.2 10.1M22 3l-7 18-3.9-10.9L2 7z"/></svg></div>
+        </div>
+        <div class="ig-likes">12,480 likes</div>
+      </div>
+      <div class="ig-sheet">
+        <h4>Share</h4>
+        <div class="ig-share-row">
+          <div class="ig-share"><i><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></i>Copy link</div>
+          <div class="ig-share kk"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg></i><span>kkinstagram</span></div>
+          <div class="ig-share"><i style="background:#25d366"></i>WhatsApp</div>
+          <div class="ig-share"><i style="background:#1877f2"></i>Facebook</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Popup : services configurables -->
+  <section class="scene bg-soft" id="popup">
+    <div class="copy">
+      <div class="kicker">Your services, your rules</div>
+      <h1>New embed site? Add it yourself.</h1>
+      <p class="lead">Add, hide or reorder link services per site from the popup. No extension update needed, and your list follows your browser account.</p>
+      <ul class="points">
+        <li><span>Short label + domain, that's it</span></li>
+        <li><span>First ones become chips, the rest go in <b>⋯</b></span></li>
+        <li><span>No tracking, nothing leaves your browser</span></li>
+      </ul>
+    </div>
+    <div class="stage">
+      <img class="popup-shot" src="build/popup.png" alt="">
+    </div>
+  </section>
+
+  <!-- Petite tuile promo 440x280 -->
+  <section class="scene" id="promo">
+    <div class="promo" style="flex-direction:column;justify-content:center;gap:16px;text-align:center">
+      <img src="icon.svg" alt="" style="width:96px;height:96px">
+      <div style="font-weight:800;font-size:26px;letter-spacing:-.01em;line-height:1.15">Share links<br>that embed</div>
+      <div style="font-weight:600;font-size:14px;opacity:.9">X · Instagram · TikTok</div>
+    </div>
+  </section>
+
+  <!-- Bannière 1400x560 -->
+  <section class="scene" id="marquee">
+    <div class="promo" style="padding:0 110px;gap:56px">
+      <img src="icon.svg" alt="" style="width:200px;height:200px">
+      <div>
+        <div style="font-weight:800;font-size:64px;letter-spacing:-.02em;line-height:1.05">Share links that embed.</div>
+        <div style="font-weight:500;font-size:26px;opacity:.92;margin-top:18px">One click on X, Instagram and TikTok. Real previews in Discord, Telegram, WhatsApp.</div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../config.js"></script>
+  <script src="../utils.js"></script>
+  <script>
+    // Pas de stockage ni de presse-papiers dans le rendu
+    window.Storage = null;
+
+    const scene = location.hash.slice(1) || 'hero';
+    document.getElementById(scene).classList.add('on');
+    if (scene === 'promo') document.body.style.cssText = 'width:440px;height:280px';
+    if (scene === 'marquee') document.body.style.cssText = 'width:1400px;height:560px';
+
+    injectStyles();
+    const noop = () => null;
+    const services = CONFIG.DEFAULT_SERVICES;
+
+    if (scene === 'x') {
+      const chips = renderServiceButtons(services.x, { platform: 'x', getUrl: noop });
+      document.getElementById('x-actions').appendChild(chips);
+      chips.querySelector('.xilc-more').click();
+      const vx = chips.querySelectorAll('.xilc-chip')[1];
+      vx.textContent = '✓';
+      vx.classList.add('xilc-copied');
+      createToast(CONFIG.MESSAGES.COPIED, 1e9, 'https://fixvx.com/alexr/status/1849204417726103');
+    }
+
+    if (scene === 'tiktok') {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'xilc-tt-action';
+      wrapper.appendChild(renderServiceButtons(services.tiktok, { platform: 'tiktok', getUrl: noop, chipClass: 'xilc-chip xilc-tt' }));
+      document.getElementById('tt-share').insertAdjacentElement('afterend', wrapper);
+      wrapper.querySelector('.xilc-more').click();
+      createToast(CONFIG.MESSAGES.COPIED, 1e9, 'https://tnktok.com/@dance.lab/video/7429813706419522847');
+    }
+
+    if (scene === 'instagram') {
+      const buttons = renderServiceButtons(services.instagram, { platform: 'instagram', getUrl: noop, chipClass: 'xilc-quick-btn xilc-ig', iconClass: 'xilc-quick-btn xilc-ig' });
+      buttons.style.marginLeft = '0';
+      document.getElementById('ig-actions').appendChild(buttons);
+    }
+  </script>
+</body>
+
+</html>

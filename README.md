@@ -1,6 +1,16 @@
-# 🔗 X & Instagram Link Converter
+<p align="center"><img src="store/icon.svg" width="96" alt=""></p>
 
-A lightweight browser extension to automatically convert links from **X.com** (formerly Twitter), **Instagram** or **TikTok** to alternative frontends when sharing or copying.
+<h1 align="center">X, Instagram &amp; TikTok Link Converter</h1>
+
+<p align="center"><b>Share links that embed.</b> One click copies an X, Instagram or TikTok post as a link that shows the real video or picture in Discord, Telegram, WhatsApp &amp; co.</p>
+
+<p align="center">
+  <a href="https://chromewebstore.google.com/detail/ohmjcjchdjkedcmpnefjgffkdolelbih"><b>Add to Chrome</b></a> ·
+  <a href="https://addons.mozilla.org/firefox/addon/x-instagram-link-converter/"><b>Add to Firefox</b></a> ·
+  <a href="https://lepetitpaco.github.io/X-Instagram-Link-Converter/">Website</a>
+</p>
+
+<p align="center"><img src="store/screenshots/1-share-links-that-embed.png" width="760" alt="A Discord chat: the x.com link has no preview, the fixvx.com link shows the video"></p>
 
 ## Features
 
@@ -137,8 +147,7 @@ X-Instagram-Link-Converter/
 ├── config.js               # Centralized configuration
 ├── utils.js                # Shared utility functions
 ├── storage.js              # Storage utilities
-├── icons/
-│   └── icon128.png
+├── icons/                  # icon16/32/48/128.png, rendered from store/icon.svg
 ├── scripts/                # Build and preparation scripts
 │   ├── prepare-chrome.sh/.bat
 │   ├── prepare-firefox.sh/.bat
@@ -147,9 +156,9 @@ X-Instagram-Link-Converter/
 ├── docs/                   # Documentation files
 │   ├── INSTAGRAM_FEATURES_REVIEW.md
 │   ├── INSTAGRAM_TEST_LINKS.md
-│   ├── STORE_DESCRIPTIONS.md
-│   ├── CHROME_PRIVACY_JUSTIFICATIONS.txt
-│   └── CHROME_STORE_DESCRIPTION.txt
+│   └── CHROME_PRIVACY_JUSTIFICATIONS.txt
+├── store/                  # Store listing texts (LISTING.md), icon source, screenshots, render.sh
+├── site/                   # GitHub Pages landing page
 ├── packages/               # Generated packages
 │   ├── x-instagram-link-converter-chrome.zip
 │   └── x-instagram-link-converter-firefox.zip
@@ -296,6 +305,11 @@ Each package includes:
 - Development files
 
 ## Changelog
+
+### Version 1.2.1
+- New icon (16 to 128 px) and store visuals
+- Removed the unused `clipboardRead` and `scripting` permissions
+- Popup texts in English, What's new section in the popup
 
 ### Version 1.2.0
 - Added TikTok support: chips below Share copy a `tnktok.com`, `tiktxk.com` or `kktiktok.com` link; the popup copies the video on screen, even on the feed

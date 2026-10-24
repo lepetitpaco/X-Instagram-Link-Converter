@@ -40,6 +40,14 @@ const CONFIG = {
   // Nouveautés affichées dans le popup (la plus récente en premier)
   CHANGELOG: [
     {
+      version: '1.2.1',
+      changes: [
+        'New icon',
+        'Fewer permissions: the extension no longer asks to read your clipboard',
+        'Popup texts in English, and this What\'s new section'
+      ]
+    },
+    {
       version: '1.2.0',
       changes: [
         'TikTok support: tnktok, tiktxk and kktiktok links below Share, and from this popup for the video on screen',

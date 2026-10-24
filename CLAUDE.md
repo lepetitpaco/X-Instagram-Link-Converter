@@ -65,8 +65,9 @@ X-Instagram-Link-Converter/
 ├── config.js              # Config centralisée : domaines, frontends alternatifs
 ├── utils.js               # Utilitaires partagés : styles, toast, icônes
 ├── storage.js             # Helpers localStorage
-├── icons/
-│   └── icon128.png
+├── icons/                 # icon16/32/48/128.png générées depuis store/icon.svg
+├── store/                 # Textes des fiches (LISTING.md), icône source, visuels ; store/render.sh régénère tout (Docker)
+├── site/                  # Page GitHub Pages (.github/workflows/pages.yml)
 ├── scripts/               # Préparation + packaging par navigateur
 ├── packages/              # ZIPs générés (ne pas commiter)
 └── docs/                  # Store descriptions, review notes

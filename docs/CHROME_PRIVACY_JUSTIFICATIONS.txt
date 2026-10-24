@@ -19,7 +19,7 @@ Required to access and modify content on:
 - www.tiktok.com
 - tiktok.com
 
-Justification: The extension needs to inject conversion buttons and intercept link copying on these domains. Without host permissions, the content scripts cannot run on these sites to provide the link conversion functionality.
+Justification: The extension's content scripts add copy buttons to posts and videos on these sites and read the post URL to convert it. Without host permissions, the buttons cannot be displayed on these sites.
 
 AUTORISATION activeTab
 ----------------------
@@ -27,23 +27,11 @@ Required to access the current tab's URL and inject conversion buttons.
 
 Justification: The extension needs to read the current page URL to convert it, and inject UI elements (buttons) into the page. This permission allows the extension to work only on the active tab when the user interacts with it.
 
-AUTORISATION clipboardRead
----------------------------
-Required for Instagram automatic link conversion feature.
-
-Justification: When users click "Copy Link" on Instagram, the extension intercepts this action by reading the clipboard content, converts the Instagram URL to kkinstagram.com, and writes the converted link back. This is the only way to automatically convert Instagram links without user interaction.
-
 AUTORISATION clipboardWrite
 ----------------------------
 Required to copy converted links to the user's clipboard.
 
 Justification: After converting a link, the extension copies the converted URL to the clipboard so users can paste it directly. This is the core functionality - users click a button and the converted link is ready to paste.
-
-AUTORISATION scripting
-----------------------
-Required to inject conversion buttons into X/Twitter, Instagram and TikTok pages (Manifest V3).
-
-Justification: The extension injects conversion buttons directly into the page content. This permission (Manifest V3 equivalent of executeScript) is necessary to add the UI elements that appear under each post. Without it, the in-page buttons cannot be displayed.
 
 AUTORISATION storage
 --------------------

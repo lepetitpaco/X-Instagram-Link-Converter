@@ -1,13 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "X & Instagram Link Converter",
-  "version": "1.2.0",
+  "name": "X, Instagram & TikTok Link Converter",
+  "version": "1.2.1",
   "description": "Copy X, Instagram and TikTok links that embed well in Discord and chats (fixvx, vxtwitter, kkinstagram, tnktok…) in one click.",
   "permissions": [
     "activeTab",
-    "clipboardRead",
     "clipboardWrite",
-    "scripting",
     "storage"
   ],
   "host_permissions": [
@@ -39,10 +37,18 @@
     }
   ],
   "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_icon": "icons/icon128.png",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
     "default_title": "Link Converter",
     "default_popup": "popup.html"
   }

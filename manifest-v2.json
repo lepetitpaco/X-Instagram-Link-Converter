@@ -1,11 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "X & Instagram Link Converter",
-  "version": "1.2.0",
+  "name": "X, Instagram & TikTok Link Converter",
+  "version": "1.2.1",
   "description": "Convert X/Twitter, Instagram and TikTok links to privacy-friendly alternatives (fixvx, fixupx, vxtwitter, kkinstagram, tnktok, tiktxk, kktiktok) with one click.",
   "permissions": [
     "activeTab",
-    "clipboardRead",
     "clipboardWrite",
     "storage"
   ],
@@ -30,10 +29,18 @@
     }
   ],
   "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
   "browser_action": {
-    "default_icon": "icons/icon128.png",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
     "default_title": "Link Converter",
     "default_popup": "popup.html"
   },

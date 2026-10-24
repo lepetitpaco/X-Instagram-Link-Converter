@@ -411,19 +411,6 @@ async function copyToClipboard(text) {
   }
 }
 
-/**
- * Lit le texte du presse-papiers avec gestion d'erreur
- * @returns {Promise<string|null>} Texte lu ou null si erreur
- */
-async function readFromClipboard() {
-  try {
-    return await navigator.clipboard.readText();
-  } catch (e) {
-    console.error('Clipboard read error:', e);
-    return null;
-  }
-}
-
 // Export pour utilisation dans les scripts
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
@@ -436,8 +423,7 @@ if (typeof module !== 'undefined' && module.exports) {
     convertUrl,
     isValidXUrl,
     isValidInstagramUrl,
-    copyToClipboard,
-    readFromClipboard
+    copyToClipboard
   };
 } else {
   window.Utils = {
@@ -450,7 +436,6 @@ if (typeof module !== 'undefined' && module.exports) {
     convertUrl,
     isValidXUrl,
     isValidInstagramUrl,
-    copyToClipboard,
-    readFromClipboard
+    copyToClipboard
   };
 }
