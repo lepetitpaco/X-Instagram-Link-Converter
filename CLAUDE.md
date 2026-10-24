@@ -39,11 +39,11 @@ L'extension supporte deux versions de manifest selon le navigateur :
 ```sh
 # Firefox (Manifest V2)
 scripts/prepare-firefox.sh    # ou prepare-firefox.bat sur Windows
-scripts/package-firefox.sh    # génère packages/firefox.zip
+scripts/package-firefox.sh    # génère packages/x-instagram-link-converter-firefox.zip
 
 # Chrome/Edge (Manifest V3)
 scripts/prepare-chrome.sh     # ou prepare-chrome.bat sur Windows
-scripts/package-chrome.sh     # génère packages/chrome.zip
+scripts/package-chrome.sh     # génère packages/x-instagram-link-converter-chrome.zip
 ```
 
 Les scripts `prepare-*` switchent le `manifest.json` actif automatiquement.
@@ -66,11 +66,10 @@ X-Instagram-Link-Converter/
 ├── utils.js               # Utilitaires partagés : styles, toast, icônes
 ├── storage.js             # Helpers localStorage
 ├── icons/                 # icon16/32/48/128.png générées depuis store/icon.svg
-├── store/                 # Textes des fiches (LISTING.md), icône source, visuels ; store/render.sh régénère tout (Docker)
+├── store/                 # Fiches des stores (LISTING.md, justifications Chrome), icône source, visuels ; store/render.sh régénère tout (Docker)
 ├── site/                  # Page GitHub Pages (.github/workflows/pages.yml)
 ├── scripts/               # Préparation + packaging par navigateur
-├── packages/              # ZIPs générés (ne pas commiter)
-└── docs/                  # Store descriptions, review notes
+└── packages/              # ZIPs générés par scripts/package-*
 ```
 
 ## Développement
@@ -87,6 +86,6 @@ Pas de build step — c'est du JavaScript vanilla.
 
 - Toujours modifier `config.js` pour les services par défaut, pas les content scripts directement
 - Toujours tester les deux manifests avant une publication
-- Le dossier `packages/` est généré — ne pas le commiter
+- Les zips de `packages/` sont suivis par git : les régénérer avec `scripts/package-*` avant chaque publication
 - Ne pas mélanger les APIs V2/V3 dans le même fichier background (deux fichiers séparés)
 - `manifest.json` est le fichier actif modifié par les scripts — ne pas l'éditer manuellement

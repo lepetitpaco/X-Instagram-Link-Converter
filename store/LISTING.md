@@ -137,4 +137,4 @@ Objectif unique :
 Copy X/Twitter, Instagram and TikTok post links converted to embed services (fixvx, vxtwitter, kkinstagram, tnktok… editable by the user) so they show a preview when shared.
 ```
 
-Justifications : voir `docs/CHROME_PRIVACY_JUSTIFICATIONS.txt` (activeTab, clipboardWrite, storage, accès aux sites). Code distant : non. Données collectées : aucune (ne cocher aucune case), puis cocher les trois certifications.
+Justifications : voir `store/CHROME_PRIVACY_JUSTIFICATIONS.txt` (activeTab, clipboardWrite, storage, accès aux sites). Code distant : non. Données collectées : aucune (ne cocher aucune case), puis cocher les trois certifications.
