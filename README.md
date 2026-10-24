@@ -302,6 +302,11 @@ Each package includes:
 - Link services are now configurable per site from the popup (label, domain, order, shown or hidden), synced with the browser account
 - Extra services are grouped in a ⋯ menu so the action bars stay compact
 
+### Version 1.1.0
+- One-click chips in the X action bar (x.com, fixvx, fixupx, vxtwitter), no extra row under posts
+- Quick link button next to Share on Instagram (feed, posts, reels), in any interface language
+- Settings apply to open tabs without reloading
+
 ### Version 1.0.4
 - Simplified Instagram integration: removed in-page buttons, kept only share menu button
 - Improved share menu detection with multiple strategies

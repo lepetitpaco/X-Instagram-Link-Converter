@@ -37,6 +37,25 @@ const CONFIG = {
   // Libellés du bouton Partager d'Instagram selon la langue de l'interface
   INSTAGRAM_SHARE_LABELS: ['Share', 'Partager', 'Compartir', 'Compartilhar', 'Teilen', 'Condividi', 'Delen', 'Udostępnij', 'Paylaş', 'Поделиться', 'Bagikan'],
 
+  // Nouveautés affichées dans le popup (la plus récente en premier)
+  CHANGELOG: [
+    {
+      version: '1.2.0',
+      changes: [
+        'TikTok support: tnktok, tiktxk and kktiktok links below Share, and from this popup for the video on screen',
+        'Link services are configurable per site below (label, domain, order, shown or hidden), synced with your browser account',
+        'Extra services are grouped in a ⋯ menu so action bars stay compact'
+      ]
+    },
+    {
+      version: '1.1.0',
+      changes: [
+        'One-click chips in the X action bar (x, vx, upx, vxt)',
+        'Quick link button next to Share on Instagram, in any language'
+      ]
+    }
+  ],
+
   // Messages
   MESSAGES: {
     COPIED: '✅ Copied',

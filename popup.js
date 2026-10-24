@@ -417,9 +417,38 @@ function renderServicesEditor() {
   });
 }
 
+/**
+ * Affiche les nouveautés de chaque version ; une pastille signale une version pas encore consultée
+ */
+async function renderChangelog() {
+  const container = document.getElementById('changelog');
+  const version = browserAPI?.runtime?.getManifest?.().version || CONFIG.CHANGELOG[0].version;
+  const storage = browserAPI?.storage?.local;
+  const seen = storage ? (await new Promise(resolve => storage.get(['lastSeenVersion'], resolve)))?.lastSeenVersion : version;
+
+  const details = createElement('details', 'changelog');
+  const summary = createElement('summary', null, `What's new · v${version}`);
+  if (seen !== version) summary.appendChild(createElement('span', 'changelog-badge', 'NEW'));
+  details.appendChild(summary);
+
+  CONFIG.CHANGELOG.forEach(release => {
+    details.appendChild(createElement('div', 'changelog-version', `v${release.version}`));
+    const list = createElement('ul');
+    release.changes.forEach(change => list.appendChild(createElement('li', null, change)));
+    details.appendChild(list);
+  });
+
+  details.addEventListener('toggle', () => {
+    if (!details.open || seen === version) return;
+    summary.querySelector('.changelog-badge')?.remove();
+    storage?.set({ lastSeenVersion: version });
+  });
+  container.replaceChildren(details);
+}
+
 // Event listener pour effacer l'historique
 document.getElementById('clear-history').addEventListener('click', async () => {
-  if (confirm('Voulez-vous vraiment effacer l\'historique ?')) {
+  if (confirm('Clear the conversion history?')) {
     try {
       const storage = browserAPI?.storage?.local;
       if (storage) {
@@ -443,4 +472,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   renderServicesEditor();
   await loadStats();
   await loadHistory();
+  await renderChangelog();
 });
