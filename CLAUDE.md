@@ -66,7 +66,7 @@ X-Instagram-Link-Converter/
 ├── utils.js               # Utilitaires partagés : styles, toast, icônes
 ├── storage.js             # Helpers localStorage
 ├── icons/                 # icon16/32/48/128.png générées depuis store/icon.svg
-├── store/                 # Fiches des stores (LISTING.md, justifications Chrome), icône source, visuels ; store/render.sh régénère tout (Docker)
+├── store/                 # Fiches des stores (CHROME.md, FIREFOX.md), icône source, vraies captures (captures/), scènes et visuels ; store/render.sh régénère tout (Docker)
 ├── site/                  # Page GitHub Pages (.github/workflows/pages.yml)
 ├── scripts/               # Préparation + packaging par navigateur
 └── packages/              # ZIPs générés par scripts/package-*
@@ -81,6 +81,10 @@ Pas de build step — c'est du JavaScript vanilla.
 - Chrome : `chrome://extensions` → "Load unpacked" → après `prepare-chrome.sh`
 
 **Modifier la config** (services par défaut, limites) : éditer `config.js` uniquement — les content scripts et le popup le chargent.
+
+## Visuels des stores
+
+`store/captures/` contient de vraies captures de x.com, instagram.com et tiktok.com (posts publics de la NASA) prises dans Chrome avec l'extension installée, recadrées sur le post : jamais de profil, de fil, de contacts ni de visage d'enfant. `store/scenes.html` les encadre (titre, halo sur les boutons, vrai toast d'`utils.js`) et `store/render.sh` rend les captures 1280x800, les tuiles promo et le popup. Pas de maquette d'interface inventée.
 
 ## Règles
 
