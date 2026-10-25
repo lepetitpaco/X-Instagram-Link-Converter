@@ -6,7 +6,7 @@ cd /d "%~dp0\.."
 
 echo 📦 Création du package Firefox (Manifest V2)...
 
-set PACKAGE_NAME=x-instagram-link-converter-firefox
+set PACKAGE_NAME=embed-link-copier-firefox
 set TEMP_DIR=.firefox-package
 set ZIP_FILE=packages\%PACKAGE_NAME%.zip
 

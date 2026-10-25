@@ -7,11 +7,23 @@ Follows the dashboard tabs in order. Labels in **bold** are the field names as t
 dashboard shows them; the text to paste is in the code blocks. Visuals are rebuilt by
 `store/render.sh` from the real captures in `store/captures/`.
 
+## Checklist for 1.2.2 (rename to Embed Link Copier)
+
+1. GitHub, in this order: rename the repository to `Embed-Link-Copier` (Settings → General),
+   update the local remote (`git remote set-url origin https://github.com/lepetitpaco/Embed-Link-Copier.git`),
+   then push, and check that Pages publishes at https://lepetitpaco.github.io/Embed-Link-Copier/
+   (re-run the Pages workflow if needed). Pushing before the rename would publish links that 404.
+2. Package: upload `packages/embed-link-copier-chrome.zip` (version 1.2.2). Chrome takes the store
+   name from the package: this replaces "X, Instagram & TikTok Link Converter".
+3. Store listing: description below, the 5 screenshots, the 2 promo images, homepage and support URLs.
+4. Privacy: privacy policy URL below (new address).
+5. "Envoyer pour examen".
+
 ---
 
 ## 1. Package
 
-Upload `packages/x-instagram-link-converter-chrome.zip` (`scripts/package-chrome.sh`).
+Upload `packages/embed-link-copier-chrome.zip` (`scripts/package-chrome.sh`).
 
 ---
 
@@ -38,7 +50,7 @@ An embed site goes down, a new one appears? Add it yourself in the popup: a shor
 ★ PRIVATE BY DESIGN
 • No tracking, no analytics, no account
 • Links are converted locally, nothing is sent anywhere
-• Open source: github.com/lepetitpaco/X-Instagram-Link-Converter
+• Open source: github.com/lepetitpaco/Embed-Link-Copier
 
 Works on x.com, twitter.com, instagram.com and tiktok.com.
 
@@ -69,8 +81,7 @@ This extension is not affiliated with these services, nor with X Corp., Meta or 
 
 All are 24-bit PNG without alpha, as Chrome requires. The screenshots are real captures of
 public NASA posts with the extension installed; the first one compares the same post pasted in
-Discord as a plain link and as a converted link. `6-instagram-in-chat.png` is for Firefox and the
-site only (Chrome takes 5 screenshots).
+Discord as a plain link and as a converted link.
 
 To replace the screenshots of the live listing: delete the old ones in "Captures d'écran",
 drop the new ones in order, then "Envoyer pour examen". No new package needed.
@@ -79,12 +90,12 @@ drop the new ones in order, then "Envoyer pour examen". No new package needed.
 
 **URL de la page d'accueil**:
 ```
-https://lepetitpaco.github.io/X-Instagram-Link-Converter/
+https://lepetitpaco.github.io/Embed-Link-Copier/
 ```
 
 **URL de l'assistance**:
 ```
-https://github.com/lepetitpaco/X-Instagram-Link-Converter/issues
+https://github.com/lepetitpaco/Embed-Link-Copier/issues
 ```
 
 ---
@@ -122,7 +133,7 @@ The content scripts add copy buttons to posts and videos on x.com, twitter.com, 
 
 **URL des règles de confidentialité**:
 ```
-https://lepetitpaco.github.io/X-Instagram-Link-Converter/privacy.html
+https://lepetitpaco.github.io/Embed-Link-Copier/privacy.html
 ```
 
 ---

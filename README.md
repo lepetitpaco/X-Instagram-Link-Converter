@@ -9,10 +9,10 @@
 <p align="center">
   <a href="https://chromewebstore.google.com/detail/ohmjcjchdjkedcmpnefjgffkdolelbih"><b>Add to Chrome</b></a> 路
   <a href="https://addons.mozilla.org/firefox/addon/x-instagram-link-converter/"><b>Add to Firefox</b></a> 路
-  <a href="https://lepetitpaco.github.io/X-Instagram-Link-Converter/">Website</a>
+  <a href="https://lepetitpaco.github.io/Embed-Link-Copier/">Website</a>
 </p>
 
-<p align="center"><img src="store/screenshots/1-share-links-that-embed.png" width="760" alt="A Discord chat: the x.com link has no preview, the fixvx.com link shows the video"></p>
+<p align="center"><img src="store/screenshots/1-share-links-that-embed.png" width="760" alt="In Discord, a plain x.com link shows cut text without the picture; the same post copied as a fixvx link shows the full text and the picture"></p>
 
 ## How it works
 
@@ -38,10 +38,10 @@ This extension makes no embed itself: it only swaps the link's domain (`x.com/鈥
 - `tiktxk.com`: [tiktxk](https://github.com/Britmoji/tiktxk) by Britmoji
 - `kkinstagram.com`, `kktiktok.com`: [kkScript](https://kkscript.com) ([GitHub](https://github.com/kkscript))
 
-Embed services come and go: the [website](https://lepetitpaco.github.io/X-Instagram-Link-Converter/#services) lists the ones that still work, with alternatives you can add in the popup.
+Embed services come and go: the [website](https://lepetitpaco.github.io/Embed-Link-Copier/#services) lists the ones that still work, with alternatives you can add in the popup.
 
 Not affiliated with these services, X Corp., Meta or TikTok.
 
 ---
 
-[Changelog](CHANGELOG.md) 路 [Contributing](CONTRIBUTING.md) 路 [Website](https://lepetitpaco.github.io/X-Instagram-Link-Converter/)
+[Changelog](CHANGELOG.md) 路 [Contributing](CONTRIBUTING.md) 路 [Website](https://lepetitpaco.github.io/Embed-Link-Copier/)

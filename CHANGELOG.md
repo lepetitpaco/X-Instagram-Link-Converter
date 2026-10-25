@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.2.2
+- The extension is called Embed Link Copier on every store
+- Refreshed popup: dark theme matching the new icon, clearer services editor
+- Links point to the renamed repository and website (github.com/lepetitpaco/Embed-Link-Copier)
+
 ## Version 1.2.1
 - New icon (16 to 128 px) and store visuals
 - Removed the unused `clipboardRead` and `scripting` permissions

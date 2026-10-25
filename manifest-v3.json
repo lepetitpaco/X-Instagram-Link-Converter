@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Embed Link Copier: X, Instagram, TikTok",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Copy X, Instagram and TikTok links that embed well in Discord and chats (fixvx, vxtwitter, kkinstagram, tnktok…) in one click.",
   "permissions": [
     "activeTab",

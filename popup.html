@@ -4,133 +4,234 @@
 <head>
   <meta charset="utf-8">
   <style>
+    /* Thème sombre aux couleurs de l'icône (dégradé bleu-violet-rose), police système : aucune ressource distante */
+    :root {
+      --bg: #0d0c14;
+      --card: #17161f;
+      --card-2: #201f2b;
+      --line: rgba(255, 255, 255, .08);
+      --ink: #f1f0f7;
+      --muted: #a6a4b8;
+      --accent: #9b4dff;
+      --grad: linear-gradient(135deg, #4f6bff 0%, #9b4dff 55%, #ff4f8b 100%);
+      --error: #ff7a8a;
+      --ok: #7bd88f;
+      color-scheme: dark;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      padding: 12px;
-      width: 320px;
+      padding: 0 14px 14px;
+      width: 330px;
       margin: 0;
       max-height: 600px;
       overflow-y: auto;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .brand {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 -14px 12px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, var(--bg) 70%, rgba(13, 12, 20, 0));
+    }
+
+    .brand img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .brand-tagline {
+      color: var(--muted);
+      font-size: 11px;
     }
 
     h3 {
-      margin: 0 0 10px 0;
-      font-size: 14px;
-      font-weight: 600;
-      color: #333;
+      margin: 0 0 8px 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     .stats {
-      background-color: #f0f0f0;
-      padding: 8px;
-      border-radius: 6px;
-      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
       font-size: 12px;
     }
 
     .stats-item {
-      margin: 4px 0;
-      color: #666;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .stats-item:last-child {
+      grid-column: 1 / -1;
     }
 
     .stats-item strong {
-      color: #333;
+      color: var(--ink);
+      font-weight: 600;
     }
 
     button {
       width: 100%;
       margin: 5px 0;
-      padding: 8px 12px;
+      padding: 9px 12px;
       border: none;
-      border-radius: 6px;
-      background-color: #1d9bf0;
+      border-radius: 10px;
+      background: var(--grad);
       color: #fff;
-      font-size: 13px;
+      font: inherit;
       font-weight: 600;
       cursor: pointer;
-      transition: background-color 0.2s ease;
+      transition: filter .15s ease, transform .15s ease;
     }
 
     button:hover {
-      background-color: #1a8cd8;
+      filter: brightness(1.1);
     }
 
     button:active {
-      background-color: #1579b8;
+      transform: translateY(1px);
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
 
     button:disabled {
-      background-color: #ccc;
+      background: var(--card-2);
+      color: var(--muted);
       cursor: not-allowed;
+      filter: none;
     }
 
     #status {
       margin-top: 10px;
       padding: 8px;
-      border-radius: 6px;
+      border-radius: 10px;
       font-size: 12px;
       text-align: center;
       min-height: 20px;
     }
 
+    #status:empty {
+      display: none;
+    }
+
     .status-success {
-      background-color: #d4edda;
-      color: #155724;
+      background: rgba(123, 216, 143, .12);
+      color: var(--ok);
     }
 
     .status-error {
-      background-color: #f8d7da;
-      color: #721c24;
+      background: rgba(255, 122, 138, .12);
+      color: var(--error);
     }
 
     .divider {
       height: 1px;
-      background-color: #e0e0e0;
-      margin: 8px 0;
+      background: var(--line);
+      margin: 12px 0;
     }
 
     .section {
       margin-bottom: 12px;
     }
 
+    /* Boutons de copie : cartes sobres, la bordure prend la couleur d'accent au survol */
+    .section button {
+      margin: 4px 0;
+      padding: 8px 12px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .section button:hover {
+      filter: none;
+      border-color: var(--accent);
+    }
+
     .settings-section {
-      margin-top: 12px;
+      margin-top: 4px;
     }
 
     .services-platform {
       margin: 6px 0;
+      padding: 4px 10px;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--line);
       font-size: 12px;
     }
 
-    .services-platform summary {
+    .services-platform[open] {
+      padding-bottom: 10px;
+    }
+
+    .services-platform summary,
+    .changelog summary {
       cursor: pointer;
       font-weight: 600;
-      color: #333;
-      padding: 4px 0;
+      color: var(--ink);
+      padding: 6px 0;
     }
 
     .service-row {
       display: flex;
       align-items: center;
       gap: 4px;
-      margin: 4px 0;
+      margin: 5px 0;
     }
 
     .service-row input[type="checkbox"] {
       margin: 0 2px 0 0;
+      accent-color: var(--accent);
       cursor: pointer;
     }
 
     .service-row input[type="text"] {
       min-width: 0;
-      padding: 4px 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      padding: 5px 7px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--bg);
+      color: var(--ink);
+      font: inherit;
       font-size: 12px;
     }
 
+    .service-row input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+
     .service-row .service-label {
-      width: 36px;
+      width: 38px;
       flex: 0 0 auto;
     }
 
@@ -139,11 +240,11 @@
     }
 
     .service-row.invalid input[type="text"] {
-      border-color: #d93025;
+      border-color: var(--error);
     }
 
     .services-error {
-      color: #d93025;
+      color: var(--error);
       font-size: 11px;
       min-height: 0;
     }
@@ -155,54 +256,60 @@
     .services-actions {
       display: flex;
       gap: 6px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     button.editor-btn {
       width: auto;
       margin: 0;
-      padding: 4px 8px;
-      background-color: #f0f0f0;
-      color: #333;
+      padding: 4px 9px;
+      border-radius: 7px;
+      background: var(--card-2);
+      color: var(--ink);
       font-size: 12px;
       font-weight: 500;
     }
 
     button.editor-btn:hover {
-      background-color: #e0e0e0;
+      filter: none;
+      background: #2a2938;
     }
 
     button.editor-btn:disabled {
-      background-color: #f7f7f7;
-      color: #bbb;
+      background: transparent;
+      color: #55536a;
     }
 
     .history-section {
-      margin-top: 12px;
+      margin-top: 4px;
     }
 
     .history-item {
-      padding: 8px;
-      margin: 4px 0;
-      background-color: #f9f9f9;
-      border-radius: 4px;
+      padding: 8px 10px;
+      margin: 5px 0;
+      border-radius: 10px;
+      background: var(--card);
+      border: 1px solid var(--line);
       font-size: 11px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: border-color .15s;
     }
 
     .history-item:hover {
-      background-color: #f0f0f0;
+      border-color: var(--accent);
     }
 
     .history-item-domain {
       font-weight: 600;
-      color: #1d9bf0;
-      margin-bottom: 4px;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 3px;
     }
 
     .history-item-url {
-      color: #666;
+      color: var(--muted);
       word-break: break-all;
       font-size: 10px;
     }
@@ -211,18 +318,11 @@
       font-size: 12px;
     }
 
-    .changelog summary {
-      cursor: pointer;
-      font-weight: 600;
-      color: #333;
-      padding: 4px 0;
-    }
-
     .changelog-badge {
       margin-left: 6px;
-      padding: 1px 5px;
+      padding: 1px 6px;
       border-radius: 8px;
-      background: #1d9bf0;
+      background: var(--grad);
       color: #fff;
       font-size: 10px;
     }
@@ -230,51 +330,64 @@
     .changelog-version {
       margin-top: 6px;
       font-weight: 600;
-      color: #555;
+      color: var(--ink);
     }
 
     .changelog ul {
       margin: 2px 0 0;
       padding-left: 16px;
-      color: #555;
+      color: var(--muted);
     }
 
     .credits {
-      margin-top: 8px;
+      margin-top: 10px;
       font-size: 11px;
-      line-height: 1.4;
-      color: #888;
+      line-height: 1.45;
+      color: var(--muted);
     }
 
     .credits a {
-      color: #1d9bf0;
+      color: var(--ink);
     }
 
     .history-empty {
       text-align: center;
-      color: #999;
+      color: var(--muted);
       font-size: 12px;
       padding: 12px;
+      border-radius: 10px;
+      border: 1px dashed var(--line);
     }
 
-    .clear-history {
+    button.clear-history {
       margin-top: 8px;
       font-size: 11px;
-      padding: 6px;
-      background-color: #f0f0f0;
+      padding: 7px;
+      background: var(--card-2);
+      color: var(--muted);
+      font-weight: 500;
     }
 
-    .clear-history:hover {
-      background-color: #e0e0e0;
+    button.clear-history:hover {
+      filter: none;
+      color: var(--ink);
     }
   </style>
 </head>
 
 <body>
+  <header class="brand">
+    <img src="icons/icon48.png" alt="">
+    <div>
+      <div class="brand-name">Embed Link Copier</div>
+      <div class="brand-tagline">Share links that embed</div>
+    </div>
+  </header>
+
   <div class="stats" id="stats">
     <div class="stats-item"><strong>Total:</strong> <span id="stats-total">0</span></div>
     <div class="stats-item"><strong>Today:</strong> <span id="stats-today">0</span></div>
-    <div class="stats-item"><strong>X:</strong> <span id="stats-x">0</span> | <strong>Instagram:</strong> <span id="stats-instagram">0</span> | <strong>TikTok:</strong> <span id="stats-tiktok">0</span></div>
+    <div class="stats-item"><strong>X:</strong> <span id="stats-x">0</span> · <strong>Instagram:</strong> <span id="stats-instagram">0</span> · <strong>TikTok:</strong> <span id="stats-tiktok">0</span></div>
   </div>
 
   <div id="copy-sections"></div>
@@ -298,7 +411,7 @@
 
   <div id="changelog"></div>
 
-  <div class="credits">Previews are made by third-party services (vxTwitter, FxEmbed, fxTikTok, tiktxk…), not by this extension. <a href="https://github.com/lepetitpaco/X-Instagram-Link-Converter#credits" target="_blank" rel="noopener">Credits</a></div>
+  <div class="credits">Previews are made by third-party services (vxTwitter, FxEmbed, fxTikTok, tiktxk…), not by this extension. <a href="https://github.com/lepetitpaco/Embed-Link-Copier#credits" target="_blank" rel="noopener">Credits</a></div>
 
   <div id="status"></div>
 

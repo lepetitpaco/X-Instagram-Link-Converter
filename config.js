@@ -1,4 +1,4 @@
-// Configuration centralisée pour le plugin X-Instagram-Link-Converter
+// Configuration centralisée de l'extension Embed Link Copier
 
 const CONFIG = {
   // Plateformes gérées : un content script par plateforme sait où placer les boutons et lire l'URL d'un post
@@ -39,6 +39,13 @@ const CONFIG = {
 
   // Nouveautés affichées dans le popup (la plus récente en premier)
   CHANGELOG: [
+    {
+      version: '1.2.2',
+      changes: [
+        'New name everywhere: Embed Link Copier',
+        'Refreshed popup with a dark theme and a clearer services editor'
+      ]
+    },
     {
       version: '1.2.1',
       changes: [

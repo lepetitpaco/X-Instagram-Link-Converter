@@ -12,6 +12,7 @@ fs.mkdirSync(path.join(STORE, 'build'), { recursive: true });
 fs.mkdirSync(path.join(STORE, 'screenshots'), { recursive: true });
 
 const browser = await chromium.launch();
+const { version } = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest-v3.json'), 'utf8'));
 
 // Icônes du manifest, fond transparent
 for (const size of [16, 32, 48, 128]) {
@@ -24,7 +25,7 @@ for (const size of [16, 32, 48, 128]) {
 
 // Popup réel de l'extension, avec une API navigateur simulée
 const popup = await browser.newPage({ viewport: { width: 344, height: 600 }, deviceScaleFactor: 2 });
-await popup.addInitScript(() => {
+await popup.addInitScript(version => {
   const area = (data) => ({
     get(keys, cb) {
       const list = typeof keys === 'string' ? [keys] : Array.isArray(keys) ? keys : Object.keys(data);
@@ -36,7 +37,7 @@ await popup.addInitScript(() => {
   });
   const now = Date.now();
   window.chrome = {
-    runtime: { getManifest: () => ({ version: '1.2.1' }), sendMessage() {} },
+    runtime: { getManifest: () => ({ version }), sendMessage() {} },
     storage: {
       local: area({
         conversionStats: { total: 342, today: 7, byPlatform: { x: 198, instagram: 61, tiktok: 83 } },
@@ -53,16 +54,18 @@ await popup.addInitScript(() => {
       sendMessage: (id, m, cb) => cb && cb(null)
     }
   };
-});
+}, version);
 await popup.goto(url('popup.html'));
 await popup.waitForTimeout(400);
 const clip = await popup.evaluate(() => {
   document.body.style.maxHeight = 'none';
-  // Éditeur X ouvert pour montrer les services, historique masqué pour tenir dans la capture
+  // En-tête et éditeur X ouvert ; compteurs (données de démo) et historique masqués pour tenir dans la capture
   document.querySelector('.services-platform').open = true;
+  document.getElementById('stats').style.display = 'none';
+  document.getElementById('copy-sections').style.display = 'none';
   document.querySelector('.history-section').style.display = 'none';
   document.querySelector('.history-section').previousElementSibling.style.display = 'none';
-  const top = document.querySelector('.settings-section').getBoundingClientRect().top - 12;
+  const top = 0;
   // Jusqu'à la fin de l'éditeur des services, sans le changelog
   const bottom = document.getElementById('changelog').getBoundingClientRect().top - 2;
   return { x: 0, y: top, width: document.documentElement.scrollWidth, height: bottom - top };
@@ -77,8 +80,6 @@ const scenes = [
   ['tiktok', 1280, 800, 'screenshots/3-tiktok.png'],
   ['instagram', 1280, 800, 'screenshots/4-instagram.png'],
   ['popup', 1280, 800, 'screenshots/5-custom-services.png'],
-  // Hors Chrome (5 captures max) : site et Firefox
-  ['chat-instagram', 1280, 800, 'screenshots/6-instagram-in-chat.png'],
   ['promo', 440, 280, 'promo-small-440x280.png'],
   ['marquee', 1400, 560, 'promo-marquee-1400x560.png']
 ];

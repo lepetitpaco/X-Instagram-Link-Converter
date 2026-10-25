@@ -8,7 +8,7 @@ cd "$PROJECT_ROOT" || exit 1
 
 echo "📦 Création du package Chrome (Manifest V3)..."
 
-PACKAGE_NAME="x-instagram-link-converter-chrome"
+PACKAGE_NAME="embed-link-copier-chrome"
 TEMP_DIR=".chrome-package"
 ZIP_FILE="packages/${PACKAGE_NAME}.zip"
 

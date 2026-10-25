@@ -8,7 +8,7 @@ cd "$PROJECT_ROOT" || exit 1
 
 echo "📦 Création du package Firefox (Manifest V2)..."
 
-PACKAGE_NAME="x-instagram-link-converter-firefox"
+PACKAGE_NAME="embed-link-copier-firefox"
 TEMP_DIR=".firefox-package"
 ZIP_FILE="packages/${PACKAGE_NAME}.zip"
 

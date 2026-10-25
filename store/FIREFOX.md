@@ -6,11 +6,20 @@ Public page: https://addons.mozilla.org/firefox/addon/x-instagram-link-converter
 Default locale English (US), with a French translation of the listing. Visuals are rebuilt by
 `store/render.sh` from the real captures in `store/captures/`.
 
+## Checklist for 1.2.2 (rename to Embed Link Copier)
+
+1. After the GitHub rename (see CHROME.md), Upload New Version: `packages/embed-link-copier-firefox.zip`
+   with the version notes below.
+2. Edit Product Page → Additional Details: Homepage `https://lepetitpaco.github.io/Embed-Link-Copier/`;
+   Describe Add-on: support site and the open source link in the description now use the new repo URL.
+3. Screenshots: already the 5 current ones (uploaded on 2026-10-25); re-upload `5-custom-services.png`
+   for the new popup look.
+
 ---
 
 ## Package
 
-Upload `packages/x-instagram-link-converter-firefox.zip` (`scripts/package-firefox.sh`).
+Upload `packages/embed-link-copier-firefox.zip` (`scripts/package-firefox.sh`).
 
 ## Describe Add-on
 
@@ -42,7 +51,7 @@ An embed site goes down, a new one appears? Add it yourself in the popup: a shor
 
 - No tracking, no analytics, no account
 - Links are converted locally, nothing is sent anywhere
-- Open source: https://github.com/lepetitpaco/X-Instagram-Link-Converter
+- Open source: https://github.com/lepetitpaco/Embed-Link-Copier
 
 **Credits: who makes the embeds**
 
@@ -58,25 +67,31 @@ If you use them a lot, consider supporting their maintainers. This add-on is not
 ```
 
 **Categories**: Social & Communication
-**Homepage**: `https://lepetitpaco.github.io/X-Instagram-Link-Converter/`
-**Support site**: `https://github.com/lepetitpaco/X-Instagram-Link-Converter/issues`
+**Homepage**: `https://lepetitpaco.github.io/Embed-Link-Copier/`
+**Support site**: `https://github.com/lepetitpaco/Embed-Link-Copier/issues`
 **Privacy policy**: the text of `site/privacy.html` (AMO wants the text, not a link)
 
 ## Images
 
 - **Add-on icon**: `icons/icon128.png`
-- **Screenshots**: `store/screenshots/1..6-*.png` (the 6th is Firefox and site only), with these captions:
+- **Screenshots**: `store/screenshots/1..5-*.png` (5, as on Chrome), with these captions:
   1. In Discord: a plain x.com link vs the same post copied with Embed Link Copier
   2. X: chips in the action bar of every post, more services in the ⋯ menu
   3. TikTok: chips under Share on every video
   4. Instagram: a button next to Share, and kkinstagram in the Share menu
   5. Add, hide or reorder your own link services
-  6. In Discord: an Instagram link with no preview vs the kkinstagram link
 
 To refresh the screenshots of the live listing: Edit Product Page → Images → Edit, remove the old
 ones, add the new ones with their captions, Save Changes. No new version needed.
 
-## Version notes (1.2.1)
+## Version notes (1.2.2)
+
+```
+- The add-on is called Embed Link Copier everywhere
+- Refreshed popup: dark theme matching the icon, clearer services editor
+```
+
+Previous version notes (1.2.1):
 
 ```
 - TikTok support: chips under Share copy a tnktok, tiktxk or kktiktok link; the popup copies the video on screen, even on the For You feed
@@ -90,5 +105,5 @@ The version notes field can be hidden on AMO: fill it through the page if needed
 ## Notes to Reviewer
 
 ```
-Plain JavaScript, no build step, no minification: the package is the source code (https://github.com/lepetitpaco/X-Instagram-Link-Converter). Content scripts for x.com, twitter.com, instagram.com and tiktok.com add copy buttons. Permissions: activeTab, clipboardWrite, storage (storage.sync holds only the user's list of link services: label + domain). No remote code, no network requests.
+Plain JavaScript, no build step, no minification: the package is the source code (https://github.com/lepetitpaco/Embed-Link-Copier). Content scripts for x.com, twitter.com, instagram.com and tiktok.com add copy buttons. Permissions: activeTab, clipboardWrite, storage (storage.sync holds only the user's list of link services: label + domain). No remote code, no network requests.
 ```

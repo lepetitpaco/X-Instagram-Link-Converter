@@ -2,7 +2,7 @@
 <html>
 <!--
   Visuels des fiches Chrome Web Store et Firefox Add-ons, et du site, rendus par store/render.mjs.
-  Une scène par ancre (#hero, #x, #tiktok, #instagram, #popup, #chat-instagram, #promo, #marquee).
+  Une scène par ancre (#hero, #x, #tiktok, #instagram, #popup, #promo, #marquee).
   Les images sont de vraies captures de x.com, instagram.com et tiktok.com avec l'extension
   installée (store/captures/, comptes publics de la NASA), recadrées ici avec .crop
   (--iw/--ih : taille de l'image, --x/--y/--w/--h : zone gardée, en pixels de l'image).
@@ -203,32 +203,6 @@
       </ul>
     </div>
     <div class="stage"><img class="popup-shot" src="build/popup.png" alt=""></div>
-  </section>
-
-  <!-- 6. Instagram dans Discord : lien instagram.com sans aperçu, lien kkinstagram avec la photo -->
-  <section class="scene backdrop" id="chat-instagram">
-    <div class="copy">
-      <div class="brand"><img src="icon.svg" alt="">Embed Link Copier</div>
-      <div class="kicker">Instagram in your chats</div>
-      <h1>No more links without a preview.</h1>
-      <p class="lead">Many Instagram links show nothing at all once pasted. With <b>kkinstagram</b>, the picture or the reel shows up right in the chat.</p>
-    </div>
-    <div class="stage" style="flex-direction: row; align-items: center; gap: 26px; padding-right: 36px;">
-      <div class="compare">
-        <div class="tag bad">✕ Plain instagram.com link</div>
-        <div class="frame discord" style="width: 360px;">
-          <div class="crop" style="--iw: 960; --ih: 684; --x: 0; --y: 0; --w: 960; --h: 62;"><img src="captures/discord-ig-carousel.png" alt=""></div>
-        </div>
-        <div class="note">No preview at all</div>
-      </div>
-      <div class="compare">
-        <div class="tag good">✓ Copied with Embed Link Copier</div>
-        <div class="frame discord" style="width: 360px;">
-          <div class="link">https://kkinstagram.com/nasa/p/De1wbZ6l2Vy/</div>
-          <div class="crop" style="--iw: 960; --ih: 684; --x: 0; --y: 64; --w: 960; --h: 620;"><img src="captures/discord-ig-carousel.png" alt=""></div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- Petite tuile promo 440x280 -->

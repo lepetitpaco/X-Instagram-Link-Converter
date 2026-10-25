@@ -1,23 +1,15 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Embed Link Copier: X, Instagram, TikTok",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Copy X, Instagram and TikTok links that embed well in Discord and chats (fixvx, vxtwitter, kkinstagram, tnktok…) in one click.",
   "permissions": [
     "activeTab",
     "clipboardWrite",
     "storage"
   ],
-  "host_permissions": [
-    "*://x.com/*",
-    "*://twitter.com/*",
-    "*://www.instagram.com/*",
-    "*://instagram.com/*",
-    "*://www.tiktok.com/*",
-    "*://tiktok.com/*"
-  ],
   "background": {
-    "service_worker": "background-v3.js"
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -42,7 +34,7 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "action": {
+  "browser_action": {
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
@@ -51,5 +43,17 @@
     },
     "default_title": "Embed Link Copier",
     "default_popup": "popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{27ce2a46-7072-4e7e-8537-e7d0b8e4823f}",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
   }
 }

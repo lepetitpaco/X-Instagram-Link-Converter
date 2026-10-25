@@ -1,4 +1,4 @@
-# CLAUDE.md — X-Instagram-Link-Converter
+# CLAUDE.md — Embed Link Copier
 
 Extension navigateur qui convertit les liens X/Twitter, Instagram et TikTok vers des frontends alternatifs.
 
@@ -39,11 +39,11 @@ L'extension supporte deux versions de manifest selon le navigateur :
 ```sh
 # Firefox (Manifest V2)
 scripts/prepare-firefox.sh    # ou prepare-firefox.bat sur Windows
-scripts/package-firefox.sh    # génère packages/x-instagram-link-converter-firefox.zip
+scripts/package-firefox.sh    # génère packages/embed-link-copier-firefox.zip
 
 # Chrome/Edge (Manifest V3)
 scripts/prepare-chrome.sh     # ou prepare-chrome.bat sur Windows
-scripts/package-chrome.sh     # génère packages/x-instagram-link-converter-chrome.zip
+scripts/package-chrome.sh     # génère packages/embed-link-copier-chrome.zip
 ```
 
 Les scripts `prepare-*` switchent le `manifest.json` actif automatiquement.
@@ -51,7 +51,7 @@ Les scripts `prepare-*` switchent le `manifest.json` actif automatiquement.
 ## Structure
 
 ```
-X-Instagram-Link-Converter/
+Embed-Link-Copier/
 ├── manifest.json          # Manifest actif (copié par les scripts prepare-*)
 ├── manifest-v2.json       # Source V2 (Firefox)
 ├── manifest-v3.json       # Source V3 (Chrome)

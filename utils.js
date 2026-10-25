@@ -1,4 +1,4 @@
-// Utilitaires partagés pour le plugin X-Instagram-Link-Converter
+// Utilitaires partagés de l'extension Embed Link Copier
 
 const STYLE_ID = 'xilc-styles';
 

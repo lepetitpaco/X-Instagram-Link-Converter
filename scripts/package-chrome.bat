@@ -6,7 +6,7 @@ cd /d "%~dp0\.."
 
 echo 📦 Création du package Chrome (Manifest V3)...
 
-set PACKAGE_NAME=x-instagram-link-converter-chrome
+set PACKAGE_NAME=embed-link-copier-chrome
 set TEMP_DIR=.chrome-package
 set ZIP_FILE=packages\%PACKAGE_NAME%.zip
 
