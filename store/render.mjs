@@ -63,7 +63,8 @@ const clip = await popup.evaluate(() => {
   document.querySelector('.history-section').style.display = 'none';
   document.querySelector('.history-section').previousElementSibling.style.display = 'none';
   const top = document.querySelector('.settings-section').getBoundingClientRect().top - 12;
-  const bottom = document.getElementById('changelog').getBoundingClientRect().bottom + 12;
+  // Jusqu'à la fin de l'éditeur des services, sans le changelog
+  const bottom = document.getElementById('changelog').getBoundingClientRect().top - 2;
   return { x: 0, y: top, width: document.documentElement.scrollWidth, height: bottom - top };
 });
 await popup.screenshot({ path: path.join(STORE, 'build/popup.png'), clip, fullPage: true });
