@@ -77,6 +77,8 @@ const scenes = [
   ['tiktok', 1280, 800, 'screenshots/3-tiktok.png'],
   ['instagram', 1280, 800, 'screenshots/4-instagram.png'],
   ['popup', 1280, 800, 'screenshots/5-custom-services.png'],
+  // Hors Chrome (5 captures max) : site et Firefox
+  ['chat-instagram', 1280, 800, 'screenshots/6-instagram-in-chat.png'],
   ['promo', 440, 280, 'promo-small-440x280.png'],
   ['marquee', 1400, 560, 'promo-marquee-1400x560.png']
 ];

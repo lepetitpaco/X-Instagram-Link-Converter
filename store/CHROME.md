@@ -68,7 +68,9 @@ This extension is not affiliated with these services, nor with X Corp., Meta or 
 | **Image promotionnelle en haut de la page** (1400 x 560) | `store/promo-marquee-1400x560.png` |
 
 All are 24-bit PNG without alpha, as Chrome requires. The screenshots are real captures of
-public NASA posts with the extension installed.
+public NASA posts with the extension installed; the first one compares the same post pasted in
+Discord as a plain link and as a converted link. `6-instagram-in-chat.png` is for Firefox and the
+site only (Chrome takes 5 screenshots).
 
 To replace the screenshots of the live listing: delete the old ones in "Captures d'écran",
 drop the new ones in order, then "Envoyer pour examen". No new package needed.

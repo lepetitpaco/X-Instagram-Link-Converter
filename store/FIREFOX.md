@@ -65,12 +65,13 @@ If you use them a lot, consider supporting their maintainers. This add-on is not
 ## Images
 
 - **Add-on icon**: `icons/icon128.png`
-- **Screenshots**: `store/screenshots/1..5-*.png`, with these captions:
-  1. Copy any post as a link that shows a real preview in chats
+- **Screenshots**: `store/screenshots/1..6-*.png` (the 6th is Firefox and site only), with these captions:
+  1. In Discord: a plain x.com link vs the same post copied with Embed Link Copier
   2. X: chips in the action bar of every post, more services in the ⋯ menu
   3. TikTok: chips under Share on every video
   4. Instagram: a button next to Share, and kkinstagram in the Share menu
   5. Add, hide or reorder your own link services
+  6. In Discord: an Instagram link with no preview vs the kkinstagram link
 
 To refresh the screenshots of the live listing: Edit Product Page → Images → Edit, remove the old
 ones, add the new ones with their captions, Save Changes. No new version needed.

@@ -2,11 +2,11 @@
 <html>
 <!--
   Visuels des fiches Chrome Web Store et Firefox Add-ons, et du site, rendus par store/render.mjs.
-  Une scène par ancre (#hero, #x, #tiktok, #instagram, #popup, #promo, #marquee).
+  Une scène par ancre (#hero, #x, #tiktok, #instagram, #popup, #chat-instagram, #promo, #marquee).
   Les images sont de vraies captures de x.com, instagram.com et tiktok.com avec l'extension
   installée (store/captures/, comptes publics de la NASA), recadrées ici avec .crop
   (--iw/--ih : taille de l'image, --x/--y/--w/--h : zone gardée, en pixels de l'image).
-  Le message « Copied » vient du vrai utils.js de l'extension.
+  Les scènes Discord viennent d'un salon de test : même post en lien d'origine puis en lien converti.
 -->
 <head>
   <meta charset="utf-8">
@@ -72,6 +72,14 @@
     }
     .label { align-self: flex-start; margin: 0 0 -8px 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
     .label b { color: var(--ink); }
+    /* Comparaisons dans Discord */
+    .compare { display: flex; flex-direction: column; gap: 12px; }
+    .tag { align-self: flex-start; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+    .tag.bad { background: rgba(255, 255, 255, .08); color: var(--muted); }
+    .tag.good { background: var(--grad); color: #fff; }
+    .frame.discord { background: linear-gradient(180deg, #171628 0%, #20122a 100%); padding: 10px 12px; }
+    .frame.discord .link { color: #6fb3f7; font-size: 13.5px; padding: 0 2px 6px; }
+    .note { font-size: 14px; color: var(--muted); padding-left: 4px; }
     .popup-shot { width: 440px; border-radius: 14px; box-shadow: 0 40px 90px rgba(0, 0, 0, .6), 0 0 0 1px var(--line); }
 
     /* Le toast de l'extension, posé sous la capture plutôt qu'en bas d'écran */
@@ -84,28 +92,33 @@
 
 <body>
 
-  <!-- 1. Vue d'ensemble : un vrai post X avec les pastilles -->
+  <!-- 1. Le résultat dans Discord : vraies captures du même post, lien x.com puis lien fixvx -->
   <section class="scene backdrop" id="hero">
-    <div class="copy">
+    <div class="copy" style="width: 420px;">
       <div class="brand"><img src="icon.svg" alt="">Embed Link Copier</div>
       <div class="kicker">Share links that embed</div>
-      <h1>Your friends see the video, not a bare link.</h1>
-      <p class="lead">One click copies an X, Instagram or TikTok post as a link to an embed service like vxTwitter, FxEmbed or fxTikTok, so Discord, Telegram &amp;&nbsp;co show the real video.</p>
+      <h1>Your friends see the whole post.</h1>
+      <p class="lead">Paste a plain link and chats often cut the text, skip the pictures or the video. The link copied by Embed Link Copier shows it all, no account needed to see it.</p>
       <ul class="points">
-        <li>X, Instagram and TikTok</li>
-        <li>Buttons right on the post</li>
-        <li>Your own services, no tracking</li>
+        <li>Full text, pictures and videos</li>
+        <li>Quoted posts included</li>
+        <li>Nothing to install for your friends</li>
       </ul>
     </div>
-    <div class="stage">
-      <div class="frame" style="width: 530px;">
-        <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url"><b>x.com</b>/NASA/status/2113693409772761305</div></div>
-        <div class="crop" style="--iw: 1036; --ih: 1167; --x: 0; --y: 0; --w: 1036; --h: 1167;">
-          <img src="captures/x-post.png" alt="">
-          <div class="ring" style="left: 73.4%; top: 89.8%; width: 23.8%; height: 4.6%;"></div>
+    <div class="stage" style="flex-direction: row; align-items: center; gap: 26px; padding-right: 36px;">
+      <div class="compare">
+        <div class="tag bad">✕ Plain x.com link</div>
+        <div class="frame discord" style="width: 360px;">
+          <div class="crop" style="--iw: 1100; --ih: 380; --x: 0; --y: 0; --w: 1100; --h: 380;"><img src="captures/discord-x-quote-plain.png" alt=""></div>
+        </div>
+        <div class="note">Cut text, no picture</div>
+      </div>
+      <div class="compare">
+        <div class="tag good">✓ Copied with Embed Link Copier</div>
+        <div class="frame discord" style="width: 360px;">
+          <div class="crop" style="--iw: 720; --ih: 1176; --x: 0; --y: 0; --w: 720; --h: 1176;"><img src="captures/discord-x-quote-fixvx.png" alt=""></div>
         </div>
       </div>
-      <div id="hero-toast" style="position: relative; width: 530px; height: 58px;"></div>
     </div>
   </section>
 
@@ -192,6 +205,32 @@
     <div class="stage"><img class="popup-shot" src="build/popup.png" alt=""></div>
   </section>
 
+  <!-- 6. Instagram dans Discord : lien instagram.com sans aperçu, lien kkinstagram avec la photo -->
+  <section class="scene backdrop" id="chat-instagram">
+    <div class="copy">
+      <div class="brand"><img src="icon.svg" alt="">Embed Link Copier</div>
+      <div class="kicker">Instagram in your chats</div>
+      <h1>No more links without a preview.</h1>
+      <p class="lead">Many Instagram links show nothing at all once pasted. With <b>kkinstagram</b>, the picture or the reel shows up right in the chat.</p>
+    </div>
+    <div class="stage" style="flex-direction: row; align-items: center; gap: 26px; padding-right: 36px;">
+      <div class="compare">
+        <div class="tag bad">✕ Plain instagram.com link</div>
+        <div class="frame discord" style="width: 360px;">
+          <div class="crop" style="--iw: 960; --ih: 684; --x: 0; --y: 0; --w: 960; --h: 62;"><img src="captures/discord-ig-carousel.png" alt=""></div>
+        </div>
+        <div class="note">No preview at all</div>
+      </div>
+      <div class="compare">
+        <div class="tag good">✓ Copied with Embed Link Copier</div>
+        <div class="frame discord" style="width: 360px;">
+          <div class="link">https://kkinstagram.com/nasa/p/De1wbZ6l2Vy/</div>
+          <div class="crop" style="--iw: 960; --ih: 684; --x: 0; --y: 64; --w: 960; --h: 620;"><img src="captures/discord-ig-carousel.png" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Petite tuile promo 440x280 -->
   <section class="scene" id="promo">
     <div class="promo" style="flex-direction:column;justify-content:center;gap:16px;text-align:center">
@@ -229,14 +268,6 @@
     if (scene === 'promo') document.body.style.cssText = 'width:440px;height:280px';
     if (scene === 'marquee') document.body.style.cssText = 'width:1400px;height:560px';
 
-    // Vrai toast de l'extension, ancré sous la capture du post
-    if (scene === 'hero') {
-      createToast(CONFIG.MESSAGES.COPIED, 1e9, 'https://fixvx.com/NASA/status/2113693409772761305');
-      const toast = document.querySelector('.xilc-toast');
-      const anchor = document.getElementById('hero-toast');
-      anchor.appendChild(toast);
-      toast.style.cssText += 'left: 50%; top: 0; bottom: auto; right: auto; transform: translateX(-50%); white-space: nowrap;';
-    }
   </script>
 </body>
 
