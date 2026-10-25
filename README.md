@@ -33,10 +33,12 @@ Click a chip and the converted link is in your clipboard. The popup (extension i
 This extension makes no embed itself: it only swaps the link's domain (`x.com/…` → `fixvx.com/…`). The previews come from these free services, run by their own authors. Star or sponsor them if you use them a lot:
 
 - `fixvx.com`, `vxtwitter.com`: [vxTwitter](https://github.com/dylanpdx/BetterTwitFix) by dylanpdx
-- `fixupx.com`: [FxEmbed](https://github.com/FxEmbed/FxEmbed)
+- `fixupx.com`: [FxEmbed](https://github.com/FxEmbed/FxEmbed) (formerly FxTwitter)
 - `tnktok.com`: [fxTikTok](https://github.com/okdargy/fxTikTok) by okdargy
 - `tiktxk.com`: [tiktxk](https://github.com/Britmoji/tiktxk) by Britmoji
-- `kkinstagram.com`, `kktiktok.com`: independent services
+- `kkinstagram.com`, `kktiktok.com`: [kkScript](https://kkscript.com) ([GitHub](https://github.com/kkscript))
+
+Embed services come and go: the [website](https://lepetitpaco.github.io/X-Instagram-Link-Converter/#services) lists the ones that still work, with alternatives you can add in the popup.
 
 Not affiliated with these services, X Corp., Meta or TikTok.
 

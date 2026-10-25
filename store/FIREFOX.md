@@ -49,10 +49,10 @@ An embed site goes down, a new one appears? Add it yourself in the popup: a shor
 This add-on does not generate any preview. It only rewrites the link to point to free embed services built and hosted by others:
 
 - fixvx.com, vxtwitter.com: [vxTwitter](https://github.com/dylanpdx/BetterTwitFix)
-- fixupx.com: [FxEmbed](https://github.com/FxEmbed/FxEmbed)
+- fixupx.com: [FxEmbed](https://github.com/FxEmbed/FxEmbed), formerly FxTwitter
 - tnktok.com: [fxTikTok](https://github.com/okdargy/fxTikTok)
 - tiktxk.com: [tiktxk](https://github.com/Britmoji/tiktxk)
-- kkinstagram.com, kktiktok.com: independent services
+- kkinstagram.com, kktiktok.com: [kkScript](https://kkscript.com)
 
 If you use them a lot, consider supporting their maintainers. This add-on is not affiliated with these services, nor with X Corp., Meta or TikTok.
 ```

@@ -45,10 +45,10 @@ Works on x.com, twitter.com, instagram.com and tiktok.com.
 ★ CREDITS: WHO MAKES THE EMBEDS
 This extension does not generate any preview. It only rewrites the link to point to free embed services built and hosted by others:
 • fixvx.com, vxtwitter.com: vxTwitter (github.com/dylanpdx/BetterTwitFix)
-• fixupx.com: FxEmbed (github.com/FxEmbed/FxEmbed)
+• fixupx.com: FxEmbed, formerly FxTwitter (github.com/FxEmbed/FxEmbed)
 • tnktok.com: fxTikTok (github.com/okdargy/fxTikTok)
 • tiktxk.com: tiktxk (github.com/Britmoji/tiktxk)
-• kkinstagram.com, kktiktok.com: independent services
+• kkinstagram.com, kktiktok.com: kkScript (kkscript.com)
 If you use them a lot, consider supporting their maintainers.
 
 This extension is not affiliated with these services, nor with X Corp., Meta or TikTok.
