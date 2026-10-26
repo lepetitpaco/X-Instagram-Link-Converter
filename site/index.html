@@ -66,6 +66,7 @@
     .tile { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
     .tile h3 { margin: 0 0 6px; font-size: 17px; }
     .tile p { margin: 0; color: var(--muted); font-size: 15px; }
+    .tile code { overflow-wrap: anywhere; }
     a.tile { text-decoration: none; }
     a.tile:hover { border-color: #9b4dff; }
 
@@ -120,7 +121,7 @@
           <a class="btn primary" href="https://chromewebstore.google.com/detail/ohmjcjchdjkedcmpnefjgffkdolelbih">Add to Chrome</a>
           <a class="btn secondary" href="https://addons.mozilla.org/firefox/addon/x-instagram-link-converter/">Add to Firefox</a>
         </div>
-        <div class="note">Free, open source, no tracking.</div>
+        <div class="note">Free, open source, no tracking. Store not available? <a href="#github">Install from GitHub</a>.</div>
         <div class="shot"><img src="screenshots/1-share-links-that-embed.png" alt="In Discord, a plain x.com link shows cut text without the picture; the same post copied as a fixvx link shows the full text and the picture"></div>
       </div>
     </div>
@@ -153,6 +154,18 @@
         <div class="tile"><h3>Private by design</h3><p>No tracking, no analytics, no account. Links are converted in your browser. <a href="privacy.html">Privacy policy</a></p></div>
         <div class="tile"><h3>Light</h3><p>Plain JavaScript, three permissions, no remote code.</p></div>
         <div class="tile"><h3>Open source</h3><p>Ideas or a broken embed service? <a href="https://github.com/lepetitpaco/Embed-Link-Copier/issues">Open an issue</a>.</p></div>
+      </div>
+    </section>
+
+    <section id="github">
+      <div class="wrap">
+        <div class="kicker">Install from GitHub</div>
+        <h2>No store? Load it yourself</h2>
+        <p class="sub">The same packages as on the stores, straight from the repository. Store installs update by themselves, these do not.</p>
+        <div class="grid">
+          <div class="tile"><h3>Chrome, Edge, Brave</h3><p>Download <a href="https://github.com/lepetitpaco/Embed-Link-Copier/raw/main/packages/embed-link-copier-chrome.zip">embed-link-copier-chrome.zip</a> and unzip it. Open <code>chrome://extensions</code>, turn on Developer mode, click Load unpacked and pick the unzipped folder.</p></div>
+          <div class="tile"><h3>Firefox</h3><p>Download <a href="https://github.com/lepetitpaco/Embed-Link-Copier/raw/main/packages/embed-link-copier-firefox.zip">embed-link-copier-firefox.zip</a>. Open <code>about:debugging#/runtime/this-firefox</code>, click Load Temporary Add-on and pick the zip. Firefox removes it when it restarts.</p></div>
+        </div>
       </div>
     </section>
 
