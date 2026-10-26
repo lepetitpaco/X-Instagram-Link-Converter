@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.2.3
+- Shorter store summary, without the list of embed domains
+
 ## Version 1.2.2
 - The extension is called Embed Link Copier on every store
 - Refreshed popup: dark theme matching the new icon, clearer services editor

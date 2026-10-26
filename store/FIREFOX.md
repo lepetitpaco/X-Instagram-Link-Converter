@@ -6,14 +6,15 @@ Public page: https://addons.mozilla.org/firefox/addon/x-instagram-link-converter
 Default locale English (US), with a French translation of the listing. Visuals are rebuilt by
 `store/render.sh` from the real captures in `store/captures/`.
 
-## Checklist for 1.2.2 (rename to Embed Link Copier)
+## Checklist for 1.2.3 (simpler listing)
 
-1. After the GitHub rename (see CHROME.md), Upload New Version: `packages/embed-link-copier-firefox.zip`
-   with the version notes below.
-2. Edit Product Page → Additional Details: Homepage `https://lepetitpaco.github.io/Embed-Link-Copier/`;
-   Describe Add-on: support site and the open source link in the description now use the new repo URL.
-3. Screenshots: already the 5 current ones (uploaded on 2026-10-25); re-upload `5-custom-services.png`
-   for the new popup look.
+Chrome rejected 1.2.2 for keyword spam because of the list of embed domains in the description:
+both listings are now kept short, without domains or service names. Credits stay on the website.
+
+1. Upload New Version: `packages/embed-link-copier-firefox.zip` (1.2.3) with the version notes below.
+2. Edit Product Page → Describe Add-on: summary and description below, in English and in the
+   French translation.
+3. Images: update the caption of screenshot 4.
 
 ---
 
@@ -25,45 +26,33 @@ Upload `packages/embed-link-copier-firefox.zip` (`scripts/package-firefox.sh`).
 
 **Name**: `Embed Link Copier: X, Instagram, TikTok`
 
-**Summary** (200/250):
+**Summary** (156/250):
 ```
-One click copies X, Instagram and TikTok posts as links to embed services (vxTwitter, FxEmbed, fxTikTok…) that show a real preview in Discord, Telegram or WhatsApp. Add your own services, no tracking.
+One click copies X, Instagram and TikTok posts as links that show a real preview in Discord, Telegram or WhatsApp. Add your own embed services, no tracking.
 ```
 
 **Description** (limited Markdown):
 ```
 **Share links that actually embed.**
 
-Paste an x.com, instagram.com or tiktok.com link in Discord, Telegram or WhatsApp and your friends often get… a bare link. This add-on copies the same post as a link to an existing embed service (vxTwitter, FxEmbed, fxTikTok…), and that service makes the chat show the video or picture.
+Paste an X, Instagram or TikTok link in Discord, Telegram or WhatsApp and your friends often see a bare link. This add-on copies the same post as a link to an embed service, so the chat shows the video or picture.
 
-**One click, right on the post**
+**How it works**
 
-- **X / Twitter**: chips in the action bar of every post: vx (fixvx), upx (fixupx), vxt (vxtwitter), x (clean original link)
-- **Instagram**: a link button next to Share on every post and reel, plus kkinstagram in the Share menu, in any interface language
-- **TikTok**: chips under Share on every video: tnktok, tiktxk, kktiktok
-- **Popup**: copy the current page in any format; on the TikTok For You feed it picks the video on screen
+- **X / Twitter**: copy buttons in the action bar of every post
+- **Instagram**: a copy button next to Share on posts and reels
+- **TikTok**: copy buttons under Share on every video
+- **Popup**: copy the link of the page you are on
 
-**Your services, your rules**
+**Your services**
 
-An embed site goes down, a new one appears? Add it yourself in the popup: a short label and a domain. Hide, reorder or reset services per site. The first ones become chips, the rest wait in a compact ⋯ menu so the page stays clean. Your list syncs with your Firefox account.
+Add, hide or reorder embed services from the popup. Your list syncs with your Firefox account.
 
-**Private by design**
+**Private**
 
-- No tracking, no analytics, no account
-- Links are converted locally, nothing is sent anywhere
-- Open source: https://github.com/lepetitpaco/Embed-Link-Copier
+No tracking, no account. Links are converted on your device and nothing is sent anywhere. Open source: https://github.com/lepetitpaco/Embed-Link-Copier
 
-**Credits: who makes the embeds**
-
-This add-on does not generate any preview. It only rewrites the link to point to free embed services built and hosted by others:
-
-- fixvx.com, vxtwitter.com: [vxTwitter](https://github.com/dylanpdx/BetterTwitFix)
-- fixupx.com: [FxEmbed](https://github.com/FxEmbed/FxEmbed), formerly FxTwitter
-- tnktok.com: [fxTikTok](https://github.com/okdargy/fxTikTok)
-- tiktxk.com: [tiktxk](https://github.com/Britmoji/tiktxk)
-- kkinstagram.com, kktiktok.com: [kkScript](https://kkscript.com)
-
-If you use them a lot, consider supporting their maintainers. This add-on is not affiliated with these services, nor with X Corp., Meta or TikTok.
+The previews are made by free embed services run by other people: credits are on the [extension's website](https://lepetitpaco.github.io/Embed-Link-Copier/). Not affiliated with X Corp., Meta or TikTok.
 ```
 
 **Categories**: Social & Communication
@@ -78,20 +67,26 @@ If you use them a lot, consider supporting their maintainers. This add-on is not
   1. In Discord: a plain x.com link vs the same post copied with Embed Link Copier
   2. X: chips in the action bar of every post, more services in the ⋯ menu
   3. TikTok: chips under Share on every video
-  4. Instagram: a button next to Share, and kkinstagram in the Share menu
+  4. Instagram: a copy button next to Share, and another in the Share menu
   5. Add, hide or reorder your own link services
 
 To refresh the screenshots of the live listing: Edit Product Page → Images → Edit, remove the old
 ones, add the new ones with their captions, Save Changes. No new version needed.
 
-## Version notes (1.2.2)
+## Version notes (1.2.3)
+
+```
+- Shorter store summary and description
+```
+
+Previous version notes (1.2.2):
 
 ```
 - The add-on is called Embed Link Copier everywhere
 - Refreshed popup: dark theme matching the icon, clearer services editor
 ```
 
-Previous version notes (1.2.1):
+Older version notes (1.2.1):
 
 ```
 - TikTok support: chips under Share copy a tnktok, tiktxk or kktiktok link; the popup copies the video on screen, even on the For You feed
